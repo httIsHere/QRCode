@@ -45,7 +45,6 @@ if($result){
 	<script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.min.js"></script>
 	<script type="text/javascript" src="DateTimePicker.js"></script>
     <script type="text/javascript" language="javascript" src="jquery.dataTables.min.js"></script>
-
 	<style type="text/css">
 		.alert{
 			position: absolute;
