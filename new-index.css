@@ -75,12 +75,12 @@ input[type=text] {
     margin-bottom: 20px;
 }
 .btn-login {
-    background-color: rgba(255,165,121,1);
+    background-color: #88c1bc;
     color: #fff;
 }
 .btn-register {
-    border:2px #FFA579 solid;
-    color: rgba(255,165,121,1);
+    border:2px #88c1bc solid;
+    color: #88c1bc;
 }
 .btn1:before{
     position: absolute;
@@ -111,10 +111,9 @@ input[type=text] {
 }
 #dateBtn{
     width: 10%;
-    padding-left: 2%;
-    padding-right: 2%;
-    border:1px #2980B9 solid;
-    color: #2980B9;
+    padding: 0 2% 0 2%;
+    border:1px #88c1bc solid;
+    color: #88c1bc;
     margin-bottom: auto;
 }
 .userInfoLine{
@@ -176,10 +175,10 @@ input[type=text] {
 }
 .QRlist{
     /*margin-top: 20px;*/
-    color: #FFA579;
+    color: #88c1bc;
 }
 .text-info {
-    color:#FFA579 ;
+    color:#88c1bc ;
 }
 
 .QRlist table{
@@ -201,10 +200,10 @@ input[type=text] {
     margin-left: 25%;
 }
 .sceneNameText {
-    color: #FFA579;
+    color: #88c1bc;
 }
 .deleteBtn,.editBtn{
-    /*background-color: #FFA579;*/
+    /*background-color: #88c1bc;*/
     padding:1% 4%;
 }
 .deleteBtn {
@@ -240,7 +239,7 @@ input[type=text] {
 .introContentTitle{
     width:100px;
     height:4vm;
-    background-color: #FFA579;
+    background-color: #88c1bc;
     color: #FFFFFF;
     text-align: center;
     line-height: 4vm;
@@ -250,7 +249,7 @@ input[type=text] {
     margin-top: 3%;
 }
 .introContentBox{
-    border:2px solid #FFA579;
+    border:2px solid #88c1bc;
     padding:1% 2% 0 2%;
     text-indent:2em;
     border-radius: 5px;
@@ -264,6 +263,40 @@ input[type=text] {
 
 
 /*2017.07.20 修改样式*/
+.container{
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
 .ui.secondary.pointing.menu{
 	background: #FFFFFF;
+}
+.contentPage{
+	background: #FFFFFF;
+	width: 90%;
+	margin: 15px auto;
+	max-width: 1120px;
+	color: #000000;
+	padding: 15px;
+	transform: scale(0.0);
+}
+.new-row {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+a{
+	color: #88c1bc;
+}
+.activeContentPage{
+	transform: scale(1.0);
 }
