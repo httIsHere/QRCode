@@ -422,7 +422,7 @@
 		var userId = "<?php echo $user; ?>";
 		localStorage['userId'] = userId;
 		console.log(userId);
-		var nowIndex = 0;
+		var nowIndex = 0, activeItem = 1;
 		var fun1, fun2, fun3, fun4; //是否已点击过功能块
 		var res = 0;
 		//用于重置
@@ -442,25 +442,41 @@
 			$('.item').removeClass('active');
 			$(this).addClass('active');
 			var _index = $(this).index();
-//			console.log(_index);
+			//			console.log(_index);
 			$('.swiper-slide').removeClass('swiper-slide-active');
 			$('.swiper-slide').removeClass('swiper-slide-prev');
 			$('.swiper-slide').removeClass('swiper-slide-next');
 			//添加class
-			$('.swiper-slide').eq(_index-1).addClass('swiper-slide-active');
-			$('.swiper-slide').eq(_index-2).addClass('swiper-slide-prev');
-			$('.swiper-slide').eq(_index).addClass('swiper-slide-next');
+			$('.swiper-slide').eq(_index - 1).addClass('swiper-slide-active');
+			if(_index > 1)
+				$('.swiper-slide').eq(_index - 2).addClass('swiper-slide-prev');
+			if(_index < 3)
+				$('.swiper-slide').eq(_index).addClass('swiper-slide-next');
 			//切换
 			var _w = document.body.clientWidth;
-			var _tl = 'translate3d(-'+_w*(_index-1)+'px, 0px, 0px)';
-//			console.log(_tl);
-			$('.swiper-wrapper').css('transition','0.5s'); 
-			$('.swiper-wrapper').css('transform',_tl);
+			var _tl = 'translate3d(-' + _w * (_index - 1) + 'px, 0px, 0px)';
+			$('.swiper-wrapper').css('transition', '0.5s');
+			$('.swiper-wrapper').css('-webkit-transition', '0.5s');
+			$('.swiper-wrapper').css('-moz-transition', '0.5s');
+			$('.swiper-wrapper').css('-ms-transition', '0.5s');
+			$('.swiper-wrapper').css('-o-transition', '0.5s');
+			$('.swiper-wrapper').css('transform', _tl);
+			$('.swiper-wrapper').css('-webkit-transform', _tl);
+			$('.swiper-wrapper').css('-moz-transform', _tl);
+			$('.swiper-wrapper').css('-ms-transform', _tl);
+			$('.swiper-wrapper').css('-o-transform', _tl);
 		})
 		//模块切换
 		var swiper = new Swiper('.swiper-container', {
+			onTouchMove: function(swiper) {
+				var _active = $('.swiper-slide').index($('.swiper-slide-active'));
+				if(activeItem != _active){
+					$('.item').removeClass('active');
+					$('.item').eq(_active).addClass('active');
+					activeItem = _active;
+				}
+			}
 		});
-		init();
 		//初始页面
 		function init() {
 			$('#datepicker').DateTimePicker();
