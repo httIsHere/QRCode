@@ -257,7 +257,7 @@
 					<!--基本页介绍-->
 					<div class="contentPage pageIntroduction">
 						<div class="row closeBtn">
-							<img src="close.png" style="width: 15px;height: 15px;float: right;margin-bottom: 5px;" />
+							<img src="close.png" style="width: 15px;height: 15px;float: right;margin-bottom: 5px;margin-right: 15px;" />
 						</div>
 						<div class="row content-padding">
 							<p class="introTitle">系统说明</p>
@@ -442,12 +442,23 @@
 			$('.item').removeClass('active');
 			$(this).addClass('active');
 			var _index = $(this).index();
-			$(".contentPage").css('transform', 'scale(0.0)');
-			$(".contentPage").eq(_index - 1).css('transform', 'scale(1.0)');
+//			console.log(_index);
+			$('.swiper-slide').removeClass('swiper-slide-active');
+			$('.swiper-slide').removeClass('swiper-slide-prev');
+			$('.swiper-slide').removeClass('swiper-slide-next');
+			//添加class
+			$('.swiper-slide').eq(_index-1).addClass('swiper-slide-active');
+			$('.swiper-slide').eq(_index-2).addClass('swiper-slide-prev');
+			$('.swiper-slide').eq(_index).addClass('swiper-slide-next');
+			//切换
+			var _w = document.body.clientWidth;
+			var _tl = 'translate3d(-'+_w*(_index-1)+'px, 0px, 0px)';
+//			console.log(_tl);
+			$('.swiper-wrapper').css('transition','0.5s'); 
+			$('.swiper-wrapper').css('transform',_tl);
 		})
 		//模块切换
 		var swiper = new Swiper('.swiper-container', {
-			//			autoplay: 2500
 		});
 		init();
 		//初始页面
