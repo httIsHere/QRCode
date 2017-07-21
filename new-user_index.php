@@ -1,9 +1,29 @@
+<?php
+require_once(dirname(_FILE_).'../cgi-bin/CommonFunction.php');
+session_start();
+include("page_switching.php");
+
+$accessid = $_SESSION["accessID"];
+$user=$_SESSION["username"];
+$pwd = $_SESSION["userpwd"];
+if($_SESSION["accessID"] == null){
+	page_redirect(false,"signin.html","请重新登录");
+}
+$sql = "SELECT ManageUserName, AccessID FROM qydt_ManageUser WHERE ManageUserName = '$user'";
+$result = runSelectSql($sql);
+if($result){
+	if($result[0]["AccessID"] != $accessid){
+		echo "<script>alertShow('请重新登录');</script>";
+       page_redirect(false,"signin.html","请重新登录");
+	}
+	}
+?>
 <!DOCTYPE html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>主页</title>
+		<title><?php echo $user; ?>的主页</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +36,6 @@
 		<link rel="stylesheet" type="text/css" href="table.css">
 		<link rel="stylesheet" type="text/css" href="jquery.dataTables.min.css">
 		<link rel="stylesheet" type="text/css" href="semantic.min.css">
-		<link rel="stylesheet" type="text/css" href="dropdown.min.css">
 		<link rel="stylesheet" type="text/css" href="swiper.min.css" />
 		<link rel="stylesheet" href="new-index.css">
 
@@ -32,7 +51,6 @@
 		<script type="text/javascript" src="DateTimePicker.js"></script>
 		<script type="text/javascript" language="javascript" src="jquery.dataTables.min.js"></script>
 		<script src="semantic.min.js"></script>
-		<script src="dropdown.min.js"></script>
 		<script src="swiper.min.js"></script>
 	</head>
 
@@ -45,7 +63,7 @@
 				<a class="item">系统设置</a>
 				<a class="item">操作说明</a>
 				<div class="right menu">
-					<a class="ui item">欢迎xxx</a>
+					<a class="ui item">欢迎<?php echo $user; ?></a>
 					<a class="ui item">退出</a>
 				</div>
 			</div>
