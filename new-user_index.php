@@ -13,7 +13,7 @@ $sql = "SELECT ManageUserName, AccessID FROM ManageUser WHERE ManageUserName = '
 $result = runSelectSql($sql);
 if($result){
 	if($result[0]["AccessID"] != $accessid){
-		echo "<script>alertShow('请重新登录');</script>";
+		echo "<script>alert('请重新登录');</script>";
        page_redirect(false,"new-signin.html","请重新登录");
 	}
 	}
@@ -587,7 +587,7 @@ if($result){
 
 			},
 			function(){
-				
+
 			});
 			initFileInput("sceneImage", "");
 		}
