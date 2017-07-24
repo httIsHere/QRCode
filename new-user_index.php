@@ -9,12 +9,12 @@ $pwd = $_SESSION["userpwd"];
 if($_SESSION["accessID"] == null){
 	page_redirect(false,"signin.html","请重新登录");
 }
-$sql = "SELECT ManageUserName, AccessID FROM qydt_ManageUser WHERE ManageUserName = '$user'";
+$sql = "SELECT ManageUserName, AccessID FROM ManageUser WHERE ManageUserName = '$user'";
 $result = runSelectSql($sql);
 if($result){
 	if($result[0]["AccessID"] != $accessid){
 		echo "<script>alertShow('请重新登录');</script>";
-       page_redirect(false,"signin.html","请重新登录");
+       page_redirect(false,"new-signin.html","请重新登录");
 	}
 	}
 ?>
@@ -23,7 +23,7 @@ if($result){
 
 	<head>
 		<meta charset="UTF-8">
-		<title><?php echo $user; ?>的主页</title>
+		<title><?php echo $user;?>的主页</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,9 +41,9 @@ if($result){
 
 		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 		<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+		<script type="text/javascript" src="sweetalert-dev.js"></script>
 		<script type="text/javascript" src="fileinput.js"></script>
 		<script type="text/javascript" src="zh.js"></script>
-		<script type="text/javascript" src="sweetalert-dev.js"></script>
 		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<!--图表引入-->
 		<script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.js"></script>
@@ -63,7 +63,7 @@ if($result){
 				<a class="item">系统设置</a>
 				<a class="item">操作说明</a>
 				<div class="right menu">
-					<a class="ui item">欢迎<?php echo $user; ?></a>
+					<a class="ui item">欢迎<?php echo $user;?></a>
 					<a class="ui item">退出</a>
 				</div>
 			</div>
@@ -133,9 +133,9 @@ if($result){
 								总二维码数：<span id="QRNum"></span>
 								<hr />
 							</div>
-							<div class="new-row">
+							<div class="new-row" style="justify-content: flex-end;">
 								<input type="button" class="col-xs-2 btn1 btn-login pull-left" value="刷新" id="uploadBtn">
-								<input type="button" class="col-xs-2 btn1 btn-register pull-right closeBtnTwo" value="关闭">
+								<!--<input type="button" class="col-xs-2 btn1 btn-register pull-right closeBtnTwo" value="关闭">-->
 							</div>
 						</div>
 					</div>
@@ -197,9 +197,9 @@ if($result){
 										<input type="text" id="sceneUrl" class="form-control" />
 									</li>
 								</ul>
-								<div>
+								<div class="new-row" style="justify-content: flex-end;">
 									<input type="button" class="btn1 btn-login" value="生成" onclick="checkInfo()" />
-									<input type="button" class="col-xs-2 btn1 btn-register pull-right closeBtnTwo" value="关闭">
+									<!--<input type="button" class="col-xs-2 btn1 btn-register pull-right closeBtnTwo" value="关闭">-->
 								</div>
 							</div>
 						</div>
@@ -243,7 +243,7 @@ if($result){
 								<div class="new-row">
 									<input type="button" id="change" value="确认" class="btn1 btn-login pull-left">
 									<input type="button" id="reset" value="恢复" class="btn1 btn-register pull-left cancelBtn">
-									<input type="button" class="btn1 btn-login pull-right closeBtnTwo" style="float: right;" value="关闭">
+									<!--<input type="button" class="btn1 btn-login pull-right closeBtnTwo" style="float: right;" value="关闭">-->
 								</div>
 							</div>
 							<!--<hr />-->
@@ -360,22 +360,6 @@ if($result){
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" id="createBtn" onclick="deleteQRCode(codeIndex,codeTicket)">确定</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal -->
-		</div>
-		<!-- /.modal -->
-		<div class="modal fade" id="alertTip" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="color: #000000;">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="alertTipTitle"></h4>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
 					</div>
 				</div>
 				<!-- /.modal-content -->
@@ -512,26 +496,6 @@ if($result){
 			$("#statisticTabContent .row").removeClass("in");
 			$("#statisticTabContent .row").eq(0).addClass("in");
 			$("#statisticTabContent .row").eq(0).addClass("active");
-			//			getCharts();
-			//			getApp();
-			//			whileAccountChange();
-			//			//退出功能
-			//			$(".signout").click(function() {
-			//				signOut();
-			//			});
-			//			//关闭功能
-			//			$('.closeBtn').click(function() {
-			//				closeContentPage();
-			//			});
-			//			$('.closeBtnTwo').click(function() {
-			//				closeContentPage();
-			//			});
-			//			$("#sceneImg").on('fileclear', function() {
-			//				console.log("fileclear");
-			//			});
-			//			$("#sceneImage").on('fileclear', function() {
-			//				console.log("fileclear");
-			//			});
 		}
 		//----------------------输入框初始化----------------------
 		function initInput() {
@@ -565,7 +529,68 @@ if($result){
 		//初始化fileinput控件（第一次初始化）
 		initFileInput("sceneImg", "");
 		initFileInput("sceneImage", "");
+		//------------------------信息提示--------------------
+		//信息确认
+		function alertSwal(title,text) {
+			swal({
+					title: title,
+					text: text,
+					showCancelButton: true,
+					cancelButtonText: "取消",
+					showConfirmButton: true,
+					confirmButtonColor: "#88c1bc",
+					confirmButtonText: "确定",
+					closeOnConfirm: true,
+					html: true
+				},
+				function() {
+					//确认并生成二维码信息
+					if(title == '信息确认'){
+						createQRCodes();
+					}
+					//修改公众号信息
+					else if(text == '是否确认修改'){
+						realChangeApp();
+					}
+					//确定删除二维码
+					else if(text == '确定删除二维码？'){
+						deleteQRCode(codeIndex,codeTicket);
+					}
+				}
+			);
+		}
+		//time tip
+		function alertTimeSwal(title, text, type) {
+			swal({
+				title: title,
+				text: text,
+				type: type,
+				timer: 2500,
+				showConfirmButton: false
+			});
+		}
+		//html框,修改二维码的时候
+		function alertInputSwal() {
+			swal({
+				title: '修改信息',
+				text: '<div align="left">标题<span class="redText">(必填*)</span></div><input type="text" id="unitName" class="form-control" /><div align="left">简介（地址，联系人，联系电话）</div><textarea id="desp" rows="4" class="form-control"></textarea><div align="left">场景图片</span></div><img id="sceneImgShow" src="" style="width: 15vw; height: 10vw;" /><br><input type="file" id="sceneImage" /><div align="left">图文链接</span></div><input type="text" id="sceneUrl" class="form-control" />',
+				type: 'input',
+				html: true,
+				InputValue: false,
+				showCancelButton: true,
+				cancelButtonText: "取消",
+				showConfirmButton: true,
+				confirmButtonColor: "#88c1bc",
+				confirmButtonText: "确定",
+				closeOnConfirm: true,
+				animation: 'slide-from-top'
 
+			},
+			function(){
+				
+			});
+			initFileInput("sceneImage", "");
+		}
 		//---------------业务逻辑-------------------
 		//加载相应数据（from session）
 		function getInfomation(index) {
@@ -632,35 +657,6 @@ if($result){
 				}
 				console.log(array);
 				$('#userInfoTab').dataTable().fnDestroy();
-				//   $('#userInfoTab').DataTable( {
-				//       data: array,
-				// // "searching":false, //去掉搜索框
-				//       "sortable": false, //是否启用排序
-				//       "bLengthChange": true, //改变每页显示数据数量
-				//       "ordering":false,
-				//       "sScrollXInner" : "100%",
-				//       "bAutoWidth" : false,
-				//       "bProcessing" : true,
-				//       "iDisplayLength" : 10,
-				//       // "bDestroy": true,
-				//       "oLanguage": {
-				//           "sLengthMenu": "每页显示 _MENU_ 个用户",
-				//           "sZeroRecords": "抱歉， 没有找到相应的用户",
-				//           "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 个用户",
-				//           "sInfoEmpty": "没有二维码数据",
-				//           "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-				//           "sSearch": "搜索",
-				//           "oPaginate": {
-				//               "sFirst": "首页",
-				//               "sPrevious": "前一页",
-				//               "sNext": "后一页",
-				//               "sLast": "尾页"
-				//           },
-				// 	"bDestroy":true, //Cannot reinitialise DataTable,解决重新加载表格内容问题
-				//           "sZeroRecords": "暂无扫描用户",
-				//           "bStateSave": true //保存状态到cookie *************** 很重要 ， 当搜索的时候页面一刷新会导致搜索的消失。使用这个属性就可避免了
-				//       }
-				//   } );
 				$('#userInfoTab').DataTable({
 					data: array,
 					"sortable": false, //是否启用排序
@@ -899,7 +895,8 @@ if($result){
 			$('#resultList th').removeClass('sorting_asc');
 			//删除的绑定事件
 			$('#resultList tbody').on('click', 'input#delete', function() {
-				$('#checkDeleteQRCode').modal('show');
+//				$('#checkDeleteQRCode').modal('show');
+				alertShow('','确定删除二维码？');
 				var codeIndex = $('#resultList').DataTable().row($(this).parents('tr')).index();
 				codeTicket = qrinfo[codeIndex].Ticket;
 				// console.log(codeIndex + "-" + qrinfo[codeIndex].Ticket);
@@ -920,6 +917,7 @@ if($result){
 				$('#editSceneInfo .modal-body #sceneImgShow').attr("src", showimg);
 				$('#editSceneInfo .modal-body #sceneUrl').val(url);
 				$('#editSceneInfo').modal('show');
+				alertInputSwal();
 				codeTicket = qrinfo[index].Ticket;
 			});
 
@@ -1014,7 +1012,7 @@ if($result){
 
 								}
 							} else {
-								alertShow("所选图片出现问题");
+								alertTimeSwal('', "所选图片出现问题", 'warning');
 							}
 						}
 					}); // reader onload end
@@ -1125,7 +1123,7 @@ if($result){
 					showQRCodeList(data);
 				},
 				error: function() {
-					alertShow("获取数据失败！");
+					alertTimeSwal('', "获取数据失败！", 'error');
 				}
 			});
 		}
@@ -1137,7 +1135,7 @@ if($result){
 			var sceneUrl = $('#sceneUrl').val();
 			// var tel = $('#tel').val();
 			if(unitName == "" || sceneImg == "" || sceneUrl == "") {
-				alertShow("输入信息不完全，请检查必填部分");
+				//				alertShow("输入信息不完全，请检查必填部分");
 			} else {
 				$.ajax({
 					type: "post",
@@ -1233,7 +1231,7 @@ if($result){
 			var sceneUrl = $('#sceneUrl').val();
 			var checkLink = 1;
 			if(unitName == "") {
-				alertShow("输入信息不完全，请检查必填部分");
+				alertTimeSwal("", "输入信息不完全，请检查必填部分", "warning", false, '');
 			} else {
 				//有图片则进行图片上传
 				if(sceneImg != "") {
@@ -1254,25 +1252,9 @@ if($result){
 			var sceneUrl = $('#editSceneInfo .modal-body #sceneUrl').val();
 			var checkLink = 1;
 			if(unitName == "") {
-				alertShow("输入信息不完全，请检查必填部分");
+				alertTimeSwal('', "输入信息不完全，请检查必填部分", 'warning');
 				return;
 			}
-			// if(sceneUrl != ""){
-			//     $.ajax({
-			//             url: "../"+sceneUrl,
-			//             type: 'GET',
-			//             complete: function(response) {
-			//                 console.log(response.status);
-			//                 if(response.status == 200) {
-			//                     checkLink = 1;
-			//                 } else {
-			//                     checkLink = 0;
-			//                     swal("失败","图文连接为无效链接，场景二维码修改失败！","error");
-			//                     return;
-			//                 }
-			//             }
-			//         });
-			// }
 			if(checkLink == 1) {
 				//没有修改图片
 				if(newImg == "") {
@@ -1340,7 +1322,7 @@ if($result){
 						$("#AppSecret").attr("disabled", true);
 						r = 1;
 						if($("#Account").val() == "") {
-							alertShow("您尚未绑定公众号，若要实现这些功能需前往系统设置绑定公众号");
+							alertTimeSwal('', "您尚未绑定公众号，若要实现这些功能需前往系统设置绑定公众号", 'warning');
 						} else {}
 					}
 				}
@@ -1359,7 +1341,8 @@ if($result){
 		//	修改公众号信息
 		function changeApp() {
 			$("#change").click(function() {
-				$('#checkChangeApp').modal('show');
+//				$('#checkChangeApp').modal('show');
+				alertSwal('','是否确认修改');
 			});
 			$("#reset").eq(0).click(function() {
 				getApp();
@@ -1433,7 +1416,7 @@ if($result){
 				var cnewp = $("#checkNewSecret").val();
 				var op = $("#oldSecret").val();
 				if(newp != cnewp || newp == "" || cnewp == "") {
-					alertShow("两次输入新密码不相同,请重新输入");
+					alertTimeSwal('', "两次输入新密码不相同,请重新输入", 'warning');
 				} else {
 					//去获得当前的密码
 					var p = 1;
