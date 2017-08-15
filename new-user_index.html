@@ -1,29 +1,9 @@
-<?php
-require_once(dirname(_FILE_).'../cgi-bin/CommonFunction.php');
-session_start();
-include("page_switching.php");
-
-$accessid = $_SESSION["accessID"];
-$user=$_SESSION["username"];
-$pwd = $_SESSION["userpwd"];
-if($_SESSION["accessID"] == null){
-	page_redirect(false,"new-signin.html","请重新登录");
-}
-$sql = "SELECT ManageUserName, AccessID FROM ManageUser WHERE ManageUserName = '$user'";
-$result = runSelectSql($sql);
-if($result){
-	if($result[0]["AccessID"] != $accessid){
-		echo "<script>alert('请重新登录');</script>";
-       page_redirect(false,"new-signin.html","请重新登录");
-	}
-	}
-?>
 <!DOCTYPE html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title><?php echo $user;?>的主页</title>
+		<title>主页</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,8 +43,8 @@ if($result){
 				<a class="item">系统设置</a>
 				<a class="item">操作说明</a>
 				<div class="right menu">
-					<a class="ui item">欢迎<span style="color: #88c1bc;"><?php echo $user;?></span></a>
-					<a class="ui item" href="new-signin.html">退出</a>
+					<a class="ui item">欢迎</a>
+					<a class="ui item" >退出</a>
 				</div>
 			</div>
 		</div>
@@ -109,7 +89,7 @@ if($result){
 								<div id="container" style="min-width:100%;min-height:400px;margin-bottom:50px;"></div>
 							</div>
 							<!--显示扫描用户信息-->
-							<div class="new-row userInfo statisticShow tab-pane fade " id="StatisticUserInfo" >
+							<div class="new-row userInfo statisticShow tab-pane fade " id="StatisticUserInfo">
 								<table class="table table-bordered table-hover" width="95%" border="1" id="userInfoTab">
 									<thead class="sceneNameText" id="listTitle">
 										<th>头像</th>
@@ -121,7 +101,6 @@ if($result){
 									<tbody></tbody>
 								</table>
 							</div>
-							<br />
 							<!--显示所有数据-->
 							<div class="new-row totalData statisticShow tab-pane fade" id="StatisticNum">
 								总扫描用户：<span></span>
@@ -588,10 +567,11 @@ if($result){
 
 			},
 			function(){
-
+				
 			});
 			initFileInput("sceneImage", "");
 		}
+		alertInputSwal();
 		//---------------业务逻辑-------------------
 		//加载相应数据（from session）
 		function getInfomation(index) {
@@ -896,8 +876,7 @@ if($result){
 			$('#resultList th').removeClass('sorting_asc');
 			//删除的绑定事件
 			$('#resultList tbody').on('click', 'input#delete', function() {
-//				$('#checkDeleteQRCode').modal('show');
-				alertShow('','确定删除二维码？');
+				$('#checkDeleteQRCode').modal('show');
 				var codeIndex = $('#resultList').DataTable().row($(this).parents('tr')).index();
 				codeTicket = qrinfo[codeIndex].Ticket;
 				// console.log(codeIndex + "-" + qrinfo[codeIndex].Ticket);
@@ -918,7 +897,6 @@ if($result){
 				$('#editSceneInfo .modal-body #sceneImgShow').attr("src", showimg);
 				$('#editSceneInfo .modal-body #sceneUrl').val(url);
 				$('#editSceneInfo').modal('show');
-				alertInputSwal();
 				codeTicket = qrinfo[index].Ticket;
 			});
 
@@ -1090,6 +1068,7 @@ if($result){
 				//对于编辑按钮的绑定
 				$(".editBtn").bind("click", function() {
 					var index = $(".editBtn").index(this);
+					// $("#editSceneInfo").modal('show');
 					//跳出一个输入模态框吧 editSceneInfo
 					$('#editSceneInfo .modal-body #unitName').val(field[index].SceneName);
 					$('#editSceneInfo .modal-body #desp').val(field[index].SceneDescription);

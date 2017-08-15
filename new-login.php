@@ -8,14 +8,14 @@ session_start();
     $user=$_POST["useremail"];
 	$password=$_POST["userpwd"];
 
-		 	$sql = "SELECT Pwd, ManageUserName,WeChatAccount FROM qydt_ManageUser WHERE ManageUserName = '$user'";
+		 	$sql = "SELECT Pwd, ManageUserName,OurWeChatAccount FROM ManageUser WHERE ManageUserName = '$user'";
 //		 }
 
     //查询记录
 	// $result = mysqli_query($conn,$sql);
 	$result = runSelectSql($sql);
 	$pwd=$result[0]["Pwd"];
-	$_SESSION['WeChatAccount'] = $result[0]['WeChatAccount'];
+	$_SESSION['OurWeChatAccount'] = $result[0]['OurWeChatAccount'];
 	// echo $pwd;
     //获取当前行--一定是唯一的？
 	// $rows = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -36,7 +36,7 @@ session_start();
     				$_SESSION["accessID"] = $accessid;
 //    				$_SESSION["useremail"] = $user;
    	 				$_SESSION["userpwd"] = $pwd;
-					$sql = "UPDATE qydt_ManageUser SET AccessID = '$accessid'  WHERE ManageUserName = '$user'";
+					$sql = "UPDATE ManageUser SET AccessID = '$accessid'  WHERE ManageUserName = '$user'";
 					$result = runSelectSql($sql);
 					page_redirect(false,"new-user_index.php","");
 		 	}
