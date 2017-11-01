@@ -425,13 +425,13 @@ if($result){
 		var userId = "<?php echo $user; ?>";
 		localStorage['userId'] = userId;
 		console.log(userId);
-		console.log("is new");
 		var nowIndex = 0,
 			activeItem = 1;
 		var fun1, fun2, fun3, fun4; //是否已点击过功能块
 		var res = 0;
 		//用于重置
-		var account, id, secret;
+		var account = "", id, secret;
+		var appId;
 		//默认头像
 		var head = "head.jpeg";
 		//用于保存二维码信息
@@ -603,6 +603,7 @@ if($result){
 			switch(index) {
 				case 1:
 					getStatisticData();
+					console.log(account)
 					getUserInfor();
 					break;
 				case 2:
@@ -610,7 +611,6 @@ if($result){
 					break;
 				case 3:
 					//加载第四个功能块的数据
-					getApp();
 					changeApp();
 					changePwd();
 					break;
@@ -699,7 +699,7 @@ if($result){
 				url: "getStatisticData.php",
 				dataType: "json",
 				data: {
-					appId: $("#Account").val(),
+					appId: account,
 					user: userId,
 					dateTime: time
 				},
@@ -797,7 +797,7 @@ if($result){
 				url: "getUserInfor.php",
 				dataType: "json",
 				data: {
-					account: $("#Account").val(),
+					account: account,
 					user: userId
 				},
 				success: function(data) {
@@ -1316,6 +1316,7 @@ if($result){
 					if(result != null) {
 						account = result[0].WeChatAccount;
 						id = result[0].AppId;
+						appId = result[0].AppId;
 						secret = result[0].AppSecret;
 						$("#change").eq(0).val("确认");
 						$("#Account").val(result[0].WeChatAccount);
@@ -1324,7 +1325,10 @@ if($result){
 						$("#AppId").attr("disabled", true);
 						$("#AppSecret").attr("disabled", true);
 						r = 1;
+						//getStatisticData();
 						getStatisticData();
+						console.log(account)
+						getUserInfor();
 						if($("#Account").val() == "") {
 							alertTimeSwal('', "您尚未绑定公众号，若要实现这些功能需前往系统设置绑定公众号", 'warning');
 						} else {}
