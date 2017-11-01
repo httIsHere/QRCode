@@ -425,6 +425,7 @@ if($result){
 		var userId = "<?php echo $user; ?>";
 		localStorage['userId'] = userId;
 		console.log(userId);
+		console.log("is new");
 		var nowIndex = 0,
 			activeItem = 1;
 		var fun1, fun2, fun3, fun4; //是否已点击过功能块
@@ -497,6 +498,8 @@ if($result){
 			$("#statisticTabContent .row").removeClass("in");
 			$("#statisticTabContent .row").eq(0).addClass("in");
 			$("#statisticTabContent .row").eq(0).addClass("active");
+			getApp();
+			getInfomation(1);
 		}
 		//----------------------输入框初始化----------------------
 		function initInput() {
@@ -656,7 +659,7 @@ if($result){
 					info[4] = "<div class='userInfoLine'>" + formatMyTime(parseInt(res[i].CreateTime)) + "</div>";
 					array[i] = info;
 				}
-				console.log(array);
+				//console.log(array);
 				$('#userInfoTab').dataTable().fnDestroy();
 				$('#userInfoTab').DataTable({
 					data: array,
@@ -1321,6 +1324,7 @@ if($result){
 						$("#AppId").attr("disabled", true);
 						$("#AppSecret").attr("disabled", true);
 						r = 1;
+						getStatisticData();
 						if($("#Account").val() == "") {
 							alertTimeSwal('', "您尚未绑定公众号，若要实现这些功能需前往系统设置绑定公众号", 'warning');
 						} else {}
