@@ -21,7 +21,7 @@ function checkTheLink($url){
     $tmpInfo = curl_exec($curl); // 执行操作  
     curl_close($curl); // 关闭CURL会话  
     if($tmpInfo){
-      return 1;
+      return 1;//有效链接
     }
     else{
       return 0;

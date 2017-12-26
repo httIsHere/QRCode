@@ -1,0 +1,74 @@
+<html>
+
+	<head>
+		<title>test</title>
+		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+	</head>
+
+	<body>
+		<input type="text" name="" id="" value="" />
+		<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+		<div></div>
+		<script type="text/javascript">
+			$("input").bind('input propertychange', function() {
+				console.log('account change');
+			});
+			Highcharts.chart('container', {
+				colors: ['#7cb5ec', '#f7a35c', '#90ee7e', '#7798BF', '#aaeeee', '#ff0066',
+      					'#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,
+					type: 'pie'
+				},
+				title: {
+					text: 'Browser market shares January, 2015 to May, 2015'
+				},
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+						}
+					}
+				},
+				series: [{
+					name: 'Brands',
+					colorByPoint: true,
+					data: [{
+						name: 'IE',
+						y: 25
+					}, {
+						name: 'Chrome',
+						y: 25,
+						sliced: true,
+						selected: true
+					}, {
+						name: 'Firefox',
+						y: 25
+					}, {
+						name: 'Safari',
+						y: 20
+					}, {
+						name: 'Opera',
+						y: 2
+					}, {
+						name: 'Other',
+						y: 3
+					}]
+				}],
+				credits: {
+					enabled: false // 禁用版权信息
+				}
+			});
+		</script>
+	</body>
+
+</html>

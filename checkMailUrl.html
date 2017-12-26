@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>验证电子邮箱</title>
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<p style="text-align: center;margin-top: 10rem;"></p>
+</body>
+<script type="text/javascript">
+	var code = GetQueryString('encode');
+	//console.log(code);
+	check(code);
+
+	function check(code) {
+		$.ajax({
+			type: 'post',
+			url: 'mailCheck.php',
+			data: {
+				code: code
+			},
+			success: function(data){
+				data = eval('('+data+')');
+				if(data.success){
+					$('p').text(data.code+'邮箱验证成功!');
+				}
+			}
+		})
+	}
+
+
+
+	function GetQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if(r != null) {
+			return unescape(r[2]);
+		}
+		return null;
+	}
+</script>
+</html>

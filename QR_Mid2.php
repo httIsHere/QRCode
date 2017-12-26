@@ -12,7 +12,7 @@ include("uploadImgToWX.php");
 	{
 		case 0:
 				// $qrCodeInfo=runSelectSql("select SceneID,SceneName,SceneDescription,SceneImg, SceneUrl,QRCodeImgFileName,Ticket,SceneImage from qydt_QRCode where ManageUserName='$webuser' order by SceneID desc");
-				$qrCodeInfo=runSelectSql("select SceneID,SceneName,SceneDescription,SceneImg, Ticket,SceneImage,SceneUrl from qydt_QRCode where ManageUserName='$webuser' and Ticket is not null and Ticket <> '' order by SceneID desc");
+				$qrCodeInfo=runSelectSql("select SceneID,SceneName,SceneDescription,SceneImg, Ticket,SceneImage,SceneUrl,QRCodeImgFileName from YQ_QRCode where ManageUserName='$webuser' and Ticket is not null and Ticket <> '' order by SceneID desc");
 				$replyStr=json_encode($qrCodeInfo);
 				break;
 		case 2:
@@ -43,8 +43,9 @@ include("uploadImgToWX.php");
 				// $token = getAccess_Token(qyAccount, qyAppId, qyAppsecret);
 				$token = getAccess_Token($account, $appId, $appS);
 				logger('iM_QRUser_Mid','log/','Log',"token=".$token);
-				if($token != null || $token != "")
-				$url = uploadImg($token,$Img);
+				if($token != null || $token != ""){
+					$url = uploadImg($token,$Img);
+				}				
 				logger('iM_QRUser_Mid','log/','Log',"sceneImg=".$url);
 				if($url == null || $url == ""){
 					$replyStr="图片上传失败！";
@@ -54,11 +55,11 @@ include("uploadImgToWX.php");
 				}
 
 				if($urlCheck == 1){
-				$sql = "INSERT INTO qydt_QRCode(SceneName , SceneDescription,SceneImg, SceneImage,SceneUrl,ManageUserName ) VALUE ('$unitName','$desp','$url','$sceneImg','$sceneUrl','$webuser')";
+				$sql = "INSERT INTO YQ_QRCode(SceneName , SceneDescription,SceneImg, SceneImage,SceneUrl,ManageUserName ) VALUE ('$unitName','$desp','$url','$sceneImg','$sceneUrl','$webuser')";
 				logger('iM_QRUser_Mid','log/','Log',"save sql = "+$sql);
 				$ret=runInsertUpdateDeleteSql($sql);
 				$replyStr="信息已经保存";
-				$isNewUser=runSelectSql("select SceneID,QRCodeImgFileName from qydt_QRCode where (ManageUserName='$webuser') and (QRCodeImgFileName IS NULL  OR QRCodeImgFileName ='')");
+				$isNewUser=runSelectSql("select SceneID,QRCodeImgFileName from YQ_QRCode where (ManageUserName='$webuser') and (QRCodeImgFileName IS NULL  OR QRCodeImgFileName ='')");
 
 				$qrNumber=count($isNewUser);
 				if($qrNumber==0)
@@ -72,33 +73,36 @@ include("uploadImgToWX.php");
 						{
 							$sceneID=$isNewUser[$i]['SceneID'];logger('iM_QRUser_Mid','log/','Log',"$sceneID");
 							// $qrCodeInfo=getTicketOfQrcode(qyAccount,qyAppId,qyAppsecret,$sceneID);
+							$start1 = time();
+							$start = microtime(true);
 							$qrCodeInfo=getTicketOfQrcode($account,$appId,$appS,$sceneID);
+							$end1 = time();
+							$end = microtime(true);
 							$ticket=$qrCodeInfo['ticket'];
 							// echo $ticket;
 							if($ticket != null && $ticket != ""){
-							$filename= getRandStr('qrcode_',36,'.jpg');
-							$QRCodeImgFileName=getQRCodeUrlFromTicket($ticket,$filename);
-							logger('iM_QRUser_Mid','log/','Log',"ticket = '$ticket'");
-							$ret=runInsertUpdateDeleteSql("update qydt_QRCode set Ticket='$ticket',QRCodeImgFileName='$QRCodeImgFileName' where (ManageUserName='$webuser') and (SceneID='$sceneID')");
-							$replyStr="二维码生成成功！";
-              //推送图文信息给该生成用户
-              //参数：公众号3件套，fromUserName, toUserName, newsNumber,title,desp,url,picurl
-              if($url == null || $url ==""){
-                $url = "http://mmbiz.qpic.cn/mmbiz_jpg/eJAQYeyIQyCVRUWd8Xj46H7faibmYtWfU4kanRvFdqzzbOdzrGyo1TlaoxHkGgBEgiaQ6nIcjVe0mZpEmDsDOdbg/0?wx_fmt=jpeg";
-              }
-              if($sceneUrl == null || $sceneUrl == ""){
-                $sceneUrl = "http://mp.weixin.qq.com/s/asipaNiCoCs8tUj7dmyHPg";
-              }
-              $newsNumber = 1;
-              $titleArray[0] = $unitName;
-              $despArray[0] = $desp;
-              $urlArray[0] = $sceneUrl;
-              $imgArray[0] = $url;
-              sendNewsMsg($account, $appId, $appS, 'gh_21c7cdfd4e9d', $webuser, $newsNumber, $titleArray, $despArray, $urlArray, $imgArray);
-
-						}else{
-							$replyStr = "无法获取二维码，请确认公众号信息";
-						}
+								$filename= getRandStr('qrcode_'.round(($end-$start)*1000).'_',36,'.jpg');
+								$QRCodeImgFileName=getQRCodeUrlFromTicket($ticket,$filename);
+								logger('iM_QRUser_Mid','log/','Log',"ticket = '$ticket'");
+								$ret=runInsertUpdateDeleteSql("update YQ_QRCode set Ticket='$ticket',QRCodeImgFileName='$QRCodeImgFileName' where (ManageUserName='$webuser') and (SceneID='$sceneID')");
+								$replyStr="二维码生成成功！";
+              					//推送图文信息给该生成用户
+              					//参数：公众号3件套，fromUserName, toUserName, newsNumber,title,desp,url,picurl
+              					if($url == null || $url ==""){
+                					$url = "http://mmbiz.qpic.cn/mmbiz_jpg/eJAQYeyIQyCVRUWd8Xj46H7faibmYtWfU4kanRvFdqzzbOdzrGyo1TlaoxHkGgBEgiaQ6nIcjVe0mZpEmDsDOdbg/0?wx_fmt=jpeg";
+              					}
+              					if($sceneUrl == null || $sceneUrl == ""){
+                					$sceneUrl = "http://mp.weixin.qq.com/s/asipaNiCoCs8tUj7dmyHPg";
+              					}
+              					$newsNumber = 1;
+              					$titleArray[0] = $unitName;
+              					$despArray[0] = $desp;
+              					$urlArray[0] = $sceneUrl;
+              					$imgArray[0] = $url;
+              					sendNewsMsg($account, $appId, $appS, 'gh_21c7cdfd4e9d', $webuser, $newsNumber, $titleArray, $despArray, $urlArray, $imgArray);
+							}else{
+								$replyStr = "无法获取二维码，请确认公众号信息";
+							}
 						}
 					}
 					break;
@@ -107,7 +111,7 @@ include("uploadImgToWX.php");
 				break;
 		case 3:
 				$ticket = $_POST['ticket'];
-				$sql = "delete from qydt_QRCode where Ticket = '$ticket'";
+				$sql = "delete from YQ_QRCode where Ticket = '$ticket'";
 				$ret = runInsertUpdateDeleteSql($sql);
 				$replyStr = "场景二维码已删除";
 				break;
@@ -120,6 +124,7 @@ include("uploadImgToWX.php");
 				$urlCheck = 1;
 				if($sceneUrl != ""){
 					//无效链接
+//					echo checkTheLink($sceneUrl);
 					if(checkTheLink($sceneUrl) != 1){
 						$urlCheck = 0;
 						$replyStr="图文连接为无效链接，场景二维码修改失败！";
@@ -144,18 +149,66 @@ include("uploadImgToWX.php");
 				}
 				if($url != null && $url != ""){
 				// if(checkTheLink($sceneUrl) == 1){
-					$sql = "update qydt_QRCode set SceneName='$unitName', SceneDescription='$desp', SceneUrl='$sceneUrl',SceneImage = '$sceneImg',SceneImg = '$url' where Ticket='$ticket'";
+					$sql = "update YQ_QRCode set SceneName='$unitName', SceneDescription='$desp', SceneUrl='$sceneUrl',SceneImage = '$sceneImg',SceneImg = '$url' where Ticket='$ticket'";
 				}
 				else{
-					$sql = "update qydt_QRCode set SceneName='$unitName', SceneDescription='$desp', SceneUrl='$sceneUrl' where Ticket='$ticket'";
+					$sql = "update YQ_QRCode set SceneName='$unitName', SceneDescription='$desp', SceneUrl='$sceneUrl' where Ticket='$ticket'";
 				}
 				logger('iM_QRUser_Mid','log/','Log',"update sql = "+$sql);
 				$ret = runInsertUpdateDeleteSql($sql);
 				$replyStr = "二维码修改成功！";
 				break;
+		case 5://生成测试
+				$account = $_POST['account']; $appId = $_POST['appId']; $appS = $_POST['appS'];
+				$num = $_POST['num'];
+				//微信
+				if($num <= 200){
+					$start2 = microtime(true);
+					for($i = 1000000000; $i < (1000000000+$num); $i++){
+						$qrCodeInfo=getTicketOfQrcode($account,$appId,$appS,$i);
+					}
+					$end2 = microtime(true);
+					$wechatDur = round(($end2 - $start2)*1000);
+				}
+				else {
+					$wechatDur = -1;
+				}
+				//腾讯(不支持https)
+				//http://mobile.qq.com/qrcode?url=
+				$start3 = microtime(true);
+				for($i = 1000000000; $i < (1000000000+$num); $i++){
+					getQRCodeTest('http://mobile.qq.com/qrcode?url=', $i);
+				}
+				$end3 = microtime(true);
+				$qqDur = round(($end3 - $start3)*1000);
+				//联图
+				$start4 = microtime(true);
+				for($i = 1000000000; $i < (1000000000+$num); $i++){
+					getQRCodeTest('http://qr.liantu.com/api.php?&w=200&text=', $i);
+				}
+				$end4 = microtime(true);
+				$liantuDur = round(($end4 - $start4)*1000);
+				$res = array();
+				$res['wechat'] = $wechatDur;
+				$res['qq'] = $qqDur;
+				$res['liantu'] = $liantuDur;
+				$replyStr = json_encode($res);
+				break;
 		default:
 				$replyStr="switch default";
 				break;
+	}
+	function getQRCodeTest($req, $url){
+		//$url = urlencode($url);
+		$req = $req.$url;
+		$ch = curl_init($req);
+		curl_setopt($ch, CURLOPT_HEADER, 0);    
+    	curl_setopt($ch, CURLOPT_NOBODY, 0);    //只取body头
+    	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$res = curl_exec( $ch );
+		curl_close( $ch );
 	}
 	logger('iM_QRUser_Mid','log/','Log',"replyStr=".$replyStr);
 	echo $replyStr;

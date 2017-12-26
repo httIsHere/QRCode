@@ -9,7 +9,7 @@ $pwd = $_SESSION["userpwd"];
 if($_SESSION["accessID"] == null){
 	page_redirect(false,"new-signin.html","请重新登录");
 }
-$sql = "SELECT ManageUserName, AccessID FROM ManageUser WHERE ManageUserName = '$user'";
+$sql = "SELECT ManageUserName, AccessID FROM YQ_ManageUser WHERE ManageUserName = '$user'";
 $result = runSelectSql($sql);
 if($result){
 	if($result[0]["AccessID"] != $accessid){
@@ -44,7 +44,6 @@ if($result){
 		<script type="text/javascript" src="sweetalert-dev.js"></script>
 		<script type="text/javascript" src="fileinput.js"></script>
 		<script type="text/javascript" src="zh.js"></script>
-		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<!--图表引入-->
 		<script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.js"></script>
 		<script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.min.js"></script>
@@ -52,6 +51,7 @@ if($result){
 		<script type="text/javascript" language="javascript" src="jquery.dataTables.min.js"></script>
 		<script src="semantic.min.js"></script>
 		<script src="swiper.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 
 	<body>
@@ -152,10 +152,13 @@ if($result){
 								<li>
 									<a href="#CreateQRCode" data-toggle="tab">二维码生成</a>
 								</li>
+								<li>
+									<a href="#QRCodeRate" data-toggle="tab">生成时间统计</a>
+								</li>
+								<li>
+									<a href="#CreateTest" data-toggle="tab">生成时间测试</a>
+								</li>
 							</ul>
-							<div class="closeBtn text-right" style="padding-right: 0;">
-								<img src="close.png" style="width: 15px;height: 15px;float: right;margin-bottom: 5px;" />
-							</div>
 						</div>
 						<div id="myQRCodeTabContent" class="tab-content">
 							<div class="new-row QRlist tab-pane fade in active" id="QRCodeList">
@@ -202,6 +205,55 @@ if($result){
 									<input type="button" class="btn1 btn-login" value="生成" onclick="checkInfo()" />
 									<!--<input type="button" class="col-xs-2 btn1 btn-register pull-right closeBtnTwo" value="关闭">-->
 								</div>
+							</div>
+							<br />
+							<div class="tab-pane fade" id="QRCodeRate">
+								<div id="ratePI" style="min-width:60%;min-height:400px;margin-bottom:50px;margin: 0 auto;"></div>
+								<table class="table table-bordered table-hover" width="80%" border="1" id="rateQRList">
+									<thead>
+										<th class="text-center">编号</th>
+										<th class="text-center">标题</th>
+										<th class="text-center">生成时间</th>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+							<!--一次性测试-->
+							<div class="tab-pane fade" id="CreateTest">
+								<ul>
+									<li id="testInput">
+										<span>生成个数</span>
+										<input type="text" class="form-control" id="codeNum"/>
+										<input type="button" class="form-control" id="testBtn" value="测试"/>
+									</li>
+									<!--加载动画-->
+									<li>
+										<div class="spinnerTwo disNone">
+  											<div class="bounce1"></div>
+  											<div class="bounce2"></div>
+  											<div class="bounce3"></div>
+										</div>
+									</li>
+									<br />
+									<!--当前生成时间结果-->
+									<li id="currentResult"></li>
+									<br />
+									<!--分布-->
+									<li id="testResultChart"></li>
+									<!--曲线-->
+									<li id="testResultChart2"></li>
+									<br />
+									<!--<li id="testResult">
+										<table class="table table-bordered table-hover" width="80%" border="1" id="testResultTable">
+											<thead>
+												<th class="text-center">生成个数</th>
+												<th class="text-center">生成时间</th>
+												<th class="text-center">测试时间</th>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</li>-->
+								</ul>
 							</div>
 						</div>
 					</div>
@@ -329,11 +381,8 @@ if($result){
 						<button type="button" class="btn btn-primary" id="createBtn" onclick="createQRCodes()">确定</button>
 					</div>
 				</div>
-				<!-- /.modal-content -->
 			</div>
-			<!-- /.modal -->
 		</div>
-		<!-- /.modal -->
 		<!-- 模态框（Modal）公众号修改 -->
 		<div class="modal fade" id="checkChangeApp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="color: #000000;">
 			<div class="modal-dialog">
@@ -394,9 +443,7 @@ if($result){
 						<button type="button" class="btn btn-primary" id="createBtn" onclick="editQRCodeInfo(codeTicket)">确定</button>
 					</div>
 				</div>
-				<!-- /.modal-content -->
 			</div>
-			<!-- /.modal -->
 		</div>
 		<!-- 加载动画效果 -->
 		<div class="spinner" style="display: none;">
@@ -475,6 +522,7 @@ if($result){
 		})
 		//模块切换
 		var swiper = new Swiper('.swiper-container', {
+			keyboardControl : true,
 			onTouchMove: function(swiper) {
 				var _active = $('.swiper-slide').index($('.swiper-slide-active'));
 				if(activeItem != _active) {
@@ -486,6 +534,7 @@ if($result){
 		});
 		//初始页面
 		function init() {
+			whileAccountChange();
 			$('#datepicker').DateTimePicker();
 			var date = new Date(new Date().getTime());
 			var nowDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
@@ -499,7 +548,7 @@ if($result){
 			$("#statisticTabContent .row").eq(0).addClass("in");
 			$("#statisticTabContent .row").eq(0).addClass("active");
 			getApp();
-			getInfomation(1);
+			//getInfomation(1);
 		}
 		//----------------------输入框初始化----------------------
 		function initInput() {
@@ -577,8 +626,8 @@ if($result){
 		function alertInputSwal() {
 			swal({
 				title: '修改信息',
-				text: '<div align="left">标题<span class="redText">(必填*)</span></div><input type="text" id="unitName" class="form-control" /><div align="left">简介（地址，联系人，联系电话）</div><textarea id="desp" rows="4" class="form-control"></textarea><div align="left">场景图片</span></div><img id="sceneImgShow" src="" style="width: 15vw; height: 10vw;" /><br><input type="file" id="sceneImage" /><div align="left">图文链接</span></div><input type="text" id="sceneUrl" class="form-control" />',
-				type: 'input',
+				text: '<div class="checkInfo2"><div align="left">标题<span class="redText">(必填*)</span></div><textarea rows="1" id="unitName" class="form-control"></textarea><div align="left">简介（地址，联系人，联系电话）</div><textarea id="desp" rows="4" class="form-control"></textarea><div align="left">场景图片</span></div><input type="file" id="sceneImage" /><div align="left">图文链接</span></div><textarea rows="1" id="sceneUrl" class="form-control"></textarea></div>',
+				type: 'info',
 				html: true,
 				InputValue: false,
 				showCancelButton: true,
@@ -588,12 +637,31 @@ if($result){
 				confirmButtonText: "确定",
 				closeOnConfirm: true,
 				animation: 'slide-from-top'
-
 			},
 			function(){
-
+				console.log('real edit');
+//				console.log(codeTicket);
+				editQRCodeInfo(codeTicket);
 			});
 			initFileInput("sceneImage", "");
+		}
+		//警告框，删除二维码
+		function alertDeleteSwal() {
+			swal({
+				title: "",
+				text: '确定删除二维码吗？',
+				type: 'warning',
+				showCancelButton: true,
+				cancelButtonText: "取消",
+				showConfirmButton: true,
+				confirmButtonColor: "#88c1bc",
+				confirmButtonText: "确定",
+				closeOnConfirm: true,
+				animation: 'slide-from-top'
+			},
+			function (){
+				deleteQRCode(index, codeTicket);
+			});
 		}
 		//---------------业务逻辑-------------------
 		//加载相应数据（from session）
@@ -602,8 +670,9 @@ if($result){
 			//根据index判断读取数据
 			switch(index) {
 				case 1:
+//					init();
 					getStatisticData();
-					console.log(account)
+//					console.log(account)
 					getUserInfor();
 					break;
 				case 2:
@@ -773,6 +842,99 @@ if($result){
 				}
 			});
 		}
+		//生成时间统计图表
+		function getRateChart(res){
+			var _length = res.length;
+			var _arr = Array.apply(null, Array(50)).map(function(item, i) {
+    						return 0;
+						});
+			var _code = [];
+			var _ci = 0;
+			//数据处理
+			for(var _i = 0; _i < _length; _i++){
+				var _num = res[_i].QRCodeImgFileName.split('_');
+				if(!isNaN(_num[1])){
+					//统计规则
+					_arr[parseInt(_num[1]/100)]++;
+					//表格数据
+					var _codeItem = [];
+					_codeItem[0] = res[_i].SceneID;
+					_codeItem[1] = res[_i].SceneName;
+					_codeItem[2] =  (_num[1]/1000)+'s';					
+					_code[_ci] = _codeItem;
+					_ci++;
+				}
+			}
+			var _data = [];
+			//数据填充
+			for(var _j = 0; _j < _arr.length; _j++){
+				if(_arr[_j] != 0){
+					var _item = {name: _j*100+'ms~'+(_j+1)*100+'ms', y: _arr[_j]/_length};
+					_data.push(_item);
+				}
+			}
+			var _chart = new Highcharts.Chart('ratePI',{
+				colors: ['#7cb5ec', '#f7a35c', '#90ee7e', '#7798BF', '#aaeeee', '#ff0066',
+      					'#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+				chart: {
+        			plotBackgroundColor: null,
+        			plotBorderWidth: null,
+        			plotShadow: false,
+        			type: 'pie'
+    			},
+    			title: {
+    				text: '生成时间统计'
+    			},
+    			tooltip: {
+    				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    			},
+    			plotOptions: {
+    				pie: {
+    					allowPointSelect: true,
+            			cursor: 'pointer',
+            			dataLabels: {
+                			enabled: true,
+                			format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            			}
+    				}
+    			},
+    			series: [{
+    				name: '生成速率',
+    				colorByPoint: true,
+    				data: _data
+    			}],
+				credits: {
+					enabled: false // 禁用版权信息
+				}
+			});
+			$('#rateQRList').dataTable().fnDestroy();
+			$('#rateQRList').DataTable({
+					data: _code,
+					"sortable": false, //是否启用排序
+					"bLengthChange": true, //改变每页显示数据数量
+					"ordering": false,
+					"sScrollXInner": "100%",
+					"bAutoWidth": false,
+					"bProcessing": true,
+					"iDisplayLength": 10,
+					"oLanguage": {
+						"sLengthMenu": "每页显示 _MENU_ 个场景",
+						"sZeroRecords": "抱歉， 没有找到相应的场景",
+						"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 个场景",
+						"sInfoEmpty": "没有场景生成数据",
+						"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+						"sSearch": "搜索",
+						"oPaginate": {
+							"sFirst": "首页",
+							"sPrevious": "前一页",
+							"sNext": "后一页",
+							"sLast": "尾页"
+						},
+						"sZeroRecords": "暂无场景生成数据",
+						"bStateSave": true //保存状态到cookie *************** 很重要
+					}
+				});
+		}
 		//时间格式化
 		function formatMyTime(str) {
 			var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
@@ -900,28 +1062,38 @@ if($result){
 			//删除的绑定事件
 			$('#resultList tbody').on('click', 'input#delete', function() {
 //				$('#checkDeleteQRCode').modal('show');
-				alertShow('','确定删除二维码？');
+				console.log('delete');
+				alertSwal('','确定删除二维码？');
 				var codeIndex = $('#resultList').DataTable().row($(this).parents('tr')).index();
 				codeTicket = qrinfo[codeIndex].Ticket;
-				// console.log(codeIndex + "-" + qrinfo[codeIndex].Ticket);
+//				console.log(codeIndex + "-" + qrinfo[codeIndex].Ticket);
 			});
 			//编辑的绑定事件
 			$('#resultList tbody').on('click', 'input#edit', function() {
+				//console.log('edit it');
 				var index = $('#resultList').DataTable().row($(this).parents('tr')).index();
+				//console.log(qrinfo[index]);
 				$('#editSceneInfo .modal-body #unitName').val(qrinfo[index].SceneName);
 				$('#editSceneInfo .modal-body #desp').val(qrinfo[index].SceneDescription);
-				var showimg;
+				var showimg, url;
 				if(qrinfo[index].SceneImage == "" || qrinfo[index].SceneImage == null) {
 					showimg = "defaultImg.png";
 				} else showimg = qrinfo[index].SceneImage;
 				if(qrinfo[index].SceneUrl == "" || qrinfo[index].SceneUrl == null) {
-					var url = "http://mp.weixin.qq.com/s/asipaNiCoCs8tUj7dmyHPg";
-				} else
+					url = "http://mp.weixin.qq.com/s/asipaNiCoCs8tUj7dmyHPg";
+				} else{
 					url = qrinfo[index].SceneUrl;
+				}
 				$('#editSceneInfo .modal-body #sceneImgShow').attr("src", showimg);
 				$('#editSceneInfo .modal-body #sceneUrl').val(url);
 				$('#editSceneInfo').modal('show');
-				alertInputSwal();
+				//alertInputSwal();
+				$('.editSceneInfo').modal('show');
+				$('.checkInfo2 #unitName').val(qrinfo[index].SceneName);
+				$('.checkInfo2 #desp').val(qrinfo[index].SceneDescription);
+				$('.checkInfo2 #sceneImgShow').attr("src", showimg);
+				$('.checkInfo2 #sceneUrl').val(url);
+				//console.log($('.checkInfo2 #sceneUrl').val());
 				codeTicket = qrinfo[index].Ticket;
 			});
 
@@ -1092,6 +1264,7 @@ if($result){
 				});
 				//对于编辑按钮的绑定
 				$(".editBtn").bind("click", function() {
+					console.log('edit me');
 					var index = $(".editBtn").index(this);
 					//跳出一个输入模态框吧 editSceneInfo
 					$('#editSceneInfo .modal-body #unitName').val(field[index].SceneName);
@@ -1124,6 +1297,7 @@ if($result){
 				success: function(data) {
 					// listshow(data);
 					showQRCodeList(data);
+					getRateChart(data);
 				},
 				error: function() {
 					alertTimeSwal('', "获取数据失败！", 'error');
@@ -1253,6 +1427,11 @@ if($result){
 			var desp = $('#editSceneInfo .modal-body #desp').val();
 			var newImg = $('#editSceneInfo .modal-body #sceneImage').val();
 			var sceneUrl = $('#editSceneInfo .modal-body #sceneUrl').val();
+//			var unitName = $('.checkInfo2 #unitName').val();
+//			var desp = $('.checkInfo2 #desp').val();
+//			var newImg = $('.checkInfo2 #sceneImage').val();
+//			var sceneUrl = $('.checkInfo2 #sceneUrl').val();
+			console.log(sceneUrl);
 			var checkLink = 1;
 			if(unitName == "") {
 				alertTimeSwal('', "输入信息不完全，请检查必填部分", 'warning');
@@ -1342,6 +1521,7 @@ if($result){
 		function whileAccountChange() {
 			//监听账号输入框
 			$("#Account").bind('input propertychange', function() {
+				console.log('account change');
 				$("#AppId").attr("disabled", false);
 				$("#AppSecret").attr("disabled", false);
 			});
@@ -1498,6 +1678,191 @@ if($result){
 			$(".contentPage").eq(i).css('transform', 'scale(0.0)');
 			$(".settingChange").eq(0).show();
 			getInfomation(i);
+		}
+		
+		//二维码生成测试
+		//需要数组记录每次的生成时间
+		var weDurTime = [];
+		var qqDurTime = [];
+		var ltDurTime = [];
+		$('#testBtn').click(function(){
+			console.log('test……');
+			$('.spinnerTwo').removeClass('disNone');
+			//要有一个加载效果
+			createQRCodeTest();
+		});
+		function createQRCodeTest(){
+			var _codeNum = $('#codeNum').val();
+			var account = $("#Account").val();
+			var appId = $("#AppId").val();
+			var appS = $("#AppSecret").val();
+			$.ajax({
+				type:"post",
+				url:"QR_Mid2.php",
+				data: {
+					num: _codeNum,
+					account: account,
+					appId: appId,
+					appS: appS,
+					type: 5
+				},
+				success: function(data){
+					$('.spinnerTwo').addClass('disNone');
+					//显示所用时间
+					var wechatDur,qqDur,liantuDur;
+					if(data.wechat == -1){
+						wechatDur = '限制';
+					}
+					else {
+						wechatDur = data.wechat/1000;
+						qqDur = data.qq/1000;
+						liantuDur = data.liantu/1000;
+					}
+					weDurTime.push([parseInt(_codeNum), parseFloat(wechatDur)]);
+					qqDurTime.push([parseInt(_codeNum), parseFloat(qqDur)]);
+					ltDurTime.push([parseInt(_codeNum), parseFloat(liantuDur)]);
+					$('#currentResult').text('微信接口：'+wechatDur+'s, 腾讯接口：'+qqDur+'s, 联图接口：'+liantuDur+'s');
+					//在图表中显示
+					testChart();
+					testChart2();
+					//在表格中显示
+				},
+				error: function(err){
+					console.log(err);
+				}
+			});
+		}
+		function testChart(){
+			var _chart = new Highcharts.Chart('testResultChart', {
+				chart: {
+					type: 'scatter',
+      				zoomType: 'xy'
+				},
+				title: {
+					text: '生成时间分布'
+				},
+				subtitle: {},
+				xAxis: {
+					title: {
+      					enabled: true,
+         				text: '生成个数 (个)'
+      				},
+      				startOnTick: true,
+      				endOnTick: true,
+      				showLastLabel: true,
+					allowDecimals: false //是否支持小数
+				},
+				yAxis: {
+					title: {
+						text: '生成时间 (s)'
+					}
+				},
+				legend: { 
+					layout: 'vertical',
+      				align: 'left',
+      				verticalAlign: 'top',
+      				x: 100,
+      				y: 70,
+      				floating: true,
+      				backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+     				borderWidth: 1
+				},
+				plotOptions: {
+					scatter: {
+         				marker: {
+            				radius: 5,
+            				states: {
+               					hover: {
+                  					enabled: true,
+                  					lineColor: 'rgb(100,100,100)'
+               					}
+            				}
+         				},
+         				states: {
+            				hover: {
+               					marker: {
+                  					enabled: false
+               					}
+            				}
+         				},
+         				tooltip: {
+           					headerFormat: '<b>{series.name}</b><br>',
+            				pointFormat: '{point.x} 个, {point.y} s'
+         				}
+      				}
+				},
+				series: [
+				{
+					name: '微信',
+					color: 'rgba(223, 83, 83, .5)',
+					data: weDurTime
+				},
+				{
+					name: '腾讯',
+					color: 'rgba(119, 152, 191, .5)',
+					data: qqDurTime
+				},
+				{
+					name: '联图',
+					color: 'rgba(263, 192, 123, .5)',
+					data: ltDurTime
+				}
+				],
+				credits: {
+					enabled: false // 禁用版权信息
+				}
+			});
+		}
+		
+		function testChart2(){
+			var _chart = new Highcharts.Chart('testResultChart2', {
+				chart: {
+      				type: 'spline'      
+   				},
+   				title: {
+   					text: '生成时间曲线'
+   				},
+   				xAxis: {
+   					title: {
+   						text: '生成个数（个）'
+   					},
+   					allowDecimals: false //是否支持小数
+   				},
+   				yAxis: {
+   					title: {
+   						text: '生成时间（s）'
+   					},
+   					min: 0
+   				},
+   				tooltip: {
+   					headerFormat: '<b>{series.name}</b><br>',
+      				pointFormat: '{point.x}个, {point.y:.2f} s'
+   				},
+   				plotOptions: {
+   					spline:{
+   						marker: {
+   							enabled: true
+   						}
+   					}
+   				},
+   				series: [
+   				{
+					name: '微信',
+					color: 'rgba(223, 83, 83, .5)',
+					data: weDurTime
+				},
+				{
+					name: '腾讯',
+					color: 'rgba(119, 152, 191, .5)',
+					data: qqDurTime
+				},
+				{
+					name: '联图',
+					color: 'rgba(263, 192, 123, .5)',
+					data: ltDurTime
+				}
+   				]
+			});
 		}
 	</script>
 

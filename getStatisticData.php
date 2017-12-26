@@ -33,7 +33,7 @@
 //		$sql = "select count(distinct FromUserName) as c from GlobalReceiveMsg where WeChatAccount= '$id' and to_days(now()) - to_days(CreateTime) = '$i'";
 //		$sql = "select distinct FromUserName from GlobalReceiveMsg where WeChatAccount= '$id' and to_days(now()) - to_days(CreateTime) = '$i'";
 //		$sql = "select distinct FromUserName from GlobalReceiveMsg where WeChatAccount= '$id' and '$time' - CreateTime <= '$i'*24*60*60 and '$time' - CreateTime > ('$i'-1)*24*60*60";
-		$sql = "select distinct OpenID from qydt_ReceiveMsg join qydt_QRCode on qydt_QRCode.Ticket = qydt_ReceiveMsg.Ticket where qydt_QRCode.ManageUserName = '$user' and WeChatAccount= '$id' and CreateTime - '$start' <= 24*60*60 and CreateTime - '$start' > 0";
+		$sql = "select distinct OpenID from YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket where YQ_QRCode.ManageUserName = '$user' and WeChatAccount= '$id' and CreateTime - '$start' <= 24*60*60 and CreateTime - '$start' > 0";
 //		$result = mysqli_query($conn, $sql);
 //		$rows = mysqli_fetch_array($result,MYSQLI_ASSOC);
 		$result = runSelectSql($sql);
@@ -50,7 +50,7 @@
 		$start = mktime(-8,0,0,$m,$d-$i+1,$y);
 //		$sql = "select FromUserName from GlobalReceiveMsg where WeChatAccount= '$id' and to_days(now()) - to_days(CreateTime) = '$i'";
 //		$sql = "select FromUserName from GlobalReceiveMsg where WeChatAccount= '$id' and '$time' - CreateTime <= '$i'*24*60*60 and '$time' - CreateTime > ('$i'-1)*24*60*60";
-		$sql = "select OpenID from qydt_ReceiveMsg join qydt_QRCode on qydt_QRCode.Ticket = qydt_ReceiveMsg.Ticket where qydt_QRCode.ManageUserName = '$user' and WeChatAccount= '$id' and CreateTime - '$start' <= 24*60*60 and CreateTime - '$start' > 0";
+		$sql = "select OpenID from YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket where YQ_QRCode.ManageUserName = '$user' and WeChatAccount= '$id' and CreateTime - '$start' <= 24*60*60 and CreateTime - '$start' > 0";
 //		$result = mysqli_query($conn, $sql);
 //		$rows = mysqli_fetch_array($result,MYSQLI_ASSOC);
 //		$msgNum[] = $rows['c'];
@@ -63,8 +63,8 @@
 	$data['msgNum'] = $msgNum;
 	//获得总扫描用户
 //	$sql = "select distinct OpenID from (GlobalUser join GlobalReceiveMsg) where (OpenID = FromUserName) and OurWeChatAccount = '$id'";
-	// $sql = "select distinct OpenID from qydt_ReceiveMsg where WeChatAccount= '$id'";
-	$sql = "select distinct qydt_WXUser.OpenID from (qydt_WXUser join qydt_ReceiveMsg join qydt_QRCode on qydt_QRCode.Ticket = qydt_ReceiveMsg.Ticket) where qydt_QRCode.ManageUserName = '$user' and (qydt_WXUser.OpenID = qydt_ReceiveMsg.OpenID) and qydt_WXUser.WeChatAccount = '$id'";
+	// $sql = "select distinct OpenID from YQ_ReceiveMsg where WeChatAccount= '$id'";
+	$sql = "select distinct YQ_WXUser.OpenID from (YQ_WXUser join YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket) where YQ_QRCode.ManageUserName = '$user' and (YQ_WXUser.OpenID = YQ_ReceiveMsg.OpenID) and YQ_WXUser.WeChatAccount = '$id'";
 //	$result = mysqli_query($conn, $sql);
 //	$rows = mysqli_fetch_array($result,MYSQLI_ASSOC);
 //	$data['totalUserNum'] = $rows['c'];
@@ -73,7 +73,7 @@
 	$data['totalUserNum'] = $num;
 	//获得总扫描次数
 //	$sql = "select OpenID from (GlobalUser join GlobalReceiveMsg) where (OpenID = FromUserName) and OurWeChatAccount = '$id'";
-	$sql = "select OpenID from qydt_ReceiveMsg join qydt_QRCode on qydt_QRCode.Ticket = qydt_ReceiveMsg.Ticket where qydt_QRCode.ManageUserName = '$user' and WeChatAccount= '$id'";
+	$sql = "select OpenID from YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket where YQ_QRCode.ManageUserName = '$user' and WeChatAccount= '$id'";
 //	$result = mysqli_query($conn, $sql);
 //	$rows = mysqli_fetch_array($result,MYSQLI_ASSOC);
 //	$data['totalMsgNum'] = $rows['c'];
@@ -81,13 +81,20 @@
 	$num = count($result);
 	$data['totalMsgNum'] = $num;
 	//获得总二维码数
-	$sql = "select SceneID from qydt_QRCode where ManageUserName='$user'";
+	$sql = "select SceneID from YQ_QRCode where ManageUserName='$user'";
 //	$result = mysqli_query($conn, $sql);
 //	$rows = mysqli_fetch_array($result,MYSQLI_ASSOC);
 //	$data['totalQRNum'] = $rows['c'];
 	$result = runSelectSql($sql);
 	$num = count($result);
 	$data['totalQRNum'] = $num;
+	//获得扫描次数前10的场景	
+	//$qrCodeInfo=runSelectSql("select SceneID,SceneName, Ticket from YQ_QRCode where ManageUserName='$webuser' and Ticket is not null and Ticket <> '' order by SceneID desc");
+	//$num = count($qrCodeInfo);
+	//for($i = 0; $i < $num; $i++){
+		
+	//}		
+	$sql = "select Ticket";	
 	echo json_encode($data);
 	$_SESSION['statistic'] = json_encode($data);
 //}
