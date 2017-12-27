@@ -5,32 +5,36 @@
     }
     
     body {
-    	background: #000;
     	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     	font-size: 14px;
     	color: #000;
     	margin: 0;
     	padding: 0;
+        background: url(bg.png) no-repeat;
     }
     
     a {
-    	color: #FFFFFF;
+    	color: #88c1bc;
     }
-    
-    a:hover {
-    	color: #EEEEEE;
+    .form-control:focus{
+        border: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
     }
     
     .form-margin input::-moz-placeholder {
-    	color: #FFF;
+    	color: #88c1bc;
+        opacity: .5;
     }
     
     .form-margin input:-ms-input-placeholder {
-    	color: #FFF;
+        color: #88c1bc;
+        opacity: .5;
     }
     
     .form-margin input::-webkit-input-placeholder {
-    	color: #FFF;
+        color: #88c1bc;
+        opacity: .5;
     }
     
     .swiper-container {
@@ -57,37 +61,52 @@
     }
     
     .login {
-    	color: #FFFFFF;
-    	position: absolute;
-    	z-index: 100;
-    	width: 30%;
-    	top: 25%;
-    	left: 35%;
-    	text-align: center;
+    	color: #88c1bc;
+    	width: 432px;
+        margin: 200px auto;
+        text-align: center;
+        background: #FFFFFF;
+        padding: 20px 50px;
     }
     
     #title {
-    	font-size: 25px;
+    	/*font-family: "Impact";*/
+        font-family: "Century Gothic";
+        font-size: 50px;
+    }
+    #little-title{
+        font-size: 16px;
+        margin-top: 10px;
     }
     
     .form-margin {
-    	margin-top: 15px;
+    	margin-top: 20px;
     	display: flex;
     	justify-content: space-between;
     	align-items: center;
+        border-bottom: 1px solid #ddd;
     }
     
     .form-margin input {
     	width: 90%;
     	background: rgba(0, 0, 0, 0);
-    	border: 1px solid #FFFFFF;
-    	color: #FFFFFF;
+        border: none;
+    	color: #999;
+        margin: 0 auto;
+        outline: none;
+        box-shadow: none;
+        font-size: 16px;
     }
     
     .btn-login {
     	width: 100%;
-    	background: rgba(255, 255, 255, 0.3);
-    	border: 1px solid #FFFFFF;
+    	/*background: rgba(255, 255, 255, 0.3);*/
+    	/*border: 1px solid #FFFFFF;*/
+        background: #88c1bc;
+        color: #fff;
+        margin-top: 15px;
+        font-size: 16px;
+        height: 40px;
     }
     
     .btn-login:hover {

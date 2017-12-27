@@ -14,43 +14,36 @@
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="swiper.min.js"></script>
-	<title>Sign in</title>
+	<title>HTTQM—用户登录</title>
 </head>
 <body class="sign_in">
 <div class="login">
 		<form class="signin form-horizontal" id="login_form" role="form" action="new-login.php" method="post">
 			<!--<h3 class="title">用户登录</h3>-->
-			<div id="title">QRCode-Manage</div>
-			<div id="little-title">二维码管理平台</div>
+			<div id="title">HTTQM</div>
+			<div id="little-title">登录QM，管理你的二维码</div>
 			<div class="form-margin">
-				<i class="fa fa-envelope fa-lg"></i>
-				<input class="form-control eamil" type="email" placeholder="邮箱" required autofocus name="useremail"/>
+				<!-- <i class="fa fa-envelope fa-lg"></i> -->
+				<input class="form-control eamil" type="email" placeholder="电子邮箱" required autofocus name="useremail"/>
 			</div>
 			<div class="form-margin">
-				<i class="fa fa-lock fa-lg"></i>
-				<input class="form-control required" type="password" placeholder="密码" required  name="userpwd"/>
+				<!-- <i class="fa fa-lock fa-lg"></i> -->
+				<input class="form-control required" type="password" placeholder="你的密码" required  name="userpwd"/>
 			</div>
-			<div class="form-margin">
-				<button class="btn btn-login" type="submit">登录</button>
-			</div>
+			<a href="javascript:;" style="float: right;color: #88c1bc; margin-top: 5px;">忘记密码？</a>
+			<!-- <div class="form-margin"> -->
+			<button class="btn btn-login" type="submit">登录</button>
+			<!-- </div> -->
 		</form>
-		<div class="signup">
-		<a id="signUp" href = "new-signup.html">注册</a>
+		<div class="signup" style="margin-top: 15px;">
+		没有账号？&nbsp;&nbsp;<a id="signUp" href = "new-signup.html" style="color: #88c1bc;text-decoration: underline;">注册</a>
 		</div>
-</div>
-<!-- BG Swiper -->
-<div class="swiper-container">
-	<div class="swiper-wrapper">
-		<div class="swiper-slide" style="background: url(bg.jpeg);background-size: 100% 100%;"></div>
-		<!--<div class="swiper-slide" style="background: url(http://s4.sinaimg.cn/mw690/004fI5vbgy6KIHvG7mjc3);background-size: 100% 100%;"></div>-->
-		<!--<div class="swiper-slide" style="background: url(http://img3.duitang.com/uploads/item/201606/20/20160620202651_cwHdk.thumb.700_0.jpeg);background-size: 100% 100%;"></div>-->
-	</div>
 </div>
 </body>
 <script type="text/javascript">
         //背景轮播
-        var swiper = new Swiper('.swiper-container', {
-	    autoplay: 2500
-    	});
+     //    var swiper = new Swiper('.swiper-container', {
+	    // autoplay: 2500
+    	// });
 </script>
 </html>
