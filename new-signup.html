@@ -1,52 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>用户注册</title>
+	<title>HTTQM-用户注册</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="new-signup.css" rel="stylesheet">
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
+    <link href="new-signin.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-	<body>
-        <div class="register">
-            <form class="form-horizontal" id="register_form" method="post" action="new-signup.php" onsubmit="return checkPwd()">
-                <div class="register-content">
-                    <div class="register-main">
-                        <h3 class="form-title text-center">用户注册</h3>
-                        <div class="form-margin">
-                            <i class="fa fa-envelope fa-lg"></i>
-                            <input class="form-control eamil" type="email" placeholder="请输入邮箱地址" required autofocus  name="email"/>
-                        </div>
-                        <div class="form-margin">
-                            <i class="fa fa-lock fa-lg"></i>
-                            <input class="form-control required" type="password" placeholder="请输入密码" id="register_password" name="password"/>
-                        </div>
-                        <div class="form-margin">
-                            <i class="fa fa-check fa-lg"></i>
-                            <input class="form-control required" type="password" placeholder="请再次输入密码" name="rpassword"/>
-                        </div>
-                        <div class="form-margin">
-                            <button type="submit" class="btn btn-login">注册</button>
-                        </div>
-                    </div>
-                </div>
-            </form>  
+<style type="text/css">
+    .qrcode:before, .qrcode:after{top:440px;}
+</style>
+<body>
+    <div class="login">
+        <form class="form-horizontal" id="register_form" method="post" action="new-signup.php" onsubmit="return checkPwd()">
+            <div id="title">HTTQM</div>
+            <div id="little-title">注册QM，管理你的二维码</div>
+            <div class="form-margin">
+                <input class="form-control eamil" type="email" placeholder="请输入邮箱地址" required autofocus  name="email"/>
+            </div>
+            <div class="form-margin">
+                <input class="form-control required" type="password" placeholder="请输入密码" id="register_password" name="password"/>
+            </div>
+            <div class="form-margin">
+                <input class="form-control required" type="password" placeholder="请再次输入密码" name="rpassword"/>
+            </div>
+            <div class="form-margin">
+                <button type="submit" class="btn btn-login">注册</button>
+            </div>     
+        </form>  
+    </div>
+    <div class="mtShow">
+        <button class="btn btn-mt">移动端使用，关注微信公众号</button>
+        <div class="qrcode qrcodeHide">
+            <div class="codeImg"></div>
         </div>
-	</body>
-	<script type="text/javascript">
-		function checkPwd(){
-			var pwd = $(".required").eq(0).val();
-			var rpwd = $(".required").eq(1).val();
-			if(pwd == rpwd){
-				return true;
-			}
-			else{
-				alert("两次输入密码不一致");
-				return false;
-			}
-		}
-	</script>
+    </div>
+</body>
+<script type="text/javascript">
+  function checkPwd(){
+     var pwd = $(".required").eq(0).val();
+     var rpwd = $(".required").eq(1).val();
+     if(pwd == rpwd){
+        return true;
+    }
+    else{
+        alert("两次输入密码不一致");
+        return false;
+    }
+}
+$('.btn-mt').bind('click', function(){
+    var self = $(this);
+    var code = $('.qrcode');
+    if(code.hasClass('qrcodeHide')){
+        code.removeClass('qrcodeHide');
+        self.text('关闭二维码');
+    } else {
+        code.addClass('qrcodeHide');
+        self.text('移动端使用，关注微信公众号');
+    }
+});
+</script>
 </html>

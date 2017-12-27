@@ -16,12 +16,6 @@
     a {
     	color: #88c1bc;
     }
-    .form-control:focus{
-        border: none;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-    }
-    
     .form-margin input::-moz-placeholder {
     	color: #88c1bc;
         opacity: .5;
@@ -63,10 +57,13 @@
     .login {
     	color: #88c1bc;
     	width: 432px;
-        margin: 200px auto;
+        margin: 200px auto 20px;
         text-align: center;
         background: #FFFFFF;
         padding: 20px 50px;
+        -webkit-box-shadow: 0 0 8px 0 rgba(0,0,0,.15);
+        box-shadow: 0 0 8px 0 rgba(0,0,0,.15);
+        border-radius: 2px;
     }
     
     #title {
@@ -91,7 +88,7 @@
     	width: 90%;
     	background: rgba(0, 0, 0, 0);
         border: none;
-    	color: #999;
+        color: #999;
         margin: 0 auto;
         outline: none;
         box-shadow: none;
@@ -110,5 +107,65 @@
     }
     
     .btn-login:hover {
-    	background: rgba(255, 255, 255, 0.5);
+    	color: #FFFFFF;
     }
+    .mtShow{
+        width: 432px;
+        margin: 0 auto;
+        /*padding: 0 50px;*/
+    }
+    .mtShow .btn-mt{
+        width: 100%;
+        color: #FFFFFF;
+        outline: none;
+        margin-bottom: 10px;
+    }
+    .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+        outline: none;
+        outline-offset: 0;
+    }
+    .qrcode{
+        height: 250px;
+        opacity: 1;
+        -webkit-transition: opacity .3s,height .3s;
+        transition: opacity .3s,height .3s;
+    }
+    .qrcodeHide{
+        height: 0;
+        opacity: 0;
+    }
+    .qrcode:before, .qrcode:after{
+        content: "";
+        position: absolute;
+        top: 423px;
+        -webkit-transform: translate(-50%) rotate(45deg);
+        transform: translate(-50%) rotate(45deg);
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border-radius: 4px;
+    }
+    .qrcode .codeImg{
+        margin: 0 auto;
+        width: 250px;
+        height: 100%;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: #fff;
+        background-size: 200px 200px;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-image: url(wxQRCode.jpg);
+        -webkit-box-shadow: 0 0 8px 0 rgba(0,0,0,.15);
+        box-shadow: 0 0 8px 0 rgba(0,0,0,.15);
+        border-radius: 2px;
+    }
+
+    
+    .form-control:focus{
+        border: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+    

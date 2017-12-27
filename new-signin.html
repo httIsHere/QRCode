@@ -1,49 +1,66 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+	<meta name="description" content="">
+	<meta name="author" content="">
 	<!--<link rel="stylesheet" href="loginStyle.css">-->
 	<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="swiper.min.css"/>
-	<link rel="stylesheet" type="text/css" href="new-signin.css"/>
+	<link rel="stylesheet" type="text/css" href="swiper.min.css" />
+	<link rel="stylesheet" type="text/css" href="new-signin.css" />
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="swiper.min.js"></script>
 	<title>HTTQM—用户登录</title>
 </head>
+
 <body class="sign_in">
-<div class="login">
+	<div class="login">
 		<form class="signin form-horizontal" id="login_form" role="form" action="new-login.php" method="post">
 			<!--<h3 class="title">用户登录</h3>-->
 			<div id="title">HTTQM</div>
 			<div id="little-title">登录QM，管理你的二维码</div>
 			<div class="form-margin">
 				<!-- <i class="fa fa-envelope fa-lg"></i> -->
-				<input class="form-control eamil" type="email" placeholder="电子邮箱" required autofocus name="useremail"/>
+				<input class="form-control eamil" type="email" placeholder="电子邮箱" required autofocus name="useremail" />
 			</div>
 			<div class="form-margin">
 				<!-- <i class="fa fa-lock fa-lg"></i> -->
-				<input class="form-control required" type="password" placeholder="你的密码" required  name="userpwd"/>
+				<input class="form-control required" type="password" placeholder="你的密码" required name="userpwd" />
 			</div>
 			<a href="javascript:;" style="float: right;color: #88c1bc; margin-top: 5px;">忘记密码？</a>
 			<!-- <div class="form-margin"> -->
-			<button class="btn btn-login" type="submit">登录</button>
-			<!-- </div> -->
-		</form>
-		<div class="signup" style="margin-top: 15px;">
-		没有账号？&nbsp;&nbsp;<a id="signUp" href = "new-signup.html" style="color: #88c1bc;text-decoration: underline;">注册</a>
+				<button class="btn btn-login" type="submit">登录</button>
+				<!-- </div> -->
+			</form>
+			<div class="signup" style="margin-top: 15px;">
+				没有账号？&nbsp;&nbsp;
+				<a id="signUp" href="new-signup.html" style="color: #88c1bc;text-decoration: underline;">注册</a>
+			</div>
 		</div>
-</div>
-</body>
-<script type="text/javascript">
-        //背景轮播
-     //    var swiper = new Swiper('.swiper-container', {
-	    // autoplay: 2500
-    	// });
-</script>
-</html>
+		<div class="mtShow">
+			<button class="btn btn-mt">移动端使用，关注微信公众号</button>
+			<div class="qrcode qrcodeHide">
+				<div class="codeImg"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$('.btn-mt').bind('click', function(){
+			var self = $(this);
+			var code = $('.qrcode');
+			if(code.hasClass('qrcodeHide')){
+				code.removeClass('qrcodeHide');
+				self.text('关闭二维码');
+			} else {
+				code.addClass('qrcodeHide');
+				self.text('移动端使用，关注微信公众号');
+			}
+		});
+	</script>
+
+	</html>

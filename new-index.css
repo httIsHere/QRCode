@@ -134,11 +134,11 @@ input[type=text] {
 }
 
 #dateBtn {
-	width: 10%;
 	padding: 0 2% 0 2%;
 	border: 1px #88c1bc solid;
 	color: #88c1bc;
 	margin-bottom: auto;
+	margin-left: 20px; 
 }
 
 .userInfoLine {
@@ -614,4 +614,38 @@ a {
 	text-align: center;
 	font-family:"arial black";
 	font-size: 20px;
+}
+
+
+/*2017-12-27 by htt*/
+/*#StatisticNum{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}*/
+#StatisticNum div{
+	width: 200px;
+	height: 150px;
+	-webkit-box-shadow: 0 0 8px 0 rgba(0,0,0,.15);
+	box-shadow: 0 0 8px 0 rgba(0,0,0,.15);
+	text-align: center;
+	display: inline-block;
+	margin: 30px 10px;
+	margin-top: 0;
+}
+#StatisticNum div:after{
+	content: "";
+	position: relative;
+	top: 0;
+	-webkit-transform: translate(-50%) rotate(45deg);
+	transform: translate(-50%) rotate(45deg);
+	left: 50%;
+	width: 100px;
+	height: 100px;
+	border: 2px solid #88c1bc;
+	/*background: #88c1bc;*/
+	border-radius: 4px;
+}
+#StatisticNum div p{
+	margin-top: 30px;
 }
