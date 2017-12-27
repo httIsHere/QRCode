@@ -618,11 +618,6 @@ a {
 
 
 /*2017-12-27 by htt*/
-/*#StatisticNum{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-}*/
 #StatisticNum div{
 	width: 200px;
 	height: 150px;
@@ -649,3 +644,7 @@ a {
 #StatisticNum div p{
 	margin-top: 30px;
 }
+.ui.menu{height: 50px;display: flex;align-content: center;}
+.ui.secondary.pointing.menu .active.item{border-color: transparent;}
+.ui.secondary.pointing.menu .item{margin: 0;}
+.ui.secondary.pointing.menu .active.item:hover {border-color: transparent;color: rgba(0,0,0,.95);}
