@@ -3,8 +3,6 @@ header("Content-type: text/html; charset=utf-8");
 include "class.phpmailer.php";  
 include "class.smtp.php";  
 
-//$code = $_POST['code'];
-
 //发送邮件
 function mailCheck($toMail, $toUrl) {
 	$mail = new PHPMailer();  
@@ -15,15 +13,20 @@ function mailCheck($toMail, $toUrl) {
 	$mail->Username = "18457730959@163.com";// 发送方的163邮箱用户名  
 	$mail->Password = "19911116";// 发送方的邮箱密码，注意用163邮箱这里填写的是“客户端授权密码”而不是邮箱的登录密码！  
 	$mail->SMTPSecure = "ssl";// 使用ssl协议方式  
-	$mail->Port = 994;// 163邮箱的ssl协议方式端口号是465/994  
+	$mail->Port = 465;// 163邮箱的ssl协议方式端口号是465/994  
+    //$mail->SMTPDebug = 2;
+
 	$mail->Form= "htt-qrcodeManagement";  
 	$mail->Helo= "xxxx";  
 	$mail->setFrom("18457730959@163.com","htt-qrcodeManagement");// 设置发件人信息，如邮件格式说明中的发件人，这里会显示为Mailer(xxxx@163.com），Mailer是当做名字显示  
-	$toName = $toMail;
-	$mail->addAddress($toMail,$toName);// 设置收件人信息，如邮件格式说明中的收件人，这里会显示为Liang(yyyy@163.com)  
+	$toName = explode('@', $toMail);
+	$mail->addAddress($toMail,$toName[0]);// 设置收件人信息，如邮件格式说明中的收件人，这里会显示为Liang(yyyy@163.com)  
 	$mail->IsHTML(true);  
-	$mail->Subject = '验证HTT二维码管理系统电子邮箱';// 邮件标题  
-	$mail->Body = '<a href="http://www.musicren.com/itsmusic/new-signin.html">HTT二维码管理系统</a><br/><h3>请确认你的邮箱地址</h3><p>点击下方进行邮箱验证</p><a href="http://localhost/mailCheck/checkMailUrl.html?encode='.$toUrl.'">点击此处验证邮箱</a>';// 邮件正文  
+	$mail->Subject = '验证HTT二维码管理系统电子邮箱';// 邮件标题
+	//验证文件路径
+	$file='http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"]; 
+	$f = dirname($file);   
+	$mail->Body = '<a href="http://www.musicren.com/itsmusic/new-signin.html">HTT二维码管理系统</a><br/><h3>请确认你的邮箱地址</h3><p>点击下方链接或者文字进行邮箱验证</p><a href="'.$f.'/checkMailUrl.html?encode='.$toUrl.'">'.$f.'/checkMailUrl.html?encode='.$toUrl.'</a><br/><br/><a href="'.$f.'/checkMailUrl.html?encode='.$toUrl.'">点击此处验证邮箱</a>';// 邮件正文  
 	$status = $mail->send();
 
 	return $status;
@@ -100,7 +103,7 @@ function authcode($string, $operation = 'DECODE', $key = '', $expiry = 3600) {
     }    
 } 
 
-$url = authcode('tingting.huang@cgtz.com', 'ENCODE', 'htt-qrcodeManagement'); 
+//$url = authcode('tingting.huang@cgtz.com', 'ENCODE', 'htt-qrcodeManagement'); 
 // echo $a.'<br/>';
 // $b = authcode($a, 'DECODE', 'htt-qrcodeManagement');  // $b(abc) 
 // echo $b.'<br/>';
