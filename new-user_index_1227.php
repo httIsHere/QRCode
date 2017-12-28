@@ -23,12 +23,13 @@ if($result){
 
 	<head>
 		<meta charset="UTF-8">
-		<title>
-			<?php echo $user;?>的主页</title>
+		<title><?php echo $user;?>的主页</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<!--<link rel="stylesheet" href="style3.css">-->
+		<!--<link rel="stylesheet" href="userIndexStyle.css">-->
 		<link rel="stylesheet" type="text/css" href="DateTimePicker.css" />
 		<link type="text/css" rel="stylesheet" href="fileinput.css" />
 		<link rel="stylesheet" type="text/css" href="sweetalert.css">
@@ -44,8 +45,8 @@ if($result){
 		<script type="text/javascript" src="fileinput.js"></script>
 		<script type="text/javascript" src="zh.js"></script>
 		<!--图表引入-->
-		<!-- <script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.js"></script>
-	<script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.min.js"></script> -->
+		<script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.js"></script>
+		<script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.min.js"></script>
 		<script type="text/javascript" src="DateTimePicker.js"></script>
 		<script type="text/javascript" language="javascript" src="jquery.dataTables.min.js"></script>
 		<script src="semantic.min.js"></script>
@@ -56,13 +57,13 @@ if($result){
 	<body>
 		<div class="mainHead">
 			<div class="ui secondary pointing menu">
-				<a class="title" href="#" style="font-size: 24px;align-self: center;color: #88c1bc;margin:0 12px;">HTTQM</a>
+				<a class="title" style="font-size: 20px;align-self: flex-end;color: #88c1bc;margin:0 12px 12px 12px;">QRCM</a>
 				<a class="active item">数据统计</a>
 				<a class="item">二维码管理</a>
 				<a class="item">系统设置</a>
 				<a class="item">操作说明</a>
 				<div class="right menu">
-					<a class="ui item" href="#">欢迎<span style="color: #88c1bc;"><?php echo $user;?></span></a>
+					<a class="ui item">欢迎<span style="color: #88c1bc;"><?php echo $user;?></span></a>
 					<a class="ui item" href="new-signin.html">退出</a>
 				</div>
 			</div>
@@ -83,11 +84,11 @@ if($result){
 									<a href="#StatisticUserInfo" data-toggle="tab">扫描用户列表</a>
 								</li>
 								<li>
-									<a href="#StatisticNum" data-toggle="tab">各项数据</a>
+									<a href="#StatisticNum" data-toggle="tab">扫描统计</a>
 								</li>
-								<!--<li>
-									<a href="#lookRank" data-toggle="tab">扫描排行榜</a>
-								</li>-->
+								<li>
+									<a href="#StatisticQRNum" data-toggle="tab">场景数量</a>
+								</li>
 							</ul>
 							<div class="closeBtn text-right" style="padding-right: 0;">
 								<img src="close.png" style="width: 15px;height: 15px;float: right;margin-bottom: 5px;" />
@@ -108,7 +109,7 @@ if($result){
 								<div id="container" style="min-width:100%;min-height:400px;margin-bottom:50px;"></div>
 							</div>
 							<!--显示扫描用户信息-->
-							<div class="new-row userInfo statisticShow tab-pane fade " id="StatisticUserInfo">
+							<div class="new-row userInfo statisticShow tab-pane fade " id="StatisticUserInfo" >
 								<table class="table table-bordered table-hover" width="95%" border="1" id="userInfoTab">
 									<thead class="sceneNameText" id="listTitle">
 										<th>头像</th>
@@ -121,26 +122,17 @@ if($result){
 								</table>
 							</div>
 							<br />
-							<!--显示所有数据以及二维码扫描的排行-->
+							<!--显示所有数据-->
 							<div class="new-row totalData statisticShow tab-pane fade" id="StatisticNum">
-								<div class="totalUsers">
-									<p>总扫描用户</p>
-									<h2>200</h2>
-								</div>
-								<div class="totalNumber">
-									<p>扫描总次数</p>
-									<h2>200</h2>
-								</div>
-								<div id="QRNum">
-									<p>总二维码数</p>
-									<h2>200</h2>
-								</div>
-								<br />
-								扫描排行榜
+								总扫描用户：<span></span>
+								<hr /> 扫描总次数：
+								<span></span>
+								<hr />
 							</div>
 							<!--显示所产生的二维码的数量-->
-							<div class="new-row statisticShow tab-pane fade" id="lookRank">
-								扫描排行榜
+							<div class="new-row statisticShow tab-pane fade" id="StatisticQRNum">
+								总二维码数：<span id="QRNum"></span>
+								<hr />
 							</div>
 							<div class="new-row" style="justify-content: flex-end;">
 								<input type="button" class="col-xs-2 btn1 btn-login pull-left" value="刷新" id="uploadBtn">
@@ -231,15 +223,15 @@ if($result){
 								<ul>
 									<li id="testInput">
 										<span>生成个数</span>
-										<input type="text" class="form-control" id="codeNum" />
-										<input type="button" class="form-control" id="testBtn" value="测试" />
+										<input type="text" class="form-control" id="codeNum"/>
+										<input type="button" class="form-control" id="testBtn" value="测试"/>
 									</li>
 									<!--加载动画-->
 									<li>
 										<div class="spinnerTwo disNone">
-											<div class="bounce1"></div>
-											<div class="bounce2"></div>
-											<div class="bounce3"></div>
+  											<div class="bounce1"></div>
+  											<div class="bounce2"></div>
+  											<div class="bounce3"></div>
 										</div>
 									</li>
 									<br />
@@ -485,8 +477,7 @@ if($result){
 		var fun1, fun2, fun3, fun4; //是否已点击过功能块
 		var res = 0;
 		//用于重置
-		var account = "",
-			id, secret;
+		var account = "", id, secret;
 		var appId;
 		//默认头像
 		var head = "head.jpeg";
@@ -531,7 +522,7 @@ if($result){
 		})
 		//模块切换
 		var swiper = new Swiper('.swiper-container', {
-			keyboardControl: true,
+			keyboardControl : true,
 			onTouchMove: function(swiper) {
 				var _active = $('.swiper-slide').index($('.swiper-slide-active'));
 				if(activeItem != _active) {
@@ -593,7 +584,7 @@ if($result){
 		initFileInput("sceneImage", "");
 		//------------------------信息提示--------------------
 		//信息确认
-		function alertSwal(title, text) {
+		function alertSwal(title,text) {
 			swal({
 					title: title,
 					text: text,
@@ -607,16 +598,16 @@ if($result){
 				},
 				function() {
 					//确认并生成二维码信息
-					if(title == '信息确认') {
+					if(title == '信息确认'){
 						createQRCodes();
 					}
 					//修改公众号信息
-					else if(text == '是否确认修改') {
+					else if(text == '是否确认修改'){
 						realChangeApp();
 					}
 					//确定删除二维码
-					else if(text == '确定删除二维码？') {
-						deleteQRCode(codeIndex, codeTicket);
+					else if(text == '确定删除二维码？'){
+						deleteQRCode(codeIndex,codeTicket);
 					}
 				}
 			);
@@ -634,43 +625,43 @@ if($result){
 		//html框,修改二维码的时候
 		function alertInputSwal() {
 			swal({
-					title: '修改信息',
-					text: '<div class="checkInfo2"><div align="left">标题<span class="redText">(必填*)</span></div><textarea rows="1" id="unitName" class="form-control"></textarea><div align="left">简介（地址，联系人，联系电话）</div><textarea id="desp" rows="4" class="form-control"></textarea><div align="left">场景图片</span></div><input type="file" id="sceneImage" /><div align="left">图文链接</span></div><textarea rows="1" id="sceneUrl" class="form-control"></textarea></div>',
-					type: 'info',
-					html: true,
-					InputValue: false,
-					showCancelButton: true,
-					cancelButtonText: "取消",
-					showConfirmButton: true,
-					confirmButtonColor: "#88c1bc",
-					confirmButtonText: "确定",
-					closeOnConfirm: true,
-					animation: 'slide-from-top'
-				},
-				function() {
-					console.log('real edit');
-					//				console.log(codeTicket);
-					editQRCodeInfo(codeTicket);
-				});
+				title: '修改信息',
+				text: '<div class="checkInfo2"><div align="left">标题<span class="redText">(必填*)</span></div><textarea rows="1" id="unitName" class="form-control"></textarea><div align="left">简介（地址，联系人，联系电话）</div><textarea id="desp" rows="4" class="form-control"></textarea><div align="left">场景图片</span></div><input type="file" id="sceneImage" /><div align="left">图文链接</span></div><textarea rows="1" id="sceneUrl" class="form-control"></textarea></div>',
+				type: 'info',
+				html: true,
+				InputValue: false,
+				showCancelButton: true,
+				cancelButtonText: "取消",
+				showConfirmButton: true,
+				confirmButtonColor: "#88c1bc",
+				confirmButtonText: "确定",
+				closeOnConfirm: true,
+				animation: 'slide-from-top'
+			},
+			function(){
+				console.log('real edit');
+//				console.log(codeTicket);
+				editQRCodeInfo(codeTicket);
+			});
 			initFileInput("sceneImage", "");
 		}
 		//警告框，删除二维码
 		function alertDeleteSwal() {
 			swal({
-					title: "",
-					text: '确定删除二维码吗？',
-					type: 'warning',
-					showCancelButton: true,
-					cancelButtonText: "取消",
-					showConfirmButton: true,
-					confirmButtonColor: "#88c1bc",
-					confirmButtonText: "确定",
-					closeOnConfirm: true,
-					animation: 'slide-from-top'
-				},
-				function() {
-					deleteQRCode(index, codeTicket);
-				});
+				title: "",
+				text: '确定删除二维码吗？',
+				type: 'warning',
+				showCancelButton: true,
+				cancelButtonText: "取消",
+				showConfirmButton: true,
+				confirmButtonColor: "#88c1bc",
+				confirmButtonText: "确定",
+				closeOnConfirm: true,
+				animation: 'slide-from-top'
+			},
+			function (){
+				deleteQRCode(index, codeTicket);
+			});
 		}
 		//---------------业务逻辑-------------------
 		//加载相应数据（from session）
@@ -679,9 +670,9 @@ if($result){
 			//根据index判断读取数据
 			switch(index) {
 				case 1:
-					//					init();
+//					init();
 					getStatisticData();
-					//					console.log(account)
+//					console.log(account)
 					getUserInfor();
 					break;
 				case 2:
@@ -786,31 +777,10 @@ if($result){
 					console.log(res);
 					if(res != null) {
 						getCharts(res['userNum'], res['msgNum']);
-						$('.totalUsers h2').text(res['totalUserNum']);
-						$('.totalNumber h2').text(res['totalMsgNum']);
-						$("#QRNum h2").text(res['totalQRNum']);
+						$('.totalData').children().eq(0).text(res['totalUserNum']);
+						$('.totalData').children().eq(2).text(res['totalMsgNum']);
+						$("#QRNum").text(res['totalQRNum']);
 					}
-				}
-			});
-			getRankList(1);
-		}
-		//获得扫描排行榜
-		function getRankList(type){
-			$.ajax({
-				type: 'post',
-				url: 'getRankList.php',
-				dataType: 'json',
-				data: {
-					weChatAccount: account,
-					user: userId,
-					type: type
-				},
-				success: function(data){
-					var _list = '';
-					data = eval(data);
-					data.forEach(function(v, i){
-						console.log(data[i]);
-					});
 				}
 			});
 		}
@@ -873,101 +843,97 @@ if($result){
 			});
 		}
 		//生成时间统计图表
-		function getRateChart(res) {
+		function getRateChart(res){
 			var _length = res.length;
 			var _arr = Array.apply(null, Array(50)).map(function(item, i) {
-				return 0;
-			});
+    						return 0;
+						});
 			var _code = [];
 			var _ci = 0;
 			//数据处理
-			for(var _i = 0; _i < _length; _i++) {
+			for(var _i = 0; _i < _length; _i++){
 				var _num = res[_i].QRCodeImgFileName.split('_');
-				if(!isNaN(_num[1])) {
+				if(!isNaN(_num[1])){
 					//统计规则
-					_arr[parseInt(_num[1] / 100)]++;
+					_arr[parseInt(_num[1]/100)]++;
 					//表格数据
 					var _codeItem = [];
 					_codeItem[0] = res[_i].SceneID;
 					_codeItem[1] = res[_i].SceneName;
-					_codeItem[2] = (_num[1] / 1000) + 's';
+					_codeItem[2] =  (_num[1]/1000)+'s';					
 					_code[_ci] = _codeItem;
 					_ci++;
 				}
 			}
 			var _data = [];
 			//数据填充
-			for(var _j = 0; _j < _arr.length; _j++) {
-				if(_arr[_j] != 0) {
-					var _item = {
-						name: _j * 100 + 'ms~' + (_j + 1) * 100 + 'ms',
-						y: _arr[_j] / _length
-					};
+			for(var _j = 0; _j < _arr.length; _j++){
+				if(_arr[_j] != 0){
+					var _item = {name: _j*100+'ms~'+(_j+1)*100+'ms', y: _arr[_j]/_length};
 					_data.push(_item);
 				}
 			}
-			var _chart = new Highcharts.Chart('ratePI', {
+			var _chart = new Highcharts.Chart('ratePI',{
 				colors: ['#7cb5ec', '#f7a35c', '#90ee7e', '#7798BF', '#aaeeee', '#ff0066',
-					'#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'
-				],
+      					'#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
 				chart: {
-					plotBackgroundColor: null,
-					plotBorderWidth: null,
-					plotShadow: false,
-					type: 'pie'
-				},
-				title: {
-					text: '生成时间统计'
-				},
-				tooltip: {
-					pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-				},
-				plotOptions: {
-					pie: {
-						allowPointSelect: true,
-						cursor: 'pointer',
-						dataLabels: {
-							enabled: true,
-							format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-						}
-					}
-				},
-				series: [{
-					name: '生成速率',
-					colorByPoint: true,
-					data: _data
-				}],
+        			plotBackgroundColor: null,
+        			plotBorderWidth: null,
+        			plotShadow: false,
+        			type: 'pie'
+    			},
+    			title: {
+    				text: '生成时间统计'
+    			},
+    			tooltip: {
+    				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    			},
+    			plotOptions: {
+    				pie: {
+    					allowPointSelect: true,
+            			cursor: 'pointer',
+            			dataLabels: {
+                			enabled: true,
+                			format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            			}
+    				}
+    			},
+    			series: [{
+    				name: '生成速率',
+    				colorByPoint: true,
+    				data: _data
+    			}],
 				credits: {
 					enabled: false // 禁用版权信息
 				}
 			});
 			$('#rateQRList').dataTable().fnDestroy();
 			$('#rateQRList').DataTable({
-				data: _code,
-				"sortable": false, //是否启用排序
-				"bLengthChange": true, //改变每页显示数据数量
-				"ordering": false,
-				"sScrollXInner": "100%",
-				"bAutoWidth": false,
-				"bProcessing": true,
-				"iDisplayLength": 10,
-				"oLanguage": {
-					"sLengthMenu": "每页显示 _MENU_ 个场景",
-					"sZeroRecords": "抱歉， 没有找到相应的场景",
-					"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 个场景",
-					"sInfoEmpty": "没有场景生成数据",
-					"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-					"sSearch": "搜索",
-					"oPaginate": {
-						"sFirst": "首页",
-						"sPrevious": "前一页",
-						"sNext": "后一页",
-						"sLast": "尾页"
-					},
-					"sZeroRecords": "暂无场景生成数据",
-					"bStateSave": true //保存状态到cookie *************** 很重要
-				}
-			});
+					data: _code,
+					"sortable": false, //是否启用排序
+					"bLengthChange": true, //改变每页显示数据数量
+					"ordering": false,
+					"sScrollXInner": "100%",
+					"bAutoWidth": false,
+					"bProcessing": true,
+					"iDisplayLength": 10,
+					"oLanguage": {
+						"sLengthMenu": "每页显示 _MENU_ 个场景",
+						"sZeroRecords": "抱歉， 没有找到相应的场景",
+						"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 个场景",
+						"sInfoEmpty": "没有场景生成数据",
+						"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+						"sSearch": "搜索",
+						"oPaginate": {
+							"sFirst": "首页",
+							"sPrevious": "前一页",
+							"sNext": "后一页",
+							"sLast": "尾页"
+						},
+						"sZeroRecords": "暂无场景生成数据",
+						"bStateSave": true //保存状态到cookie *************** 很重要
+					}
+				});
 		}
 		//时间格式化
 		function formatMyTime(str) {
@@ -1095,12 +1061,12 @@ if($result){
 			$('#resultList th').removeClass('sorting_asc');
 			//删除的绑定事件
 			$('#resultList tbody').on('click', 'input#delete', function() {
-				//				$('#checkDeleteQRCode').modal('show');
+//				$('#checkDeleteQRCode').modal('show');
 				console.log('delete');
-				alertSwal('', '确定删除二维码？');
+				alertSwal('','确定删除二维码？');
 				var codeIndex = $('#resultList').DataTable().row($(this).parents('tr')).index();
 				codeTicket = qrinfo[codeIndex].Ticket;
-				//				console.log(codeIndex + "-" + qrinfo[codeIndex].Ticket);
+//				console.log(codeIndex + "-" + qrinfo[codeIndex].Ticket);
 			});
 			//编辑的绑定事件
 			$('#resultList tbody').on('click', 'input#edit', function() {
@@ -1115,7 +1081,7 @@ if($result){
 				} else showimg = qrinfo[index].SceneImage;
 				if(qrinfo[index].SceneUrl == "" || qrinfo[index].SceneUrl == null) {
 					url = "http://mp.weixin.qq.com/s/asipaNiCoCs8tUj7dmyHPg";
-				} else {
+				} else{
 					url = qrinfo[index].SceneUrl;
 				}
 				$('#editSceneInfo .modal-body #sceneImgShow').attr("src", showimg);
@@ -1461,10 +1427,10 @@ if($result){
 			var desp = $('#editSceneInfo .modal-body #desp').val();
 			var newImg = $('#editSceneInfo .modal-body #sceneImage').val();
 			var sceneUrl = $('#editSceneInfo .modal-body #sceneUrl').val();
-			//			var unitName = $('.checkInfo2 #unitName').val();
-			//			var desp = $('.checkInfo2 #desp').val();
-			//			var newImg = $('.checkInfo2 #sceneImage').val();
-			//			var sceneUrl = $('.checkInfo2 #sceneUrl').val();
+//			var unitName = $('.checkInfo2 #unitName').val();
+//			var desp = $('.checkInfo2 #desp').val();
+//			var newImg = $('.checkInfo2 #sceneImage').val();
+//			var sceneUrl = $('.checkInfo2 #sceneUrl').val();
 			console.log(sceneUrl);
 			var checkLink = 1;
 			if(unitName == "") {
@@ -1563,8 +1529,8 @@ if($result){
 		//	修改公众号信息
 		function changeApp() {
 			$("#change").click(function() {
-				//				$('#checkChangeApp').modal('show');
-				alertSwal('', '是否确认修改');
+//				$('#checkChangeApp').modal('show');
+				alertSwal('','是否确认修改');
 			});
 			$("#reset").eq(0).click(function() {
 				getApp();
@@ -1713,27 +1679,26 @@ if($result){
 			$(".settingChange").eq(0).show();
 			getInfomation(i);
 		}
-
+		
 		//二维码生成测试
 		//需要数组记录每次的生成时间
 		var weDurTime = [];
 		var qqDurTime = [];
 		var ltDurTime = [];
-		$('#testBtn').click(function() {
+		$('#testBtn').click(function(){
 			console.log('test……');
 			$('.spinnerTwo').removeClass('disNone');
 			//要有一个加载效果
 			createQRCodeTest();
 		});
-
-		function createQRCodeTest() {
+		function createQRCodeTest(){
 			var _codeNum = $('#codeNum').val();
 			var account = $("#Account").val();
 			var appId = $("#AppId").val();
 			var appS = $("#AppSecret").val();
 			$.ajax({
-				type: "post",
-				url: "QR_Mid2.php",
+				type:"post",
+				url:"QR_Mid2.php",
 				data: {
 					num: _codeNum,
 					account: account,
@@ -1741,37 +1706,37 @@ if($result){
 					appS: appS,
 					type: 5
 				},
-				success: function(data) {
+				success: function(data){
 					$('.spinnerTwo').addClass('disNone');
 					//显示所用时间
-					var wechatDur, qqDur, liantuDur;
-					if(data.wechat == -1) {
+					var wechatDur,qqDur,liantuDur;
+					if(data.wechat == -1){
 						wechatDur = '限制';
-					} else {
-						wechatDur = data.wechat / 1000;
-						qqDur = data.qq / 1000;
-						liantuDur = data.liantu / 1000;
+					}
+					else {
+						wechatDur = data.wechat/1000;
+						qqDur = data.qq/1000;
+						liantuDur = data.liantu/1000;
 					}
 					weDurTime.push([parseInt(_codeNum), parseFloat(wechatDur)]);
 					qqDurTime.push([parseInt(_codeNum), parseFloat(qqDur)]);
 					ltDurTime.push([parseInt(_codeNum), parseFloat(liantuDur)]);
-					$('#currentResult').text('微信接口：' + wechatDur + 's, 腾讯接口：' + qqDur + 's, 联图接口：' + liantuDur + 's');
+					$('#currentResult').text('微信接口：'+wechatDur+'s, 腾讯接口：'+qqDur+'s, 联图接口：'+liantuDur+'s');
 					//在图表中显示
 					testChart();
 					testChart2();
 					//在表格中显示
 				},
-				error: function(err) {
+				error: function(err){
 					console.log(err);
 				}
 			});
 		}
-
-		function testChart() {
+		function testChart(){
 			var _chart = new Highcharts.Chart('testResultChart', {
 				chart: {
 					type: 'scatter',
-					zoomType: 'xy'
+      				zoomType: 'xy'
 				},
 				title: {
 					text: '生成时间分布'
@@ -1779,12 +1744,12 @@ if($result){
 				subtitle: {},
 				xAxis: {
 					title: {
-						enabled: true,
-						text: '生成个数 (个)'
-					},
-					startOnTick: true,
-					endOnTick: true,
-					showLastLabel: true,
+      					enabled: true,
+         				text: '生成个数 (个)'
+      				},
+      				startOnTick: true,
+      				endOnTick: true,
+      				showLastLabel: true,
 					allowDecimals: false //是否支持小数
 				},
 				yAxis: {
@@ -1792,109 +1757,111 @@ if($result){
 						text: '生成时间 (s)'
 					}
 				},
-				legend: {
+				legend: { 
 					layout: 'vertical',
-					align: 'left',
-					verticalAlign: 'top',
-					x: 100,
-					y: 70,
-					floating: true,
-					backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-					borderWidth: 1
+      				align: 'left',
+      				verticalAlign: 'top',
+      				x: 100,
+      				y: 70,
+      				floating: true,
+      				backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+     				borderWidth: 1
 				},
 				plotOptions: {
 					scatter: {
-						marker: {
-							radius: 5,
-							states: {
-								hover: {
-									enabled: true,
-									lineColor: 'rgb(100,100,100)'
-								}
-							}
-						},
-						states: {
-							hover: {
-								marker: {
-									enabled: false
-								}
-							}
-						},
-						tooltip: {
-							headerFormat: '<b>{series.name}</b><br>',
-							pointFormat: '{point.x} 个, {point.y} s'
-						}
-					}
+         				marker: {
+            				radius: 5,
+            				states: {
+               					hover: {
+                  					enabled: true,
+                  					lineColor: 'rgb(100,100,100)'
+               					}
+            				}
+         				},
+         				states: {
+            				hover: {
+               					marker: {
+                  					enabled: false
+               					}
+            				}
+         				},
+         				tooltip: {
+           					headerFormat: '<b>{series.name}</b><br>',
+            				pointFormat: '{point.x} 个, {point.y} s'
+         				}
+      				}
 				},
-				series: [{
-						name: '微信',
-						color: 'rgba(223, 83, 83, .5)',
-						data: weDurTime
-					},
-					{
-						name: '腾讯',
-						color: 'rgba(119, 152, 191, .5)',
-						data: qqDurTime
-					},
-					{
-						name: '联图',
-						color: 'rgba(263, 192, 123, .5)',
-						data: ltDurTime
-					}
+				series: [
+				{
+					name: '微信',
+					color: 'rgba(223, 83, 83, .5)',
+					data: weDurTime
+				},
+				{
+					name: '腾讯',
+					color: 'rgba(119, 152, 191, .5)',
+					data: qqDurTime
+				},
+				{
+					name: '联图',
+					color: 'rgba(263, 192, 123, .5)',
+					data: ltDurTime
+				}
 				],
 				credits: {
 					enabled: false // 禁用版权信息
 				}
 			});
 		}
-
-		function testChart2() {
+		
+		function testChart2(){
 			var _chart = new Highcharts.Chart('testResultChart2', {
 				chart: {
-					type: 'spline'
+      				type: 'spline'      
+   				},
+   				title: {
+   					text: '生成时间曲线'
+   				},
+   				xAxis: {
+   					title: {
+   						text: '生成个数（个）'
+   					},
+   					allowDecimals: false //是否支持小数
+   				},
+   				yAxis: {
+   					title: {
+   						text: '生成时间（s）'
+   					},
+   					min: 0
+   				},
+   				tooltip: {
+   					headerFormat: '<b>{series.name}</b><br>',
+      				pointFormat: '{point.x}个, {point.y:.2f} s'
+   				},
+   				plotOptions: {
+   					spline:{
+   						marker: {
+   							enabled: true
+   						}
+   					}
+   				},
+   				series: [
+   				{
+					name: '微信',
+					color: 'rgba(223, 83, 83, .5)',
+					data: weDurTime
 				},
-				title: {
-					text: '生成时间曲线'
+				{
+					name: '腾讯',
+					color: 'rgba(119, 152, 191, .5)',
+					data: qqDurTime
 				},
-				xAxis: {
-					title: {
-						text: '生成个数（个）'
-					},
-					allowDecimals: false //是否支持小数
-				},
-				yAxis: {
-					title: {
-						text: '生成时间（s）'
-					},
-					min: 0
-				},
-				tooltip: {
-					headerFormat: '<b>{series.name}</b><br>',
-					pointFormat: '{point.x}个, {point.y:.2f} s'
-				},
-				plotOptions: {
-					spline: {
-						marker: {
-							enabled: true
-						}
-					}
-				},
-				series: [{
-						name: '微信',
-						color: 'rgba(223, 83, 83, .5)',
-						data: weDurTime
-					},
-					{
-						name: '腾讯',
-						color: 'rgba(119, 152, 191, .5)',
-						data: qqDurTime
-					},
-					{
-						name: '联图',
-						color: 'rgba(263, 192, 123, .5)',
-						data: ltDurTime
-					}
-				]
+				{
+					name: '联图',
+					color: 'rgba(263, 192, 123, .5)',
+					data: ltDurTime
+				}
+   				]
 			});
 		}
 	</script>
