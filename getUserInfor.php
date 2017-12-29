@@ -14,7 +14,10 @@
 
 	// $sql = "select distinct qydt_WXUser.OpenID,nickname,sex,city,headimgurl from (qydt_WXUser join qydt_ReceiveMsg) where (qydt_WXUser.OpenID = qydt_ReceiveMsg.OpenID) and qydt_WXUser.WeChatAccount = '$account'";
 	// $sql = "select * from (select qydt_ReceiveMsg.OpenID,nickname,sex,city,headimgurl,max(CreateTime) as CreateTime from (qydt_WXUser join qydt_ReceiveMsg) where (qydt_WXUser.OpenID = qydt_ReceiveMsg.OpenID) and qydt_WXUser.WeChatAccount = '$account' group by qydt_ReceiveMsg.OpenID) as info order by CreateTime desc";
-	$sql = "select * from (select qydt_ReceiveMsg.OpenID,nickname,sex,city,headimgurl,max(CreateTime) as CreateTime from (qydt_WXUser join qydt_ReceiveMsg join qydt_QRCode on qydt_QRCode.Ticket = qydt_ReceiveMsg.Ticket) where (qydt_WXUser.OpenID = qydt_ReceiveMsg.OpenID) and qydt_WXUser.WeChatAccount = '$account' and qydt_QRCode.ManageUserName = '$user' group by qydt_ReceiveMsg.OpenID) as info order by CreateTime desc";
+
+	##之前用的sql语句 by 2017-12-29
+	// $sql = "select * from (select qydt_ReceiveMsg.OpenID,nickname,sex,city,headimgurl,max(CreateTime) as CreateTime from (qydt_WXUser join qydt_ReceiveMsg join qydt_QRCode on qydt_QRCode.Ticket = qydt_ReceiveMsg.Ticket) where (qydt_WXUser.OpenID = qydt_ReceiveMsg.OpenID) and qydt_WXUser.WeChatAccount = '$account' and qydt_QRCode.ManageUserName = '$user' group by qydt_ReceiveMsg.OpenID) as info order by CreateTime desc";
+	$sql = "select * from (select YQ_ReceiveMsg.OpenID,nickname,sex,city,headimgurl,max(CreateTime) as CreateTime from (YQ_WXUser join YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket) where (YQ_WXUser.OpenID = YQ_ReceiveMsg.OpenID) and YQ_WXUser.WeChatAccount = '$account' and YQ_QRCode.ManageUserName = '$user' group by YQ_ReceiveMsg.OpenID) as info order by CreateTime desc";
 	$link=openDB();
 	$recodeList=array();
 		if($link)

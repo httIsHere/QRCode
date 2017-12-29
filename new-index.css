@@ -650,20 +650,26 @@ a {
 .ui.secondary.pointing.menu .active.item:hover {border-color: transparent;color: rgba(0,0,0,.95);}
 
 .lookRank{display: flex;justify-content: flex-start;}
-.lookRank>div{display: inline-block;height: 500px;}
-.rankNo1{width: 20%;min-width:250px;background: rgba(136,193,188, .5);}
+.lookRank>div{height: 709px;}
+.rankNo1{width: 20%;min-width:250px;background: rgba(136,193,188, .5); display: flex;flex-direction: column; justify-content: space-between;}
 .rankList{width: 70%;background: #f9f9f9;overflow: hidden;}
 .no1Tag{width: 50px;height:50px;background: url(no1.png); background-size: 100% 100%;}
-.no1Code{width: 150px;height: 150px;margin: 100px auto;}
+.no1Code{width: 150px;height: 150px;margin: 30px auto 0;}
 .no1Code img{width: 100%; height: 100%;}
-/*.rankList ul{overflow-y: scroll;}*/
+/*.rankList ul{overflow-y: auto;}*/
 .rankList li{ height: 50px; padding: 10px 20px; position: relative;}
 .rankList li .rankNum{font-size: 20px; font-style: italic; margin-left: 15px;}
 .rankList li+li{border-top: 1px solid #eee;}
 .rankList li .rateFg{width: 80%;height: 100%; background: rgba(173,216,230, .8); float: left; position: relative;top: 0;left: 0;}
-.rankMsg{position: absolute;width: 100%;z-index: 100;display: flex;justify-content: space-between;align-items: center;}
-.lookNum{margin-right: 55px; font-size: 20px;}
+.rankMsg{position: absolute;width: 100%;z-index: 100;}
+.rankMsg>*{display: inline-block;}
+.rankMsg>div{width: 50px; text-align: center; margin-right: 20px;}
+.rankMsg>img{margin-right: 30px;}
+.lookNum{margin-right: 35px; font-size: 20px; float: right;line-height: 50px;}
 .lookNum em{font-size: 12px;}
 body{background: rgba(136,193,188, .2);}
 canvas{position: fixed; z-index: -1;}
 .contentPage{-webkit-box-shadow: 0 0 8px 0 rgba(0,0,0,.15);box-shadow: 0 0 8px 0 rgba(0,0,0,.15);}
+.rankBtn{background: rgba(136,193,188, .7);position: relative;bottom: 0;width: 100%;height: 50px; display: flex;align-items: center;justify-content: space-around;}
+.rankBtn>a{color: #FFF;}
+.rankBtn>a.activeType{font-weight: bold;font-size: 16px;}

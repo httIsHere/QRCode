@@ -151,14 +151,33 @@ if($result){
 												<img src="wxQRCode.jpg">
 											</div>
 											<div class="no1Msg"></div>
+											<div class="rankBtn">
+												<a href="javascript:;" class="activeType">全部</a>
+												<a href="javascript:;">今日</a>
+												<a href="javascript:;">近一周</a>
+												<a href="javascript:;">近一月</a>
+											</div>
 										</div>
 										<div class="rankList">
 											<ul>
 												<li>
 													<div class="rankMsg">
-														<em class="rankNum">1</em>
+														<div>
+															<em class="rankNum">1</em>
+														</div>
 														<img src="wxQRCode.jpg">
 														<span>我美丽的家乡~</span>
+														<span class="lookNum">251<em>次</em></span>
+													</div>
+													<div class="rateFg"></div>
+												</li>
+												<li>
+													<div class="rankMsg">
+														<div>
+															<em class="rankNum">21</em>
+														</div>
+														<img src="wxQRCode.jpg">
+														<span>科科</span>
 														<span class="lookNum">251<em>次</em></span>
 													</div>
 													<div class="rateFg"></div>
@@ -825,7 +844,14 @@ if($result){
 			});
 			getRankList(1);
 		}
-
+		//切换排行榜方式
+		$('.rankBtn a').bind('click', function(){
+			$('.rankBtn a').removeClass('activeType');
+			$(this).addClass('activeType');
+			var _i = $('.rankBtn a').index($(this));
+			console.log(_i);
+			getRankList(_i+1);
+		});
 		//扫描排行榜
 		function getRankList(type){
 			$.ajax({
@@ -839,16 +865,20 @@ if($result){
 				},
 				success: function(data){
 					data = eval(data);
+					var _total = data.totalMsgNum;
 					data = data.rankList;
 					 var _list = '';
 					 for(var _i = 0; _i < data.length; _i++){
+					 	var _r = data[_i].count*10000 / (_total*data[0].count);
+					 	var _opacity = ((0.8-0.1*_i) > 0.3) ? (0.8-0.1*_i) : 0.3;
 					 	_list += `<li>\
 									<div class="rankMsg">\
-										<em class="rankNum">${_i+1}</em>\
-										<!--<img src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${data[_i]['YQ_ReceiveMsg.Ticket']}">-->\
+										<div><em class="rankNum">${_i+1}</em></div>\
+										<img src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${data[_i].ticket}">\
 										<span>${data[_i].SceneName}</span>\
-										<span class="lookNum">${data[_i]['count(YQ_ReceiveMsg.Ticket)']}<em>次</em></span>\
+										<span class="lookNum">${data[_i].count}<em>次</em></span>\
 									</div>\
+									<div class="rateFg" style="width:${_r}%;background: rgba(173,216,230, ${_opacity});"></div>\
 								</li>`;
 					 }
 					 $('.rankList ul').html(_list);
