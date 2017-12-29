@@ -845,9 +845,9 @@ if($result){
 					 	_list += `<li>\
 									<div class="rankMsg">\
 										<em class="rankNum">${_i+1}</em>\
-										<img src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${data[_i].Ticket}">\
+										<!--<img src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${data[_i]['YQ_ReceiveMsg.Ticket']}">-->\
 										<span>${data[_i].SceneName}</span>\
-										<span class="lookNum">${data[_i]['count(Ticket)']}<em>次</em></span>\
+										<span class="lookNum">${data[_i]['count(YQ_ReceiveMsg.Ticket)']}<em>次</em></span>\
 									</div>\
 								</li>`;
 					 }
