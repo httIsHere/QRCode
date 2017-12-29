@@ -861,27 +861,40 @@ if($result){
 				data: {
 					weChatAccount: account,
 					user: userId,
-					type: 1
+					type: type
 				},
 				success: function(data){
 					data = eval(data);
 					var _total = data.totalMsgNum;
 					data = data.rankList;
-					 var _list = '';
-					 for(var _i = 0; _i < data.length; _i++){
-					 	var _r = data[_i].count*10000 / (_total*data[0].count);
+					if(data.length > 0){
+					var _list = '';
+					var _h = 71*data.length-1;
+					$('.lookRank>div').css('height', _h+'px');
+					//no1
+					$('.no1Code img').attr('src', `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${data[0].ticket}`);
+					$('.no1Msg').html(`<p>${data[0].SceneName}</p><p>${data[0].SceneDescription}</p>`);
+					//list
+					for(var _i = 0; _i < data.length; _i++){
+					 	var _r = data[_i].count*100 / (data[0].count);
+					 	var _r2 = data[_i].count*100 / (_total);
 					 	var _opacity = ((0.8-0.1*_i) > 0.3) ? (0.8-0.1*_i) : 0.3;
 					 	_list += `<li>\
 									<div class="rankMsg">\
 										<div><em class="rankNum">${_i+1}</em></div>\
 										<img src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${data[_i].ticket}">\
 										<span>${data[_i].SceneName}</span>\
-										<span class="lookNum">${data[_i].count}<em>次</em></span>\
+										<span class="lookNum">${data[_i].count}<em>次&nbsp;(${_r2}%)</em></span>\
 									</div>\
 									<div class="rateFg" style="width:${_r}%;background: rgba(173,216,230, ${_opacity});"></div>\
 								</li>`;
-					 }
-					 $('.rankList ul').html(_list);
+					}
+					$('.rankList ul').html(_list);
+				} else {
+					$('.lookRank>div').css('height', '70px');
+					$('.no1Code').hide();					
+					$('.rankList ul').html('<li style="text-align:center;">暂无数据<li>');
+				}
 				}
 			})
 		}

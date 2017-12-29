@@ -3,7 +3,7 @@ header("Content-type: text/html; charset=utf-8");
 require_once(dirname(_FILE_).'../cgi-bin/CommonFunction.php');
 $user = $_POST['user'];
 $account = $_POST['weChatAccount'];
-$type = $_POST['type'] || 1;
+$type = (integer)$_POST['type'];
 // $account = "ItsMusic";
 // $type = 1;
 $data = array();
@@ -23,12 +23,13 @@ switch ($type) {
 		$m = date("m");
 		$d = date("d");
 		//目标日0点
-		if($type = 2){
+		if($type == 2){
 			$dd = 0;
 		} else {
 			$dd = ($type == 3) ? 7 : 30;
 		}
 		$start = mktime(-8,0,0,$m-$dd,$d,$y);
+		$data['start'] = $start;
 		$sql = "select WeChatAccount, YQ_ReceiveMsg.Ticket as ticket, CreateTime,count(YQ_ReceiveMsg.Ticket) as count,SceneName,SceneDescription, SceneUrl from YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket where CreateTime - '$start' <= 24*60*60 and CreateTime - '$start' > 0 andWeChatAccount='$account' and YQ_ReceiveMsg.Ticket is not null and YQ_QRCode.ManageUserName = '$user' group by YQ_ReceiveMsg.Ticket order by count(YQ_ReceiveMsg.Ticket) desc limit 10";
 		break;
 }
