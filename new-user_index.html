@@ -41,14 +41,16 @@
 		<div id="particles">
 			<div class="mainHead">
 				<div class="ui secondary pointing menu">
-					<a class="title" href="#" style="font-size: 24px;align-self: center;color: #88c1bc;margin:0 12px;">HTTQM</a>
-					<a class="active item">数据统计</a>
-					<a class="item">二维码管理</a>
-					<a class="item">系统设置</a>
-					<a class="item">操作说明</a>
-					<div class="right menu">
-						<a class="ui item" href="#">欢迎<span style="color: #88c1bc;"><?php echo $user;?></span></a>
-						<a class="ui item" href="new-signin.html">退出</a>
+					<div>
+						<a class="title" href="#" style="font-size: 24px;align-self: center;color: #88c1bc;margin:0 12px;">HTTQM</a>
+						<a class="active item">数据统计</a>
+						<a class="item">二维码管理</a>
+						<a class="item">系统设置</a>
+						<a class="item">操作说明</a>
+						<div class="right menu">
+							<a class="ui item" href="#">欢迎<span style="color: #88c1bc;"><?php echo $user;?></span></a>
+							<a class="ui item" href="new-signin.html">退出</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -104,6 +106,7 @@
 										</thead>
 										<tbody></tbody>
 									</table>
+
 								</div>
 								<br />
 								<!--显示所有数据以及二维码扫描的排行-->
@@ -824,6 +827,7 @@
 				}
 			});
 			getRankList(1);
+			$('.rankBtn a:eq(0)').addClass('activeType');
 		}
 		//切换排行榜方式
 		$('.rankBtn a').bind('click', function(){
@@ -842,12 +846,14 @@
 				data: {
 					weChatAccount: account,
 					user: userId,
-					type: 1
+					type: type
 				},
 				success: function(data){
 					data = eval(data);
 					var _total = data.totalMsgNum;
 					data = data.rankList;
+					if(data.length > 0){
+						$('.no1Code').show();	
 					var _list = '';
 					var _h = 71*data.length-1;
 					$('.lookRank>div').css('height', _h+'px');
@@ -856,19 +862,26 @@
 					$('.no1Msg').html(`<p>${data[0].SceneName}</p><p>${data[0].SceneDescription}</p>`);
 					//list
 					for(var _i = 0; _i < data.length; _i++){
-					 	var _r = data[_i].count*10000 / (_total*data[0].count);
+					 	var _r = data[_i].count*100 / (data[0].count);
+					 	var _r2 = data[_i].count*100 / (_total);
 					 	var _opacity = ((0.8-0.1*_i) > 0.3) ? (0.8-0.1*_i) : 0.3;
 					 	_list += `<li>\
 									<div class="rankMsg">\
 										<div><em class="rankNum">${_i+1}</em></div>\
 										<img src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${data[_i].ticket}">\
 										<span>${data[_i].SceneName}</span>\
-										<span class="lookNum">${data[_i].count}<em>次</em></span>\
+										<span class="lookNum">${data[_i].count}<em>次&nbsp;(${_r2}%)</em></span>\
 									</div>\
 									<div class="rateFg" style="width:${_r}%;background: rgba(173,216,230, ${_opacity});"></div>\
 								</li>`;
 					}
 					$('.rankList ul').html(_list);
+				} else {
+					$('.lookRank>div').css('height', '70px');
+					$('.no1Code').hide();	
+					$('.no1Msg').html('');				
+					$('.rankList ul').html('<li style="text-align:center;line-height:50px;">暂无数据</li>');
+				}
 				}
 			})
 		}

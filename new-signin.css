@@ -16,6 +16,10 @@
     a {
     	color: #88c1bc;
     }
+    a:hover{
+        color: #88c1bc;
+        text-decoration: none;
+    }
     .form-margin input::-moz-placeholder {
     	color: #88c1bc;
         opacity: .5;
@@ -84,7 +88,7 @@
         border-bottom: 1px solid #ddd;
     }
     
-    .form-margin input {
+    .form-margin input, .form-margin .alertMsg {
     	width: 90%;
     	background: rgba(0, 0, 0, 0);
         border: none;
@@ -168,4 +172,38 @@
         -webkit-box-shadow: none;
         box-shadow: none;
     }
-    
+    .disNone{
+        display: none;
+    }
+    .returnSignin{
+        margin: 10px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .returnSignin .returnIcon{
+        width: 16px;
+        height: 16px;
+        background: url(return.png);
+        background-size: 100% 100%;
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .form-margin input.checkMsg{
+        width: 60%;
+    }
+    .putCheck{
+        width: 30%;
+        height: 30px;
+        background: #FFFFFF;
+        border: 1px solid #88c1bc;
+        border-radius: 15px;
+        outline: none;
+    }
+    button.going{
+        background: #ddd;
+        border-color: #ddd;
+        color: #FFFFFF;
+    }
+    .form-margin .alertMsg{color: #E34A4F;float: right;}
+    .wrong{background-color: rgb(255, 243, 243);}

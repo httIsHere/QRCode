@@ -868,6 +868,7 @@ if($result){
 					var _total = data.totalMsgNum;
 					data = data.rankList;
 					if(data.length > 0){
+						$('.no1Code').show();	
 					var _list = '';
 					var _h = 71*data.length-1;
 					$('.lookRank>div').css('height', _h+'px');
@@ -892,8 +893,9 @@ if($result){
 					$('.rankList ul').html(_list);
 				} else {
 					$('.lookRank>div').css('height', '70px');
-					$('.no1Code').hide();					
-					$('.rankList ul').html('<li style="text-align:center;">暂无数据<li>');
+					$('.no1Code').hide();	
+					$('.no1Msg').html('');				
+					$('.rankList ul').html('<li style="text-align:center;line-height:50px;">暂无数据</li>');
 				}
 				}
 			})

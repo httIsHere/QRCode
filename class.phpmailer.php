@@ -361,7 +361,7 @@ class PHPMailer {
    * @return void
    */
   public function IsSMTP() {
-    $this->Mailer = 'SMTP';
+    $this->Mailer = 'smtp';
   }
 
   /**
@@ -572,7 +572,7 @@ class PHPMailer {
       switch($this->Mailer) {
         case 'sendmail':
           return $this->SendmailSend($header, $body);
-        case 'SMTP':
+        case 'smtp':
           return $this->SmtpSend($header, $body);
         default:
           return $this->MailSend($header, $body);

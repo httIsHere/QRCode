@@ -3,6 +3,8 @@ header("Content-type: text/html; charset=utf-8");
 include "class.phpmailer.php";  
 include "class.smtp.php";  
 
+//$code = $_POST['code'];
+
 //发送邮件
 function mailCheck($toMail, $toUrl) {
 	$mail = new PHPMailer();  
@@ -13,9 +15,7 @@ function mailCheck($toMail, $toUrl) {
 	$mail->Username = "18457730959@163.com";// 发送方的163邮箱用户名  
 	$mail->Password = "19911116";// 发送方的邮箱密码，注意用163邮箱这里填写的是“客户端授权密码”而不是邮箱的登录密码！  
 	$mail->SMTPSecure = "ssl";// 使用ssl协议方式  
-	$mail->Port = 465;// 163邮箱的ssl协议方式端口号是465/994  
-    //$mail->SMTPDebug = 2;
-
+	$mail->Port = 994;// 163邮箱的ssl协议方式端口号是465/994  
 	$mail->Form= "htt-qrcodeManagement";  
 	$mail->Helo= "xxxx";  
 	$mail->setFrom("18457730959@163.com","htt-qrcodeManagement");// 设置发件人信息，如邮件格式说明中的发件人，这里会显示为Mailer(xxxx@163.com），Mailer是当做名字显示  

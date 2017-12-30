@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!--<link rel="stylesheet" href="loginStyle.css">-->
+	<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="swiper.min.css" />
+	<link rel="stylesheet" type="text/css" href="new-signin.css" />
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="swiper.min.js"></script>
+	<title>HTTQM—重置密码</title>
+</head>
+
+<body class="sign_in">
+	<div class="login">
+			<!--<h3 class="title">用户登录</h3>-->
+			<div id="title">HTTQM</div>
+			<div id="little-title">验证码将会发送至你的注册邮箱</div>
+			<div class="form-margin">
+				<!-- <i class="fa fa-envelope fa-lg"></i> -->
+				<input class="form-control email" type="email" placeholder="您注册的电子邮箱" required autofocus name="useremail" />
+				<div class="form-control alertMsg disNone">请输入正确的邮箱</div>
+			</div>
+			<div class="form-margin">
+				<input class="form-control required checkMsg" type="text" placeholder="邮箱验证码" required name="userpwd" />
+				<button class="putCheck">发送验证码</button>
+			</div>
+			<div class="form-margin disNone">
+				<input class="form-control required" type="password" placeholder="新密码" required name="userpwd" />
+			</div>
+			<div class="form-margin disNone">
+				<input class="form-control required" type="password" placeholder="你的密码" required name="userpwd" />
+			</div>
+			<button class="btn btn-login">下一步</button>
+			<a href="new-signin.html" class="returnSignin"><div class="returnIcon"></div>返回登录</a>
+		</div>
+		<div class="mtShow">
+			<button class="btn btn-mt">移动端使用，关注微信公众号</button>
+			<div class="qrcode qrcodeHide">
+				<div class="codeImg"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var step = 1;
+
+		//发送验证码
+		$('.putCheck').bind('click', function(){
+			//email
+			if($('.email').val() == ''){
+				console.log('wrong');
+				$('.email').parent().addClass('wrong');
+				$('.alertMsg').removeClass('disNone');
+				$('.email').attr('placeholder', "");
+			}
+		});
+		$('.email').bind('focus', function(){
+			$(this).parent().removeClass('wrong');
+			$('.alertMsg').addClass('disNone');
+			$(this).attr('placeholder', "您注册的电子邮箱");
+		});
+
+		//下一步
+		$('.btn-login').bind('click', function(){
+			console.log('next');
+			//email
+			if($('.email').val() == ''){
+				console.log('wrong');
+				$('.email').parent().addClass('wrong');
+				$('.alertMsg').removeClass('disNone');
+				$('.email').attr('placeholder', "");
+			} else {
+				//验证验证码的对错
+				if($('.checkMsg').val() == ''){
+					return;
+				} else {
+					checkMsg($('.checkMsg').val());
+				}
+			}
+		});
+
+
+
+		$('.btn-mt').bind('click', function(){
+			var self = $(this);
+			var code = $('.qrcode');
+			if(code.hasClass('qrcodeHide')){
+				code.removeClass('qrcodeHide');
+				self.text('关闭二维码');
+			} else {
+				code.addClass('qrcodeHide');
+				self.text('移动端使用，关注微信公众号');
+			}
+		});
+
+		function checkMsg(msg){
+
+		}
+	</script>
+
+	</html>
