@@ -872,13 +872,14 @@ if($result){
 					var _list = '';
 					var _h = 71*data.length-1;
 					$('.lookRank>div').css('height', _h+'px');
+					$('.lookRank>div').css('min-height', '300px');
 					//no1
 					$('.no1Code img').attr('src', `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${data[0].ticket}`);
 					$('.no1Msg').html(`<p>${data[0].SceneName}</p><p>${data[0].SceneDescription}</p>`);
 					//list
 					for(var _i = 0; _i < data.length; _i++){
 					 	var _r = data[_i].count*100 / (data[0].count);
-					 	var _r2 = data[_i].count*100 / (_total);
+					 	var _r2 = (data[_i].count*100 / (_total)).toFixed(2);
 					 	var _opacity = ((0.8-0.1*_i) > 0.3) ? (0.8-0.1*_i) : 0.3;
 					 	_list += `<li>\
 									<div class="rankMsg">\

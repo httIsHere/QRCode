@@ -163,31 +163,34 @@ include("uploadImgToWX.php");
 				$num = $_POST['num'];
 				//微信
 				if($num <= 200){
-					$start2 = microtime(true);
+					$wechatDur = array();
 					for($i = 1000000000; $i < (1000000000+$num); $i++){
+						$start2 = microtime(true);
 						$qrCodeInfo=getTicketOfQrcode($account,$appId,$appS,$i);
+						$end2 = microtime(true);
+						$wechatDur[] = round(($end2 - $start2)*1000);
 					}
-					$end2 = microtime(true);
-					$wechatDur = round(($end2 - $start2)*1000);
 				}
 				else {
 					$wechatDur = -1;
 				}
 				//腾讯(不支持https)
 				//http://mobile.qq.com/qrcode?url=
-				$start3 = microtime(true);
+				$qqDur = array();
 				for($i = 1000000000; $i < (1000000000+$num); $i++){
+					$start3 = microtime(true);
 					getQRCodeTest('http://mobile.qq.com/qrcode?url=', $i);
+					$end3 = microtime(true);
+					$qqDur[] = round(($end3 - $start3)*1000);
 				}
-				$end3 = microtime(true);
-				$qqDur = round(($end3 - $start3)*1000);
 				//联图
-				$start4 = microtime(true);
+				$liantuDur = array();
 				for($i = 1000000000; $i < (1000000000+$num); $i++){
+					$start4 = microtime(true);
 					getQRCodeTest('http://qr.liantu.com/api.php?&w=200&text=', $i);
+					$end4 = microtime(true);
+					$liantuDur[] = round(($end4 - $start4)*1000);
 				}
-				$end4 = microtime(true);
-				$liantuDur = round(($end4 - $start4)*1000);
 				$res = array();
 				$res['wechat'] = $wechatDur;
 				$res['qq'] = $qqDur;
