@@ -60,14 +60,16 @@ if($result){
 		<div id="particles">
 			<div class="mainHead">
 				<div class="ui secondary pointing menu">
-					<a class="title" href="#" style="font-size: 24px;align-self: center;color: #88c1bc;margin:0 12px;">HTTQM</a>
-					<a class="active item">数据统计</a>
-					<a class="item">二维码管理</a>
-					<a class="item">系统设置</a>
-					<a class="item">操作说明</a>
-					<div class="right menu">
-						<a class="ui item" href="#">欢迎<span style="color: #88c1bc;"><?php echo $user;?></span></a>
-						<a class="ui item" href="new-signin.html">退出</a>
+					<div style="max-width: 1180px; margin: 0 auto;">
+						<a class="title" href="#" style="font-size: 24px;align-self: center;color: #88c1bc;margin:0 12px;">HTTQM</a>
+						<a class="active item">数据统计</a>
+						<a class="item">二维码管理</a>
+						<a class="item">系统设置</a>
+						<a class="item">操作说明</a>
+						<div class="right menu">
+							<a class="ui item" href="#">欢迎<span style="color: #88c1bc;"><?php echo $user;?></span></a>
+							<a class="ui item" href="new-signin.html">退出</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -123,6 +125,13 @@ if($result){
 										</thead>
 										<tbody></tbody>
 									</table>
+									<br>
+									<!-- 忠实粉丝榜 -->
+									<div>
+										<!-- <h3 style="text-align: center;">忠实粉丝榜</h3> -->
+										<br>
+										<div id="userRank" style="min-width:100%;min-height:400px;margin-bottom:50px;"></div>
+									</div>
 								</div>
 								<br />
 								<!--显示所有数据以及二维码扫描的排行-->
@@ -294,11 +303,11 @@ if($result){
 										<!--当前生成时间结果-->
 										<li id="currentResult"></li>
 										<br />
-										<!--分布-->
-										<li id="testResultChart"></li>
 										<!--曲线-->
 										<li id="testResultChart2"></li>
 										<br />
+										<!--分布-->
+										<li id="testResultChart"></li>
 										<!--<li id="testResult">
 										<table class="table table-bordered table-hover" width="80%" border="1" id="testResultTable">
 											<thead>
@@ -388,33 +397,34 @@ if($result){
 							</div>
 							<div class="row content-padding">
 								<p class="introTitle">系统说明</p>
-								<p class="introContent">该系统主要用于公众号场景二维码的生成与管理，其中场景二维码即带不同场景信息的二维码，用户扫描后，可以在公众号中接收到二维码内带有的场景信息；</p>
-								<p class="introContent">可以进行扫描的统计与查看，查看二维码被扫描的次数以及扫描用户的信息；</p>
-								<p class="introContent">系统界面左侧是四个导航目录</p>
+								<p class="introContent">该系统主要用于公众号场景二维码的生成与管理，其中场景二维码即带不同场景信息的二维码，用户扫描后，可以在公众号中接收到二维码内带有的场景信息的图文链接；</p>
+								<p class="introContent">可以进行扫描的统计与查看，查看二维码被扫描的次数的统计图表以及扫描用户的信息和其他各项统计数据；</p>
+								<p class="introContent">系统界面上方是四个导航目录：</p>
 							</div>
 							<div class="row content-padding">
 								<div class="introContentTitle">统计数据</div>
 								<div class="introContentBox">
-									<p>用于扫描的统计与查看（一共有四个标签页）；</p>
-									<div class="col-md-12 col-xs-12"><img src="op1.JPG" style="width: 50%;"></div>
+									<p>用于扫描的统计与查看（一共有三个标签页）；</p>
+									<div class="navImage"><img src="op1.JPG"></div>
 									<p>点击第一个标签页可查看当前扫描的统计图表，统计图表以一周为一个周期，默认显示最近到该天一周时间内的扫描数量，包括扫描用户量和全部扫描次数，可点击时间选框选择需要查看的时间并点击确定即可查看统计数据；</p>
-									<p>点击第二个标签页可查看全部扫描用户数量和全部扫描次数；</p>
-									<p>点击第三个标签页可查看当前用户所生成的场景二维码的数量；</p>
-									<p>点击第四个标签页可查看并搜索扫描用户信息。</p>
+									<p>点击第二个标签页可查看并搜索扫描用户信息和各自扫描次数；</p>
+									<p>点击第三个标签页可查看当前总扫描用户数，扫描总次数，总二维码数以及二维码扫描排行榜；</p>
 								</div>
 							</div>
 							<div class="row content-padding ">
 								<div class="introContentTitle">二维码管理</div>
 								<div class="introContentBox">
-									<p>用于二维码生成以及二维码查看（注意：二维码生成一定要绑定公众号的AppID和 AppSecret，公众号的AppID和AppSecret在微信公众平台>>开发>>基本配置）;</p>
+									<p>用于二维码生成以及已有二维码查看（注意：二维码生成一定要绑定公众号的AppID和 AppSecret，公众号的AppID和AppSecret在微信公众平台>>开发>>基本配置）;</p>
+									<div class="navImage" style="width: 240px;"><img src="op2.JPG"></div>
 									<p>第一个标签页是二维码内所带信息的输入以及二维码的生成，其中场景名称是必填项目；</p>
-									<p>第二个标签页是已生成的二维码的查看，可对二维码进行删除。</p>
+									<p>第二个标签页是已生成的二维码的查看，可对二维码进行编辑和删除。</p>
 								</div>
 							</div>
 							<div class="row content-padding">
 								<div class="introContentTitle">系统设置</div>
 								<div class="introContentBox">
-									<p>主要用于用户所绑定公众号账户的操作以及登录密码的修改；</p>
+									<p>用于用户所绑定公众号账户的操作以及登录密码的修改；</p>
+									<div class="navImage" style="width: 322px;"><img src="op3.JPG"></div>
 									<p>第一个标签页是公众号账户的绑定与修改，在账号，AppID和AppSecret通过验证后只有修改账号才可以修改AppID和AppSecret，修改AppID和AppSecret后确认时会进行两者的验证只有验证通过才能正确修改；在确认修改之前点击取消按钮可恢复到修改之前的数据；</p>
 									<p>第二个标签页是登录密码的修改，需要同时确认旧密码和新密码以及确认新密码，只有全部符合才能正确修改。</p>
 								</div>
@@ -817,6 +827,76 @@ if($result){
 				});
 			}
 		}
+
+		//显示忠实粉丝排行榜
+		function showUserRank(data) {
+			var res = eval(data);
+			var _categories = new Array();
+			var _num = new Array();
+			res.each(function(index, ele){
+				_categories[index] = ele.nickname;
+				_num[index] = ele.count;
+			});
+			console.log(_categories);
+
+			var chart = new Highcharts.chart('userRank', {
+    			chart: {
+        			type: 'bar'
+    			},
+    			title: {
+        			text: '忠实粉丝榜'
+    			},
+    			subtitle: {
+        			// text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
+    			},
+    			xAxis: {
+        			categories: _categories,
+        			title: {
+            			text: null
+        			}
+    			},
+    			yAxis: {
+        			min: 0,
+        			title: {
+            			text: '扫描次数（次）',
+            			align: 'high'
+        			},
+        			labels: {
+            			overflow: 'justify'
+        			}
+    			},
+    			tooltip: {
+        			valueSuffix: ' 次'
+    			},
+   				plotOptions: {
+        			bar: {
+            			dataLabels: {
+                			enabled: true
+            			}
+        			}
+    			},
+    			legend: {
+        			layout: 'vertical',
+        			align: 'right',
+        			verticalAlign: 'top',
+        			x: -40,
+        			y: 80,
+        			floating: true,
+        			borderWidth: 1,
+        			backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+        			shadow: true
+    			},
+    			credits: {
+        			enabled: false
+    			},
+    			series: [{
+        			// name: 'Year 1800',
+        			data: _num
+    			}]
+			});
+		}
+
+
 		//得到数据统计的数据
 		function getStatisticData() {
 			var time = $('#dateInput').val();
@@ -875,7 +955,7 @@ if($result){
 					$('.lookRank>div').css('min-height', '300px');
 					//no1
 					$('.no1Code img').attr('src', `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${data[0].ticket}`);
-					$('.no1Msg').html(`<p>${data[0].SceneName}</p><p>${data[0].SceneDescription}</p>`);
+					$('.no1Msg').html(`<p style="margin-top:10px;">${data[0].SceneName}</p><p style="margin-top:10px;">${data[0].SceneDescription}</p>`);
 					//list
 					for(var _i = 0; _i < data.length; _i++){
 					 	var _r = data[_i].count*100 / (data[0].count);
@@ -1084,8 +1164,8 @@ if($result){
 					user: userId
 				},
 				success: function(data) {
-					console.log(data);
-					showUserInfo(data);
+					showUserInfo(data.userInfor);
+					showUserRank(data.userRank);
 				}
 
 			});
@@ -1813,6 +1893,15 @@ if($result){
 			createQRCodeTest();
 		});
 
+		function averageTime(data) {
+			var _length = data.length;
+			var _sum = 0;
+			for(var _i = 0; _i < _length; _i++){
+				_sum += data[_i];
+			}
+			return _sum / 1000;
+		}
+
 		function createQRCodeTest() {
 			var _codeNum = $('#codeNum').val();
 			var account = $("#Account").val();
@@ -1835,13 +1924,16 @@ if($result){
 					if(data.wechat == -1) {
 						wechatDur = '限制';
 					} else {
-						wechatDur = data.wechat / 1000;
-						qqDur = data.qq / 1000;
-						liantuDur = data.liantu / 1000;
+						wechatDur = averageTime(data.wechat);
+						qqDur = averageTime(data.qq);
+						liantuDur = averageTime(data.liantu);
 					}
-					weDurTime.push([parseInt(_codeNum), parseFloat(wechatDur)]);
-					qqDurTime.push([parseInt(_codeNum), parseFloat(qqDur)]);
-					ltDurTime.push([parseInt(_codeNum), parseFloat(liantuDur)]);
+					weDurTime = data.wechat;
+					qqDurTime = data.qq;
+					ltDurTime = data.liantu;
+					//weDurTime.push([parseInt(_codeNum), parseFloat(wechatDur)]);
+					//qqDurTime.push([parseInt(_codeNum), parseFloat(qqDur)]);
+					//ltDurTime.push([parseInt(_codeNum), parseFloat(liantuDur)]);
 					$('#currentResult').text('微信接口：' + wechatDur + 's, 腾讯接口：' + qqDur + 's, 联图接口：' + liantuDur + 's');
 					//在图表中显示
 					testChart();

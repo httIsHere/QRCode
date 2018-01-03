@@ -17,40 +17,56 @@
 
 	##之前用的sql语句 by 2017-12-29
 	// $sql = "select * from (select qydt_ReceiveMsg.OpenID,nickname,sex,city,headimgurl,max(CreateTime) as CreateTime from (qydt_WXUser join qydt_ReceiveMsg join qydt_QRCode on qydt_QRCode.Ticket = qydt_ReceiveMsg.Ticket) where (qydt_WXUser.OpenID = qydt_ReceiveMsg.OpenID) and qydt_WXUser.WeChatAccount = '$account' and qydt_QRCode.ManageUserName = '$user' group by qydt_ReceiveMsg.OpenID) as info order by CreateTime desc";
+
+	#扫描用户信息
 	$sql = "select * from (select YQ_ReceiveMsg.OpenID,nickname,sex,city,headimgurl,max(CreateTime) as CreateTime from (YQ_WXUser join YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket) where (YQ_WXUser.OpenID = YQ_ReceiveMsg.OpenID) and YQ_WXUser.WeChatAccount = '$account' and YQ_QRCode.ManageUserName = '$user' group by YQ_ReceiveMsg.OpenID) as info order by CreateTime desc";
 	$link=openDB();
 	$recodeList=array();
-		if($link)
-		{	$res=mysql_query($sql);
-			if(!$res) {logger('CommonFunction','log/','Error',"runSelectSql Mysql-query error:".$sql.mysql_error());}
-			else
-			{	$sqlNum =  mysql_num_rows($res);
-				for($i=0;$i<$sqlNum;$i++)
-				{	$row=mysql_fetch_array($res);
-					if($row) {
-						$recodeList[$i]=$row;
-					}
-					}
+	if($link){	
+		$res=mysql_query($sql);
+		if(!$res) {
+			logger('CommonFunction','log/','Error',"runSelectSql Mysql-query error:".$sql.mysql_error());}
+		else{	
+			$sqlNum =  mysql_num_rows($res);
+			for($i=0;$i<$sqlNum;$i++){	
+				$row=mysql_fetch_array($res);
+				if($row) {
+					$recodeList[$i]=$row;
+				}
 			}
-			$replyStr=json_encode($recodeList);
-			mysql_close($link);
 		}
-//	$sql = "select headimgurl, nickname, sex, city from GlobalUser where OurWeChatAccount ='$account'";
-//	$sql="select distinct FromUserName from GlobalReceiveMsg where WeChatAccount= '$account'";
-//	$result = mysqli_query($conn, $sql);
-//	$result = runSelectSql($sql);
-//	for($i = 0; $i < count($result); $i++){
-//		$openId = $result[$i]['FromUserName'];
-//		$sql =
-//	}
-//	$data['user'] = $result;
-//	while($rows = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-//		$data[] = $rows;
-//	}
-//	echo json_encode($data);
-	echo json_encode($recodeList);
+		$replyStr=json_encode($recodeList);
+		mysql_close($link);
+	}
+
+	$data['userInfor'] = $recodeList;
+
+	#扫描用户排行榜
+	$sql = "select * from (select YQ_ReceiveMsg.OpenID,nickname,sex,city,headimgurl,count(YQ_ReceiveMsg.OpenID) as count from (YQ_WXUser join YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket) where (YQ_WXUser.OpenID = YQ_ReceiveMsg.OpenID) and YQ_WXUser.WeChatAccount = '$account' and YQ_QRCode.ManageUserName = '$user' group by YQ_ReceiveMsg.OpenID) as info order by count desc limit 10";
+	$link=openDB();
+	$rank=array();
+	if($link){	
+		$res=mysql_query($sql);
+		if(!$res) {
+			logger('CommonFunction','log/','Error',"runSelectSql Mysql-query error:".$sql.mysql_error());}
+		else{	
+			$sqlNum =  mysql_num_rows($res);
+			for($i=0;$i<$sqlNum;$i++){	
+				$row=mysql_fetch_array($res);
+				if($row) {
+					$rank[$i]=$row;
+				}
+			}
+		}
+		$replyStr=json_encode($rank);
+		mysql_close($link);
+	}
+
+	$data['userRank'] = $rank;
+
+	echo json_encode($data);
 //	echo $data;
-	$_SESSION['userInfor'] = json_encode($result);
+	$_SESSION['userInfor'] = json_encode($data);
 //	echo $data[1]['headimgurl'];
 //}
 //else{

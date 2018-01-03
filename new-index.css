@@ -641,7 +641,7 @@ a {
 	/*background: #88c1bc;*/
 	border-radius: 4px;
 }
-#StatisticNum div p{
+#StatisticNum>div p{
 	margin-top: 30px;
 }
 .ui.menu>div{height: 50px;display: flex;align-content: center; font-size: 16px;width: 100%;max-width: 1200px;margin: 0 auto;}
@@ -654,9 +654,10 @@ a {
 .rankNo1{width: 20%;min-width:250px;background: rgba(136,193,188, .5); display: flex;flex-direction: column; justify-content: space-between;}
 .rankList{width: 70%;background: #f9f9f9;overflow: hidden;}
 .no1Tag{width: 50px;height:50px;background: url(no1.png); background-size: 100% 100%;}
-.no1Code{width: 150px;height: 150px;margin: 30px auto 0;}
+.no1Code{width: 150px;height: 150px;margin: 10px auto 0;}
 .no1Code img{width: 100%; height: 100%;}
 .no1Msg{text-align: center;}
+.no1Msg p{margin: 10px;}
 /*.rankList ul{overflow-y: auto;}*/
 .rankList li{ height: 50px; padding: 10px 20px; position: relative;}
 .rankList li .rankNum{font-size: 20px; font-style: italic; margin-left: 15px;}
@@ -674,3 +675,10 @@ canvas{position: fixed; z-index: -1;}
 .rankBtn{background: rgba(136,193,188, .7);position: relative;bottom: 0;width: 100%;height: 50px; display: flex;align-items: center;justify-content: space-around;}
 .rankBtn>a{color: #FFF;}
 .rankBtn>a.activeType{font-weight: bold;font-size: 16px;}
+.introContentTitle{padding: 10px;}
+.navImage{width: 341px; height: 57px;}
+.navImage img{width: 100%; height: 100%;}
+.introContentBox{padding: 3%;}
+.introContentBox p{line-height: 1.6rem;}
+.settingChange{max-width: 420px;margin: 0 auto;}
+.settingChange label{font-weight: normal;}

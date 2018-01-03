@@ -29,13 +29,13 @@ switch ($type) {
 		} else {
 			$dd = ($type == 3) ? 7 : 30;
 		}
-		$start = mktime(-8,0,0,$m-$dd,$d,$y);
-		$sql = "select OpenID from YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket where YQ_QRCode.ManageUserName = '$user' and WeChatAccount= '$account' and CreateTime - '$start' <= 24*60*60 and CreateTime - '$start' > 0";
+		$start = mktime(-8,0,0,$m,$d-$dd,$y);
+		$sql = "select OpenID from YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket where YQ_QRCode.ManageUserName = '$user' and WeChatAccount= '$account' and CreateTime - '$start' <= 24*60*60*'$dd' and CreateTime - '$start' > 0";
 		$result = runSelectSql($sql);
 		$num = count($result);
 		$data['totalMsgNum'] = $num;
 		$data['start'] = $start;
-		$sql = "select WeChatAccount, YQ_ReceiveMsg.Ticket as ticket, CreateTime,count(YQ_ReceiveMsg.Ticket) as count,SceneName,SceneDescription, SceneUrl from YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket where CreateTime - '$start' <= 24*60*60 and CreateTime - '$start' > 0 and WeChatAccount='$account' and YQ_ReceiveMsg.Ticket is not null and YQ_QRCode.ManageUserName = '$user' group by YQ_ReceiveMsg.Ticket order by count(YQ_ReceiveMsg.Ticket) desc limit 10";
+		$sql = "select WeChatAccount, YQ_ReceiveMsg.Ticket as ticket, CreateTime,count(YQ_ReceiveMsg.Ticket) as count,SceneName,SceneDescription, SceneUrl from YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket where CreateTime - '$start' <= 24*60*60*'$dd' and CreateTime - '$start' > 0 and WeChatAccount='$account' and YQ_ReceiveMsg.Ticket is not null and YQ_QRCode.ManageUserName = '$user' group by YQ_ReceiveMsg.Ticket order by count(YQ_ReceiveMsg.Ticket) desc limit 10";
 		break;
 }
 $link=openDB();
