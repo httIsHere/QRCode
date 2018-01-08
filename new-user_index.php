@@ -45,8 +45,6 @@ if($result){
 		<script type="text/javascript" src="fileinput.js"></script>
 		<script type="text/javascript" src="zh.js"></script>
 		<!--图表引入-->
-		<!-- <script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.js"></script>
-	<script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.min.js"></script> -->
 		<script type="text/javascript" src="DateTimePicker.js"></script>
 		<script type="text/javascript" language="javascript" src="jquery.dataTables.min.js"></script>
 		<script src="semantic.min.js"></script>
@@ -91,14 +89,13 @@ if($result){
 									<li>
 										<a href="#StatisticNum" data-toggle="tab">各项数据</a>
 									</li>
-									<!--<li>
-									<a href="#lookRank" data-toggle="tab">扫描排行榜</a>
-								</li>-->
 								</ul>
-								<div class="closeBtn text-right" style="padding-right: 0;">
-									<img src="close.png" style="width: 15px;height: 15px;float: right;margin-bottom: 5px;" />
-								</div>
 							</div>
+							<ul class="httNav">
+								<li class="active">扫描图表</li>
+								<li>扫描用户列表</li>
+								<li>各项数据</li>
+							</ul>
 							<br />
 							<div id="statisticTabContent" class="tab-content">
 								<!--显示统计数据图表-->
@@ -127,11 +124,7 @@ if($result){
 									</table>
 									<br>
 									<!-- 忠实粉丝榜 -->
-									<div>
-										<!-- <h3 style="text-align: center;">忠实粉丝榜</h3> -->
-										<br>
-										<div id="userRank" style="min-width:100%;min-height:400px;margin-bottom:50px;"></div>
-									</div>
+									<div id="userRank" style="min-width:100%;min-height:400px;margin-bottom:50px;"></div>
 								</div>
 								<br />
 								<!--显示所有数据以及二维码扫描的排行-->
@@ -335,9 +328,6 @@ if($result){
 										<a href="#ChangePwdP" data-toggle="tab">修改登录密码</a>
 									</li>
 								</ul>
-								<div class="col-md-1 col-xs-1 closeBtn text-right" style="padding-right: 0;">
-									<img src="close.png" style="width: 15px;height: 15px;float: right;margin-bottom: 5px;" />
-								</div>
 							</div>
 							<br />
 							<div id="myTabContent" class="tab-content">
@@ -392,9 +382,6 @@ if($result){
 					<div class="swiper-slide">
 						<!--基本页介绍-->
 						<div class="contentPage pageIntroduction">
-							<div class="row closeBtn">
-								<img src="close.png" style="width: 15px;height: 15px;float: right;margin-bottom: 5px;margin-right: 15px;" />
-							</div>
 							<div class="row content-padding">
 								<p class="introTitle">系统说明</p>
 								<p class="introContent">该系统主要用于公众号场景二维码的生成与管理，其中场景二维码即带不同场景信息的二维码，用户扫描后，可以在公众号中接收到二维码内带有的场景信息的图文链接；</p>
@@ -833,11 +820,11 @@ if($result){
 			var res = eval(data);
 			var _categories = new Array();
 			var _num = new Array();
-			res.each(function(index, ele){
-				_categories[index] = ele.nickname;
-				_num[index] = ele.count;
-			});
-			console.log(_categories);
+			for(var _i = 0; _i < res.length; _i++){
+				_categories[_i] = res[_i].nickname;
+				_num[_i] = parseInt(res[_i].count);
+			}
+			console.log(_num);
 
 			var chart = new Highcharts.chart('userRank', {
     			chart: {
@@ -845,9 +832,6 @@ if($result){
     			},
     			title: {
         			text: '忠实粉丝榜'
-    			},
-    			subtitle: {
-        			// text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
     			},
     			xAxis: {
         			categories: _categories,
@@ -890,7 +874,7 @@ if($result){
         			enabled: false
     			},
     			series: [{
-        			// name: 'Year 1800',
+        			// name: '扫描次数',
         			data: _num
     			}]
 			});

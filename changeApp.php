@@ -1,4 +1,5 @@
 <?php
+	header('Access-Control-Allow-Origin:*');
 	//连接数据库
 //	include("sql_connection.php");
 	require_once(dirname(_FILE_).'../cgi-bin/CommonFunction.php');
