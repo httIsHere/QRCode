@@ -27,9 +27,10 @@ switch ($type) {
 		if($type == 2){
 			$dd = 0;
 		} else {
-			$dd = ($type == 3) ? 7 : 30;
+			$dd = ($type == 3) ? 6 : 29;
 		}
 		$start = mktime(-8,0,0,$m,$d-$dd,$y);
+		$dd = $dd + 1;
 		$sql = "select OpenID from YQ_ReceiveMsg join YQ_QRCode on YQ_QRCode.Ticket = YQ_ReceiveMsg.Ticket where YQ_QRCode.ManageUserName = '$user' and WeChatAccount= '$account' and CreateTime - '$start' <= 24*60*60*'$dd' and CreateTime - '$start' > 0";
 		$result = runSelectSql($sql);
 		$num = count($result);

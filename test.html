@@ -4,15 +4,31 @@
 		<title>test</title>
 		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 		<script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		<script type="text/javascript" src="export-csv.js"></script>
 	</head>
 
 	<body>
-		<input type="text" name="" id="" value="" />
+		<!-- <input type="text" name="" id="" value="" /> -->
 		<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 		<div></div>
 		<script type="text/javascript">
 			$("input").bind('input propertychange', function() {
 				console.log('account change');
+			});
+			//图表的初始化
+			Highcharts.setOptions({  
+    			lang: {  
+        			printChart: "打印图表",  
+        			downloadJPEG: "下载JPEG 图片",  
+        			downloadPDF: "下载PDF文档",  
+        			downloadPNG: "下载PNG 图片",  
+        			downloadSVG: "下载SVG 矢量图",  
+        			exportButtonTitle: "导出图片",  
+       				downloadCSV:"下载excel格式文件",  
+        			downloadXLS:"下载XLS格式文件",
+        			viewData:"查看数据"  
+    			}  
 			});
 			Highcharts.chart('container', {
 				colors: ['#7cb5ec', '#f7a35c', '#90ee7e', '#7798BF', '#aaeeee', '#ff0066',

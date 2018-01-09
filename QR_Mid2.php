@@ -161,6 +161,8 @@ include("uploadImgToWX.php");
 		case 5://生成测试
 				$account = $_POST['account']; $appId = $_POST['appId']; $appS = $_POST['appS'];
 				$num = $_POST['num'];
+				# 需要将时间测试生成的结果下载到本地（导入曲线拟合代码中，得出曲线参数）
+				$text = $num."\n";
 				//微信
 				if($num <= 200){
 					$wechatDur = array();
@@ -175,6 +177,7 @@ include("uploadImgToWX.php");
 				else {
 					$wechatDur = -1;
 				}
+				$text = $text.json_encode($wechatDur)."\n";
 				//腾讯(不支持https)
 				//http://mobile.qq.com/qrcode?url=
 				$qqDur = array();
@@ -185,6 +188,8 @@ include("uploadImgToWX.php");
 					$end3 = microtime(true);
 					$qqDur[] = round(($end3 - $start3)*1000);
 				}
+				$text = $text.json_encode($qqDur)."\n";
+
 				//联图
 				$liantuDur = array();
 				$liantuDur[] = 0;
@@ -193,7 +198,13 @@ include("uploadImgToWX.php");
 					getQRCodeTest('http://qr.liantu.com/api.php?&w=200&text=', $i);
 					$end4 = microtime(true);
 					$liantuDur[] = round(($end4 - $start4)*1000);
-				}
+				}				
+				$text = $text.json_encode($liantuDur);
+				$filename = 'timeDur.txt';
+				$myfile = fopen($filename, "w");
+				fwrite($myfile, $text);
+				fclose($myfile);
+
 				$res = array();
 				$res['wechat'] = $wechatDur;
 				$res['qq'] = $qqDur;

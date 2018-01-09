@@ -41,6 +41,8 @@ if($result){
 
 		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 		<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		<script type="text/javascript" src="export-csv.js"></script>
 		<script type="text/javascript" src="sweetalert-dev.js"></script>
 		<script type="text/javascript" src="fileinput.js"></script>
 		<script type="text/javascript" src="zh.js"></script>
@@ -91,11 +93,11 @@ if($result){
 									</li>
 								</ul>
 							</div>
-							<ul class="httNav">
-								<li class="active">扫描图表</li>
-								<li>扫描用户列表</li>
-								<li>各项数据</li>
-							</ul>
+							<!-- <ul class="httNav">
+								<li class="active"><a href="#StatisticUserNum">扫描图表</a></li>
+								<li><a href="#StatisticUserInfo">扫描用户列表</a></li>
+								<li><a href="#StatisticNum">各项数据</a></li>
+							</ul> -->
 							<br />
 							<div id="statisticTabContent" class="tab-content">
 								<!--显示统计数据图表-->
@@ -283,6 +285,7 @@ if($result){
 											<span>生成个数</span>
 											<input type="text" class="form-control" id="codeNum" />
 											<input type="button" class="form-control" id="testBtn" value="测试" />
+											<a href="timeDur.txt" download="timeDur" style="margin-left: 20px;">下载结果文件</a>
 										</li>
 										<!--加载动画-->
 										<li>
@@ -544,7 +547,7 @@ if($result){
 		var sceneImg, sceneImage;
 		//初始化
 		init();
-		//菜单切换&功能切换
+
 		$('.menu .item').click(function() {
 			$('.item').removeClass('active');
 			$(this).addClass('active');
@@ -577,16 +580,24 @@ if($result){
 		})
 		//模块切换
 		var swiper = new Swiper('.swiper-container', {
-			keyboardControl: true,
-			onTouchMove: function(swiper) {
-				var _active = $('.swiper-slide').index($('.swiper-slide-active'));
-				if(activeItem != _active) {
-					$('.item').removeClass('active');
-					$('.item').eq(_active).addClass('active');
-					activeItem = _active;
-				}
-			}
+			// keyboard: true,
+			allowTouchMove: false,//禁止拖动,防止拖动可拖动操作对按钮点击效果的影响；
 		});
+
+
+		//菜单切换&功能切换
+		$('.httNav li').click('click', function(){			
+			var href = $(this).children().attr('href');
+			console.log(href);
+			var _parent = $(this).parent();
+			var _children = _parent.children().children();
+			_children.each(function(){
+				var _href = $(this).attr('href');
+				$(_href).fadeOut();
+			});
+			$(href).fadeIn();
+		});
+
 		//初始页面
 		function init() {
 			whileAccountChange();
@@ -602,6 +613,20 @@ if($result){
 			$("#statisticTabContent .row").removeClass("in");
 			$("#statisticTabContent .row").eq(0).addClass("in");
 			$("#statisticTabContent .row").eq(0).addClass("active");
+			//图表的初始化
+			Highcharts.setOptions({  
+    			lang: {  
+        			printChart: "打印图表",
+        			downloadJPEG: "导出JPEG 图片",
+        			downloadPDF: "导出PDF文档",
+        			downloadPNG: "导出PNG 图片",
+        			downloadSVG: "导出SVG 矢量图",
+        			exportButtonTitle: "导出图片",
+       				downloadCSV:"导出excel格式文件",
+        			downloadXLS:"导出XLS格式文件",
+        			viewData:"查看数据"
+    			}  
+			});
 			getApp();
 			//getInfomation(1);
 		}
