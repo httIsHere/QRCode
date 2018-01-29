@@ -977,7 +977,7 @@
 			}
 			return l;
 		}
-		//生成图表
+		//生成扫描统计图表
 		function getCharts(user, msg) {
 			var now = $('#dateInput').val();
 			var label = preDay(now);
@@ -1115,7 +1115,7 @@
 			var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
 			var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
 			var isEdge = userAgent.indexOf("Edge") > -1; //判断是否IE的Edge浏览器
-			console.log("isIE:" + isIE + isEdge);
+			console.log("isIE:" + isIE + "isEdge:" + isEdge);
 			var d = new Date(str * 1000);
 			if(isIE || isEdge) {
 				commonTime = d.toLocaleString();
