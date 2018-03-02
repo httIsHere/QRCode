@@ -1,5 +1,10 @@
 # QRCode <br>
 
+功能优化：<br><br>
+
+- 2018-03-02 <br>
+1、用户（还需添加管理员，可手动删除警告不安全二维码，维护二维码和扫描用户的安全性）；??<br>
+
 页面UI优化：<br><br>
 
 - 2018-01-26 <br>
@@ -24,7 +29,7 @@ var swiper = new Swiper('.swiper-container', {
 		}
 	}
 });
-//new(>=4.0.0)
+//new(>=4.0.0)(实际上keyboard控制效果也会消失)
 var swiper = new Swiper('.swiper-container', {
 	keyboard: true,
 	allowTouchMove: false
