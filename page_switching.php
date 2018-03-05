@@ -1,6 +1,6 @@
 <?php  
 //页面重定向
-// session_start();
+session_start();
 
 function page_redirect($back,$path,$info)
 {
@@ -15,8 +15,11 @@ function page_redirect($back,$path,$info)
 	else
 	{
 		//重定向到指定页面
-		if (!empty($path))
+		if (!empty($path)){
+			//$str .= "alert('".$_SESSION["username"]."');";
+			//$str .= "localStorage['userId']='".$_SESSION["username"]."';localStorage['accessid']='".$_SESSION["accessID"]."';"
 			$str .= "window.location='" .$path. "';";
+		}
 	}
 	$str .= "</script>";
 	echo $str;

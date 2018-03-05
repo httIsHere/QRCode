@@ -643,7 +643,7 @@ if($result){
 			$("#sceneImage").trigger('filesuccessremove');
 			getStatisticData();
 			getApp();
-		}
+		}   
 		//----------------------文件上传输入框初始化----------------
 		//初始化fileinput控件（第一次初始化）
 		function initFileInput(ctrlName, uploadUrl) {

@@ -9,7 +9,7 @@ $qyAppId = 'wx3baa5a278d207f5e';
 $qyAppsecret = '072b4d7cf04dd25660f577d0017c6f62';
 $user=$_POST["email"];
 $password=$_POST["password"];
-$sql = "insert into YQ_ManageUser(ManageUserName, Pwd, WeChatAccount, AppID, AppSecret, status) value('$user', '$password','".$qyAccount."', '".$qyAppId."','".$qyAppsecret."', 1)";
+$sql = "insert into YQ_ManageUser(ManageUserName, Pwd, WeChatAccount, AppID, AppSecret, status, createTime) value('$user', '$password','".$qyAccount."', '".$qyAppId."','".$qyAppsecret."', 1,".time().")";
 
 logger('QRCode_signUp','log/','Log',"signup_insertSql=".$sql);
 $ret=runInsertUpdateDeleteSql($sql);
