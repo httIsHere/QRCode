@@ -348,7 +348,7 @@ if($result){
 									<br />
 									<div class="form-group">
 										<label for="appSecret">AppSecret</label>
-										<input type="text" id="AppSecret" class="form-control">
+										<input type="password" id="AppSecret" class="form-control">
 									</div>
 									<br />
 									<div class="new-row">
@@ -1929,21 +1929,25 @@ if($result){
 				success: function(data) {
 					$('.spinnerTwo').addClass('disNone');
 					//显示所用时间
-					var wechatDur, qqDur, liantuDur;
+					var wechatDur, qqDur, liantuDur,jiaDur, iclcikDur;
 					if(data.wechat == -1) {
 						wechatDur = '限制';
 					} else {
 						wechatDur = averageTime(data.wechat);
 						qqDur = averageTime(data.qq);
 						liantuDur = averageTime(data.liantu);
+						jiaDur = averageTime(data.jia);
+						iclickDur = averageTime(data.iclick);
 					}
 					weDurTime = data.wechat;
 					qqDurTime = data.qq;
 					ltDurTime = data.liantu;
+					jiaDurTime = data.jia;
+					iclickDurTime = data.iclick;
 					//weDurTime.push([parseInt(_codeNum), parseFloat(wechatDur)]);
 					//qqDurTime.push([parseInt(_codeNum), parseFloat(qqDur)]);
 					//ltDurTime.push([parseInt(_codeNum), parseFloat(liantuDur)]);
-					$('#currentResult').text('微信接口：' + wechatDur + 's, 腾讯接口：' + qqDur + 's, 联图接口：' + liantuDur + 's');
+					$('#currentResult').text('QR Code Generator接口：' + wechatDur + 's, 腾讯接口：' + qqDur + 's, 联图接口：' + liantuDur + 's, JiaThis 接口：'+jiaDur+'s, 快站接口：'+iclickDur);
 					//在图表中显示
 					testChart();
 					testChart2();
@@ -2015,7 +2019,7 @@ if($result){
 					}
 				},
 				series: [{
-						name: '微信',
+						name: 'QR Code Generator',
 						color: 'rgba(223, 83, 83, .5)',
 						data: weDurTime
 					},
@@ -2068,7 +2072,7 @@ if($result){
 					}
 				},
 				series: [{
-						name: '微信',
+						name: 'QR Code Generator',
 						color: 'rgba(223, 83, 83, .5)',
 						data: weDurTime
 					},
@@ -2081,6 +2085,16 @@ if($result){
 						name: '联图',
 						color: 'rgba(263, 192, 123, .5)',
 						data: ltDurTime
+					},
+					{
+						name: 'JiaThis',
+						color: 'rgba(263, 192, 123, .5)',
+						data: jiaDurTime
+					},
+					{
+						name: '快站',
+						color: 'rgba(263, 192, 123, .5)',
+						data: iclickDurTime
 					}
 				]
 			});

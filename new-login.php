@@ -8,23 +8,24 @@ include("page_switching.php");
 $user=$_POST["useremail"];
 $password=$_POST["userpwd"];
 
-$sql = "SELECT Pwd, ManageUserName,WeChatAccount, status FROM YQ_ManageUser WHERE ManageUserName = '$user'";
+$sql = "SELECT Pwd, ManageUserName,WeChatAccount, status, isAdmin FROM YQ_ManageUser WHERE ManageUserName = '$user'";
 
     //查询记录
 	// $result = mysqli_query($conn,$sql);
 $result = runSelectSql($sql);
 $pwd=$result[0]["Pwd"];
 $_SESSION['WeChatAccount'] = $result[0]['WeChatAccount'];
-$status = $result[0]['status'] || '1';
-$isAdmin = $result[0]['isAdmin'] || '0';
+$status = $result[0]['status'];
+$isAdmin = $result[0]['isAdmin'];
 	// echo $pwd;
     //获取当前行--一定是唯一的？
 	// $rows = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
 if ($result){
 	//邮箱是否验证
-	if($status && $status == '0'){
-		page_redirect(true,"","注册邮箱尚未验证，请验证后登录！");
+	if($status == '1'){
+		page_redirect(true,"","该账户已被停用！有问题请联系系统管理员");
+		return;
 	}
 	if ($pwd == $password){
 		//对该用户嵌入accessID
@@ -38,6 +39,7 @@ if ($result){
 		$_SESSION["userpwd"] = $pwd;
 		$sql = "UPDATE YQ_ManageUser SET AccessID = '$accessid'  WHERE ManageUserName = '$user'";
 		$result = runSelectSql($sql);
+		//echo $isAdmin;
 		if($isAdmin && $isAdmin == '1'){
 			page_redirect(false, 'new-admin.html');
 		} else {

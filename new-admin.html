@@ -9,9 +9,11 @@
 	<link href="bootstrap.min.css" rel="stylesheet">
 	<link href="animate.css" rel="stylesheet" type="text/css" media="all">
 	<link rel="stylesheet" type="text/css" href="theme.css">
+	<link rel="stylesheet" type="text/css" href="sweetalert.css">
 	<link rel="stylesheet" type="text/css" href="adminStyle.css">
 	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 	<script src="bootstrap.min.js"></script>
+	<script type="text/javascript" src="sweetalert-dev.js"></script>
 </head>
 <body>
 	<div class="container head">
@@ -37,67 +39,81 @@
 	<div class="container">
 		<div class="row">
 			<div class="span12">
-				<div class="content">
+				<div class="content">					
+					<div id="demo">
+						<div id="indemo">
+							<div id="demo1">
+								<ul>
+	           						<li><p style="text-align:center;">message</p></li>
+         							<li><p style="text-align:center;">message</p></li>
+          						</ul>
+          					</div>
+							<div id="demo2">
+								<ul>
+	           						<li><p style="text-align:center;">message</p></li>
+         							<li><p style="text-align:center;">message</p></li>
+          						</ul>
+          					</div>
+						</div>
+					</div>
+					<script>
+						var speed=20;
+						var tab=document.getElementById("demo");
+						var tab1=document.getElementById("demo1");
+						var tab2=document.getElementById("demo2");
+						tab2.innerHTML=tab1.innerHTML;
+						//向左滚动
+						function Marquee(){
+							if(tab2.offsetWidth-tab.scrollLeft<=0)
+								tab.scrollLeft-=tab1.offsetWidth
+							else{
+								tab.scrollLeft++;
+							}
+						}
+						//向右滚动
+						function Marquee2(){
+ 							if(tab.scrollLeft<=0)
+ 								tab.scrollLeft+=demo2.offsetWidth
+ 							else{
+ 								tab.scrollLeft--
+ 							}
+ 						}
+						var MyMar=setInterval(Marquee,speed);
+//						tab.onmouseover=function() {clearInterval(MyMar)};
+//						tab.onmouseout=function() {MyMar=setInterval(Marquee,speed)};
+					</script>
 					<div class="btn-controls">
 						<div class="btn-box-row row-fluid">
-							<a href="#" class="btn-box big span3"><i class=" icon-random"></i><b>65%</b><p class="text-muted">用户增长率</p></a>
-							<a href="#" class="btn-box big span3"><i class="icon-user"></i><b>15</b><p class="text-muted">新用户个数</p></a>
-							<a href="#" class="btn-box big span3"><i class="icon-money"></i><b>15,152</b><p class="text-muted">新二维码个数</p></a>
-							<a href="#" class="btn-box big span3"><i class="icon-money"></i><b>20%</b><p class="text-muted">二维码增长率</p></a>
+							<a href="javascript:;" class="btn-box big span3 totalUser"><i></i><p class="text-muted">总用户数</p></a>
+							<a href="javascript:;" class="btn-box big span3 totalCode"><i></i><p class="text-muted">总二维码数</p></a>
+							<a href="javascript:;" class="btn-box big span3 totalScan"><i></i><p class="text-muted">总扫描次数</p></a>
+							<a href="javascript:;" class="btn-box big span3 scanUser"><i></i><p class="text-muted">总扫描用户数</p></a>
 						</div>
 						<div class="btn-box-row row-fluid">
 							<div class="span8">
 								<div class="row-fluid">
 									<div class="span12">
-										<a href="#" class="btn-box small span4"><i class="icon-envelope"></i><b>Messages</b>
-										</a><a href="#" class="btn-box small span4"><i class="icon-group"></i><b>Clients</b>
-										</a><a href="#" class="btn-box small span4"><i class="icon-exchange"></i><b>Expenses</b>
-										</a>
-									</div>
-								</div>
-								<div class="row-fluid">
-									<div class="span12">
-										<a href="#" class="btn-box small span4"><i class="icon-save"></i><b>Total Sales</b>
-										</a><a href="#" class="btn-box small span4"><i class="icon-bullhorn"></i><b>Social Feed</b>
-										</a><a href="#" class="btn-box small span4"><i class="icon-sort-down"></i><b>Bounce
-										Rate</b> </a>
+										<a href="#" class="btn-box small span6 newUser"><i></i><b>今日新增用户</b></a>
+										<a href="#" class="btn-box small span6 newScan"><i></i><b>今日新增扫描</b></a>
 									</div>
 								</div>
 							</div>
 							<ul class="widget widget-usage unstyled span4">
 								<li>
 									<p>
-										<strong>Windows 8</strong> <span class="pull-right small muted">78%</span>
+										<strong>用户新增率</strong> <span class="pull-right small muted userRate"></span>
 									</p>
-									<div class="progress tight">
-										<div class="bar" style="width: 78%;">
+									<div class="progress tight userRateBar">
+										<div class="bar" style="width: 0%;">
 										</div>
 									</div>
 								</li>
 								<li>
 									<p>
-										<strong>Mac</strong> <span class="pull-right small muted">56%</span>
+										<strong>扫描新增率</strong> <span class="pull-right small muted scanRate"></span>
 									</p>
-									<div class="progress tight">
-										<div class="bar bar-success" style="width: 56%;">
-										</div>
-									</div>
-								</li>
-								<li>
-									<p>
-										<strong>Linux</strong> <span class="pull-right small muted">44%</span>
-									</p>
-									<div class="progress tight">
-										<div class="bar bar-warning" style="width: 44%;">
-										</div>
-									</div>
-								</li>
-								<li>
-									<p>
-										<strong>iPhone</strong> <span class="pull-right small muted">67%</span>
-									</p>
-									<div class="progress tight">
-										<div class="bar bar-danger" style="width: 67%;">
+									<div class="progress tight scanRateBar">
+										<div class="bar bar-success" style="width: 0%;">
 										</div>
 									</div>
 								</li>
@@ -107,8 +123,7 @@
 					<!--/#btn-controls-->
 					<div class="module">
 						<div class="module-head">
-							<h3>
-							Profit Chart</h3>
+							<h3>Profit Chart</h3>
 						</div>
 						<div class="module-body">
 							<div class="chart inline-legend grid">
@@ -136,1024 +151,39 @@
 							</div>
 						</div>
 					</div>
-					<div class="copyrights">Collect from <a href="http://www.cssmoban.com/" title="模板之家">模板之家</a></div>
 					<div class="module">
 						<div class="module-head">
-							<h3>
-							DataTables</h3>
+							<h3>用户列表</h3>
 						</div>
 						<div class="module-body table">
-							<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display"
+							<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	display"
 							width="100%">
 							<thead>
 								<tr>
-									<th>
-										Rendering engine
-									</th>
-									<th>
-										Browser
-									</th>
-									<th>
-										Platform(s)
-									</th>
-									<th>
-										Engine version
-									</th>
-									<th>
-										CSS grade
-									</th>
+									<th>用户</th>
+									<th>微信公众号</th>
+									<th>注册时间</th>
+									<!-- <th>生成二维码个数</th> -->
+									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr class="odd gradeX">
-									<td>
-										Trident
-									</td>
-									<td>
-										Internet Explorer 4.0
-									</td>
-									<td>
-										Win 95+
-									</td>
-									<td class="center">
-										4
-									</td>
-									<td class="center">
-										X
-									</td>
-								</tr>
-								<tr class="even gradeC">
-									<td>
-										Trident
-									</td>
-									<td>
-										Internet Explorer 5.0
-									</td>
-									<td>
-										Win 95+
-									</td>
-									<td class="center">
-										5
-									</td>
-									<td class="center">
-										C
-									</td>
-								</tr>
-								<tr class="odd gradeA">
-									<td>
-										Trident
-									</td>
-									<td>
-										Internet Explorer 5.5
-									</td>
-									<td>
-										Win 95+
-									</td>
-									<td class="center">
-										5.5
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="even gradeA">
-									<td>
-										Trident
-									</td>
-									<td>
-										Internet Explorer 6
-									</td>
-									<td>
-										Win 98+
-									</td>
-									<td class="center">
-										6
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="odd gradeA">
-									<td>
-										Trident
-									</td>
-									<td>
-										Internet Explorer 7
-									</td>
-									<td>
-										Win XP SP2+
-									</td>
-									<td class="center">
-										7
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="even gradeA">
-									<td>
-										Trident
-									</td>
-									<td>
-										AOL browser (AOL desktop)
-									</td>
-									<td>
-										Win XP
-									</td>
-									<td class="center">
-										6
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Firefox 1.0
-									</td>
-									<td>
-										Win 98+ / OSX.2+
-									</td>
-									<td class="center">
-										1.7
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Firefox 1.5
-									</td>
-									<td>
-										Win 98+ / OSX.2+
-									</td>
-									<td class="center">
-										1.8
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Firefox 2.0
-									</td>
-									<td>
-										Win 98+ / OSX.2+
-									</td>
-									<td class="center">
-										1.8
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Firefox 3.0
-									</td>
-									<td>
-										Win 2k+ / OSX.3+
-									</td>
-									<td class="center">
-										1.9
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Camino 1.0
-									</td>
-									<td>
-										OSX.2+
-									</td>
-									<td class="center">
-										1.8
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Camino 1.5
-									</td>
-									<td>
-										OSX.3+
-									</td>
-									<td class="center">
-										1.8
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Netscape 7.2
-									</td>
-									<td>
-										Win 95+ / Mac OS 8.6-9.2
-									</td>
-									<td class="center">
-										1.7
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Netscape Browser 8
-									</td>
-									<td>
-										Win 98SE+
-									</td>
-									<td class="center">
-										1.7
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Netscape Navigator 9
-									</td>
-									<td>
-										Win 98+ / OSX.2+
-									</td>
-									<td class="center">
-										1.8
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Mozilla 1.0
-									</td>
-									<td>
-										Win 95+ / OSX.1+
-									</td>
-									<td class="center">
-										1
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Mozilla 1.1
-									</td>
-									<td>
-										Win 95+ / OSX.1+
-									</td>
-									<td class="center">
-										1.1
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Mozilla 1.2
-									</td>
-									<td>
-										Win 95+ / OSX.1+
-									</td>
-									<td class="center">
-										1.2
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Mozilla 1.3
-									</td>
-									<td>
-										Win 95+ / OSX.1+
-									</td>
-									<td class="center">
-										1.3
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Mozilla 1.4
-									</td>
-									<td>
-										Win 95+ / OSX.1+
-									</td>
-									<td class="center">
-										1.4
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Mozilla 1.5
-									</td>
-									<td>
-										Win 95+ / OSX.1+
-									</td>
-									<td class="center">
-										1.5
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Mozilla 1.6
-									</td>
-									<td>
-										Win 95+ / OSX.1+
-									</td>
-									<td class="center">
-										1.6
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Mozilla 1.7
-									</td>
-									<td>
-										Win 98+ / OSX.1+
-									</td>
-									<td class="center">
-										1.7
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Mozilla 1.8
-									</td>
-									<td>
-										Win 98+ / OSX.1+
-									</td>
-									<td class="center">
-										1.8
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Seamonkey 1.1
-									</td>
-									<td>
-										Win 98+ / OSX.2+
-									</td>
-									<td class="center">
-										1.8
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Gecko
-									</td>
-									<td>
-										Epiphany 2.20
-									</td>
-									<td>
-										Gnome
-									</td>
-									<td class="center">
-										1.8
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Webkit
-									</td>
-									<td>
-										Safari 1.2
-									</td>
-									<td>
-										OSX.3
-									</td>
-									<td class="center">
-										125.5
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Webkit
-									</td>
-									<td>
-										Safari 1.3
-									</td>
-									<td>
-										OSX.3
-									</td>
-									<td class="center">
-										312.8
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Webkit
-									</td>
-									<td>
-										Safari 2.0
-									</td>
-									<td>
-										OSX.4+
-									</td>
-									<td class="center">
-										419.3
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Webkit
-									</td>
-									<td>
-										Safari 3.0
-									</td>
-									<td>
-										OSX.4+
-									</td>
-									<td class="center">
-										522.1
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Webkit
-									</td>
-									<td>
-										OmniWeb 5.5
-									</td>
-									<td>
-										OSX.4+
-									</td>
-									<td class="center">
-										420
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Webkit
-									</td>
-									<td>
-										iPod Touch / iPhone
-									</td>
-									<td>
-										iPod
-									</td>
-									<td class="center">
-										420.1
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Webkit
-									</td>
-									<td>
-										S60
-									</td>
-									<td>
-										S60
-									</td>
-									<td class="center">
-										413
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Opera 7.0
-									</td>
-									<td>
-										Win 95+ / OSX.1+
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Opera 7.5
-									</td>
-									<td>
-										Win 95+ / OSX.2+
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Opera 8.0
-									</td>
-									<td>
-										Win 95+ / OSX.2+
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Opera 8.5
-									</td>
-									<td>
-										Win 95+ / OSX.2+
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Opera 9.0
-									</td>
-									<td>
-										Win 95+ / OSX.3+
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Opera 9.2
-									</td>
-									<td>
-										Win 88+ / OSX.3+
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Opera 9.5
-									</td>
-									<td>
-										Win 88+ / OSX.3+
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Opera for Wii
-									</td>
-									<td>
-										Wii
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Nokia N800
-									</td>
-									<td>
-										N800
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Presto
-									</td>
-									<td>
-										Nintendo DS browser
-									</td>
-									<td>
-										Nintendo DS
-									</td>
-									<td class="center">
-										8.5
-									</td>
-									<td class="center">
-										C/A<sup>1</sup>
-									</td>
-								</tr>
-								<tr class="gradeC">
-									<td>
-										KHTML
-									</td>
-									<td>
-										Konqureror 3.1
-									</td>
-									<td>
-										KDE 3.1
-									</td>
-									<td class="center">
-										3.1
-									</td>
-									<td class="center">
-										C
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										KHTML
-									</td>
-									<td>
-										Konqureror 3.3
-									</td>
-									<td>
-										KDE 3.3
-									</td>
-									<td class="center">
-										3.3
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										KHTML
-									</td>
-									<td>
-										Konqureror 3.5
-									</td>
-									<td>
-										KDE 3.5
-									</td>
-									<td class="center">
-										3.5
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeX">
-									<td>
-										Tasman
-									</td>
-									<td>
-										Internet Explorer 4.5
-									</td>
-									<td>
-										Mac OS 8-9
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										X
-									</td>
-								</tr>
-								<tr class="gradeC">
-									<td>
-										Tasman
-									</td>
-									<td>
-										Internet Explorer 5.1
-									</td>
-									<td>
-										Mac OS 7.6-9
-									</td>
-									<td class="center">
-										1
-									</td>
-									<td class="center">
-										C
-									</td>
-								</tr>
-								<tr class="gradeC">
-									<td>
-										Tasman
-									</td>
-									<td>
-										Internet Explorer 5.2
-									</td>
-									<td>
-										Mac OS 8-X
-									</td>
-									<td class="center">
-										1
-									</td>
-									<td class="center">
-										C
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Misc
-									</td>
-									<td>
-										NetFront 3.1
-									</td>
-									<td>
-										Embedded devices
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										C
-									</td>
-								</tr>
-								<tr class="gradeA">
-									<td>
-										Misc
-									</td>
-									<td>
-										NetFront 3.4
-									</td>
-									<td>
-										Embedded devices
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										A
-									</td>
-								</tr>
-								<tr class="gradeX">
-									<td>
-										Misc
-									</td>
-									<td>
-										Dillo 0.8
-									</td>
-									<td>
-										Embedded devices
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										X
-									</td>
-								</tr>
-								<tr class="gradeX">
-									<td>
-										Misc
-									</td>
-									<td>
-										Links
-									</td>
-									<td>
-										Text only
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										X
-									</td>
-								</tr>
-								<tr class="gradeX">
-									<td>
-										Misc
-									</td>
-									<td>
-										Lynx
-									</td>
-									<td>
-										Text only
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										X
-									</td>
-								</tr>
-								<tr class="gradeC">
-									<td>
-										Misc
-									</td>
-									<td>
-										IE Mobile
-									</td>
-									<td>
-										Windows Mobile 6
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										C
-									</td>
-								</tr>
-								<tr class="gradeC">
-									<td>
-										Misc
-									</td>
-									<td>
-										PSP browser
-									</td>
-									<td>
-										PSP
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										C
-									</td>
-								</tr>
-								<tr class="gradeU">
-									<td>
-										Other browsers
-									</td>
-									<td>
-										All others
-									</td>
-									<td>
-										-
-									</td>
-									<td class="center">
-										-
-									</td>
-									<td class="center">
-										U
-									</td>
+							<tbody class="userList">
+								<tr>
+									<td>11111111111111</td>
+									<td>11111111111111</td>
+									<td>11111111111111</td>
+									<td><input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td>
 								</tr>
 							</tbody>
-							<tfoot>
+							<!-- <tfoot>
 								<tr>
-									<th>
-										Rendering engine
-									</th>
-									<th>
-										Browser
-									</th>
-									<th>
-										Platform(s)
-									</th>
-									<th>
-										Engine version
-									</th>
-									<th>
-										CSS grade
+									<th colspan="3" style="text-align: right;">
+										<a href="javascript:;" id="lastPage">上一页</a>
+										<a href="javascript:;" id="nowPage">第<b></b>页</a>
+										<a href="javascript:;" id="nextPage">下一页</a>
 									</th>
 								</tr>
-							</tfoot>
+							</tfoot> -->
 						</table>
 					</div>
 				</div>
@@ -1166,6 +196,7 @@
 </div>
 </body>
 <script type="text/javascript">
+	var opAccount;
 	$(".nav1 .hvr-sweep-to-bottom").click(function() {
 		$(".nav1 .hvr-sweep-to-bottom").removeClass("active");
 		$(this).addClass('active');
@@ -1185,7 +216,103 @@
 			}
 		});
 	};
-	//显示用户列表
+	//初始化数据
+	adminOperation.prototype.initData = function() {
+		$.ajax({
+			type: "post",
+			url: "adminMidFunc.php",
+			dataType: "json",
+			data: {
+				type: 0
+			},
+			success: function(data){
+				//data = eval("("+data+")");
+				$('.totalUser i').text(data.totalUser);
+				$('.totalCode i').text(data.totalCode);
+				$('.totalScan i').text(data.totalScan);
+				$('.scanUser i').text(data.totalScanUser);
+				$('.newUser i').text(data.newUsers);
+				$('.newScan i').text(data.newScan);
+				$('.userRate').text(data.userRate.toFixed(2)*100+'%');
+				$('.scanRate').text(data.scanRate.toFixed(2)*100+'%');
+				$('.userRateBar .bar').css('width', data.userRate.toFixed(2)*100+'%');
+				$('.scanRateBar .bar').css('width', data.scanRate.toFixed(2)*100+'%');
 
-</script>
-</html>
+				// 用户列表
+				var list = '';
+				var l = data.userList;
+				for(var i = 0; i < l.length; i++){
+					var name = l[i].ManageUserName || '-';
+					var account = l[i].WeChatAccount || '-';
+					list += '<tr class="odd gradeX"><td>'+name+'</td><td>'+account+'</td><td>'+formatMyTime(l[i].createTime)+'</td><td><input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td></tr>';
+				}
+				$('.userList').html(list);
+			}
+		});
+	}
+
+	adminOperation.prototype.operateAccount = function(tp){
+		$.ajax({
+			type: 'post',
+			url: 'adminMidFunc.php',
+			dataType: 'json',
+			data: {
+				type: 1,
+				tp: tp,
+				acnt: opAccount
+			},
+			success: function(data){
+				swal("删除！", "你的虚拟文件已经被删除。", "success");
+			}
+		})
+	}
+
+	//弹窗
+	adminOperation.prototype.myAlert = function(tit, txt, func, arg){
+		swal({ 
+  			title: tit, 
+  			text: txt, 
+  			type: "warning",
+  			showCancelButton: true, 
+  			confirmButtonColor: "#DD6B55",
+  			confirmButtonText: "确定", 
+  			cancelButtonText: "取消",
+  			closeOnConfirm: false
+		},
+		function(){
+			func(arg);
+		});
+	}
+
+	$(function(){
+		var admin = new adminOperation();
+		admin.initData();		
+		$('.stopAcnt').bind('click', function(){
+			admin.myAlert("", "确定停用该账户？", admin.operateAccount, 1);
+		});
+		$('.coverAcnt').bind('click', function(){
+			admin.myAlert("", "确定恢复该账户？", admin.operateAccount, 0);
+		});
+		$('.resetAcnt').bind('click', function(){
+			admin.myAlert("", "确定重置该账户密码？", admin.operateAccount, 2);
+		});
+	});
+
+	//时间格式化
+	function formatMyTime(str) {
+		var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+		var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+		var isEdge = userAgent.indexOf("Edge") > -1; //判断是否IE的Edge浏览器
+		console.log("isIE:" + isIE + isEdge);
+		var d = new Date(str * 1000);
+		if(isIE || isEdge) {
+			commonTime = d.toLocaleString();
+		} else
+		commonTime = d.toLocaleString('chinese', {
+			hour12: false
+		});
+		return commonTime;
+	}
+
+	</script>
+	</html>

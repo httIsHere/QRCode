@@ -2070,3 +2070,21 @@ ul.grid-part {
  margin-top: 2rem;
 }
 }
+.table th, .table td{text-align: center;}
+.table a{color: #88c1bc;}
+
+.animate span{list-style: none; display: inline-block;}
+.animate{width: 10rem;height: 1.2rem;overflow: hidden;}
+.animate div{width: 40rem;margin-left: 9rem; animation: mymove 15s infinite;}
+@keyframes mymove {from{margin-left: 9rem;} to{margin-left: -30rem;}}
+
+#demo{ /*width:960px;*/ overflow:hidden; height:80px; }
+#demo ul{ overflow: hidden; list-style: none; padding-top:30px}
+#demo1 ul li,#demo2 ul li{ float:left; padding:4px 5px 0px 5px;text-align:center; border:2px solid #fff }
+#demo1 ul li a span,#demo2 ul li a span{background:#FFF; display:block }
+#indemo{ float:left; width:800%}
+#demo1{ float:left}
+#demo2{ float:left}
+
+/*操作按钮*/
+.userList .btn{width: 40px; height: 25px; font-size: 12px; padding: 0; margin-right: 10px;}

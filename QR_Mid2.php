@@ -164,26 +164,28 @@ include("uploadImgToWX.php");
 				# 需要将时间测试生成的结果下载到本地（导入曲线拟合代码中，得出曲线参数）
 				$text = $num."\n";
 				//微信
-				if($num <= 200){
+				// if($num <= 200){
 					$wechatDur = array();
 					$wechatDur[] = 0;
+					$start2 = microtime(true);
 					for($i = 1000000000; $i < (1000000000+$num); $i++){
-						$start2 = microtime(true);
-						$qrCodeInfo=getTicketOfQrcode($account,$appId,$appS,$i);
+						//$qrCodeInfo=getTicketOfQrcode($account,$appId,$appS,$i);
+						//改为其他接口-QR Code Generator(https接口)
+						getQRCodeTest('https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=', $i);
 						$end2 = microtime(true);
 						$wechatDur[] = round(($end2 - $start2)*1000);
 					}
-				}
-				else {
-					$wechatDur = -1;
-				}
+				// }
+				// else {
+				// 	$wechatDur = -1;
+				// }
 				$text = $text.json_encode($wechatDur)."\n";
 				//腾讯(不支持https)
 				//http://mobile.qq.com/qrcode?url=
 				$qqDur = array();
 				$qqDur[] = 0;
+				$start3 = microtime(true);
 				for($i = 1000000000; $i < (1000000000+$num); $i++){
-					$start3 = microtime(true);
 					getQRCodeTest('http://mobile.qq.com/qrcode?url=', $i);
 					$end3 = microtime(true);
 					$qqDur[] = round(($end3 - $start3)*1000);
@@ -193,13 +195,36 @@ include("uploadImgToWX.php");
 				//联图
 				$liantuDur = array();
 				$liantuDur[] = 0;
+				$start4 = microtime(true);
 				for($i = 1000000000; $i < (1000000000+$num); $i++){
-					$start4 = microtime(true);
-					getQRCodeTest('http://qr.liantu.com/api.php?&w=200&text=', $i);
+					getQRCodeTest("http://qr.liantu.com/api.php?&w=200&text=", $i);
 					$end4 = microtime(true);
 					$liantuDur[] = round(($end4 - $start4)*1000);
 				}				
 				$text = $text.json_encode($liantuDur);
+
+				//JiaThis 接口(无https)
+				$jiaDur = array();
+				$jiaDur[] = 0;
+				$start5 = microtime(true);
+				for($i = 1000000000; $i < (1000000000+$num); $i++){
+					getQRCodeTest('http://s.jiathis.com/qrcode.php?url=', $i);
+					$end5 = microtime(true);
+					$jiaDur[] = round(($end5 - $start5)*1000);
+				}				
+				$text = $text.json_encode($jiaDur);
+
+				//快站接口 (无https)
+				$iclickDur = array();
+				$iclickDur[] = 0;
+				$start6 = microtime(true);
+				for($i = 1000000000; $i < (1000000000+$num); $i++){
+					getQRCodeTest('http://www.kuaizhan.com/common/encode-png?large=true&data=', $i);
+					$end4 = microtime(true);
+					$iclickDur[] = round(($end6 - $start6)*1000);
+				}				
+				$text = $text.json_encode($iclickDur);
+
 				$filename = 'timeDur.txt';
 				$myfile = fopen($filename, "w");
 				fwrite($myfile, $text);
@@ -209,6 +234,8 @@ include("uploadImgToWX.php");
 				$res['wechat'] = $wechatDur;
 				$res['qq'] = $qqDur;
 				$res['liantu'] = $liantuDur;
+				$res['jia'] = $jiaDur;
+				$res['iclick'] = $iclickDur;
 				$replyStr = json_encode($res);
 				break;
 		default:
