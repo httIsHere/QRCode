@@ -27,7 +27,7 @@ switch ($type) {
 		$data['scanRate'] = $newScan / ($totalScan - $newScan);
 
 		# 用户列表
-		$sql = "select ManageUserName, WeChatAccount, createTime from YQ_ManageUser";
+		$sql = "select ManageUserName, WeChatAccount, createTime, status from YQ_ManageUser";
 		$result = runSelectSql($sql);
 		$data['userList'] = $result;
 
@@ -37,14 +37,34 @@ switch ($type) {
 	case 1:
 		#账户操作
 		$tp=(integer)$_POST['tp'];
-		$opAccount = $_POST['account'];
+		$opAccount = $_POST['acnt'];
 		if($tp == 1){
 			# stop
 			$sql = "update YQ_ManageUser set status=1 where ManageUserName='$opAccount'";
+			$result = runSelectSql($sql);
+			if(count($result)){
+				$replyStr = 1;
+			} else {
+				$replyStr = 0;
+			}
 		} else if($tp == 0){
 			# recover
+			$sql = "update YQ_ManageUser set status=0 where ManageUserName='$opAccount'";
+			$result = runSelectSql($sql);
+			if(count($result)){
+				$replyStr = 1;
+			} else {
+				$replyStr = 0;
+			}
 		} else if($tp == 2){
 			# reset password
+			$sql = "update YQ_ManageUser set pwd=123456 where ManageUserName='$opAccount'";
+			$result = runSelectSql($sql);
+			if(count($result)){
+				$replyStr = 1;
+			} else {
+				$replyStr = 0;
+			}
 		}
 		break;
 }

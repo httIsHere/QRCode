@@ -216,8 +216,49 @@
 			}
 		});
 	};
+
+	//账户操作
+	adminOperation.prototype.operateAccount = function(tp){
+		$.ajax({
+			type: 'post',
+			url: 'adminMidFunc.php',
+			dataType: 'json',
+			data: {
+				type: 1,
+				tp: tp,
+				acnt: opAccount
+			},
+			success: function(data){
+				if(tp == 1){
+					swal("", "该账户停用成功", "success");
+				} else if(tp == 0){
+					swal("", "该账户恢复成功", "success");
+				} else if(tp == 2){
+					swal("", "该账户密码重置成功", "success");
+				}
+			}
+		})
+	}
+
+	//弹窗
+	adminOperation.prototype.myAlert = function(tit, txt, func, arg){
+		swal({ 
+  			title: tit, 
+  			text: txt, 
+  			type: "warning",
+  			showCancelButton: true, 
+  			confirmButtonColor: "#DD6B55",
+  			confirmButtonText: "确定", 
+  			cancelButtonText: "取消",
+  			closeOnConfirm: false
+		},
+		function(){
+			func(arg);
+		});
+	}
 	//初始化数据
 	adminOperation.prototype.initData = function() {
+		var $this = this;
 		$.ajax({
 			type: "post",
 			url: "adminMidFunc.php",
@@ -244,58 +285,39 @@
 				for(var i = 0; i < l.length; i++){
 					var name = l[i].ManageUserName || '-';
 					var account = l[i].WeChatAccount || '-';
-					list += '<tr class="odd gradeX"><td>'+name+'</td><td>'+account+'</td><td>'+formatMyTime(l[i].createTime)+'</td><td><input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td></tr>';
+					list += '<tr class="odd gradeX"><td>'+name+'</td><td>'+account+'</td><td>'+formatMyTime(l[i].createTime)+'</td>';
+					if(l[i].status == "1"){
+						list+='<td><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td></tr>';
+					} else if(l[i].status == "0"){
+						list+='<td><input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td></tr>';
+					} else {
+						list+='<td><input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td></tr>';
+					}
+					
 				}
 				$('.userList').html(list);
+				$('.stopAcnt').bind('click', function(){
+					var _this = $(this);
+					opAccount = _this.parent().parent().children('td:eq(0)').text();
+					$this.myAlert("", "确定停用该账户？", $this.operateAccount, 1);
+				});
+				$('.coverAcnt').bind('click', function(){
+					var _this = $(this);
+					opAccount = _this.parent().parent().children('td:eq(0)').text();
+					$this.myAlert("", "确定恢复该账户？", $this.operateAccount, 0);
+				});
+				$('.resetAcnt').bind('click', function(){
+					var _this = $(this);
+					opAccount = _this.parent().parent().children('td:eq(0)').text();
+					$this.myAlert("", "确定重置该账户密码？", $this.operateAccount, 2);
+				});
 			}
-		});
-	}
-
-	adminOperation.prototype.operateAccount = function(tp){
-		$.ajax({
-			type: 'post',
-			url: 'adminMidFunc.php',
-			dataType: 'json',
-			data: {
-				type: 1,
-				tp: tp,
-				acnt: opAccount
-			},
-			success: function(data){
-				swal("删除！", "你的虚拟文件已经被删除。", "success");
-			}
-		})
-	}
-
-	//弹窗
-	adminOperation.prototype.myAlert = function(tit, txt, func, arg){
-		swal({ 
-  			title: tit, 
-  			text: txt, 
-  			type: "warning",
-  			showCancelButton: true, 
-  			confirmButtonColor: "#DD6B55",
-  			confirmButtonText: "确定", 
-  			cancelButtonText: "取消",
-  			closeOnConfirm: false
-		},
-		function(){
-			func(arg);
 		});
 	}
 
 	$(function(){
 		var admin = new adminOperation();
-		admin.initData();		
-		$('.stopAcnt').bind('click', function(){
-			admin.myAlert("", "确定停用该账户？", admin.operateAccount, 1);
-		});
-		$('.coverAcnt').bind('click', function(){
-			admin.myAlert("", "确定恢复该账户？", admin.operateAccount, 0);
-		});
-		$('.resetAcnt').bind('click', function(){
-			admin.myAlert("", "确定重置该账户密码？", admin.operateAccount, 2);
-		});
+		admin.initData();
 	});
 
 	//时间格式化
