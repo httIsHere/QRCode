@@ -14,6 +14,8 @@
 	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 	<script src="bootstrap.min.js"></script>
 	<script type="text/javascript" src="sweetalert-dev.js"></script>
+	<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
 	<div class="container head">
@@ -44,16 +46,16 @@
 						<div id="indemo">
 							<div id="demo1">
 								<ul>
-	           						<li><p style="text-align:center;">message</p></li>
-         							<li><p style="text-align:center;">message</p></li>
-          						</ul>
-          					</div>
+									<li><p style="text-align:center;">message</p></li>
+									<li><p style="text-align:center;">message</p></li>
+								</ul>
+							</div>
 							<div id="demo2">
 								<ul>
-	           						<li><p style="text-align:center;">message</p></li>
-         							<li><p style="text-align:center;">message</p></li>
-          						</ul>
-          					</div>
+									<li><p style="text-align:center;">message</p></li>
+									<li><p style="text-align:center;">message</p></li>
+								</ul>
+							</div>
 						</div>
 					</div>
 					<script>
@@ -62,7 +64,6 @@
 						var tab1=document.getElementById("demo1");
 						var tab2=document.getElementById("demo2");
 						tab2.innerHTML=tab1.innerHTML;
-						//向左滚动
 						function Marquee(){
 							if(tab2.offsetWidth-tab.scrollLeft<=0)
 								tab.scrollLeft-=tab1.offsetWidth
@@ -70,17 +71,14 @@
 								tab.scrollLeft++;
 							}
 						}
-						//向右滚动
 						function Marquee2(){
- 							if(tab.scrollLeft<=0)
- 								tab.scrollLeft+=demo2.offsetWidth
- 							else{
- 								tab.scrollLeft--
- 							}
- 						}
+							if(tab.scrollLeft<=0)
+								tab.scrollLeft+=demo2.offsetWidth
+							else{
+								tab.scrollLeft--
+							}
+						}
 						var MyMar=setInterval(Marquee,speed);
-//						tab.onmouseover=function() {clearInterval(MyMar)};
-//						tab.onmouseout=function() {MyMar=setInterval(Marquee,speed)};
 					</script>
 					<div class="btn-controls">
 						<div class="btn-box-row row-fluid">
@@ -123,11 +121,11 @@
 					<!--/#btn-controls-->
 					<div class="module">
 						<div class="module-head">
-							<h3>Profit Chart</h3>
+							<h3>扫描统计（近一周）</h3>
 						</div>
 						<div class="module-body">
 							<div class="chart inline-legend grid">
-								<div id="placeholder2" class="graph" style="height: 500px">
+								<div id="mychart1" class="graph" style="height: 500px">
 								</div>
 							</div>
 						</div>
@@ -243,17 +241,53 @@
 	//弹窗
 	adminOperation.prototype.myAlert = function(tit, txt, func, arg){
 		swal({ 
-  			title: tit, 
-  			text: txt, 
-  			type: "warning",
-  			showCancelButton: true, 
-  			confirmButtonColor: "#DD6B55",
-  			confirmButtonText: "确定", 
-  			cancelButtonText: "取消",
-  			closeOnConfirm: false
+			title: tit, 
+			text: txt, 
+			type: "warning",
+			showCancelButton: true, 
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "确定", 
+			cancelButtonText: "取消",
+			closeOnConfirm: false
 		},
 		function(){
 			func(arg);
+		});
+	}
+	//生成图表
+	adminOperation.prototype.getCharts = function(user, msg) {
+		var now = nowFm();
+		console.log(now);
+		var label = preDay(now);
+		var chart = new Highcharts.Chart('mychart1', {
+			chart: {
+				type: 'column'
+			},
+			title: {
+				text: '数据统计'
+			},
+			xAxis: {
+				categories: label
+			},
+			yAxis: {
+				title: {
+					text: '每日扫描用户量/扫描次数'
+				},
+				allowDecimals: false,
+				min: 0,
+				minRange: 1
+			},
+			series: [{
+				name: '扫描用户量',
+				color: '#ffa579',
+				data: user
+			}, {
+				name: '扫描次数',
+				data: msg
+			}],
+			credits: {
+				enabled: false
+			}
 		});
 	}
 	//初始化数据
@@ -278,6 +312,9 @@
 				$('.scanRate').text(data.scanRate.toFixed(2)*100+'%');
 				$('.userRateBar .bar').css('width', data.userRate.toFixed(2)*100+'%');
 				$('.scanRateBar .bar').css('width', data.scanRate.toFixed(2)*100+'%');
+
+				//扫描图表
+				$this.getCharts(data.userNum, data.msgNum);
 
 				// 用户列表
 				var list = '';
@@ -317,6 +354,7 @@
 
 	$(function(){
 		var admin = new adminOperation();
+		//admin.getCharts([1,1], [2,2]);
 		admin.initData();
 	});
 
@@ -335,6 +373,35 @@
 		});
 		return commonTime;
 	}
+	//当前时间格式化xx（月）-xx
+	function nowFm(){
+		var _time = new Date();
+		var _y = _time.getFullYear();
+		var _m = _time.getMonth()+1;
+		var _d = _time.getDate();
+		return _y+'-'+_m+'-'+_d;
+	}
+	function preDay(now) {
+		var l = new Array();
+		if(now.indexOf("-") >= 0)
+			var data = now.split("-");
+		else var data = now.split("/");
+		var year = data[0];
+		var month = data[1];
+		var day = data[2];
+		var dd = new Date();
+		var d = new Date(year, month - 1, day);
+			// console.log(year+"-"+month+"-"+day);
+			for(var i = 29; i >= 0; i--) {
+				dd.setTime(d.getTime() - 24 * 60 * 60 * 1000 * i);
+				var y = dd.getFullYear();
+				var m = dd.getMonth() + 1;
+				var d2 = dd.getDate();
+				// console.log(dd+"~"+m);
+				l.push(([y, m, d2].join('-')));
+			}
+			return l;
+		}
 
 	</script>
 	</html>
