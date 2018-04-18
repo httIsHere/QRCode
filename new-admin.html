@@ -330,7 +330,9 @@
 			//定义正则表示式对象
 			//利用RegExp可以动态生成正则表示式
 			var pattern = new RegExp("("+re+")", "g");
-			var _result = str.match(pattern);
+//			console.log(pattern);
+//			var _result = str.match(pattern);
+//			console.log(_result);
 			var _newstr = str.replace(pattern, "<font color=red>$1</font>"); 
 			return _newstr;
 		}
