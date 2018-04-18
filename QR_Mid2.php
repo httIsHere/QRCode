@@ -11,7 +11,6 @@ include("uploadImgToWX.php");
 	switch($type)
 	{
 		case 0:
-				// $qrCodeInfo=runSelectSql("select SceneID,SceneName,SceneDescription,SceneImg, SceneUrl,QRCodeImgFileName,Ticket,SceneImage from qydt_QRCode where ManageUserName='$webuser' order by SceneID desc");
 				$qrCodeInfo=runSelectSql("select SceneID,SceneName,SceneDescription,SceneImg, Ticket,SceneImage,SceneUrl,QRCodeImgFileName from YQ_QRCode where ManageUserName='$webuser' and Ticket is not null and Ticket <> '' order by SceneID desc");
 				$replyStr=json_encode($qrCodeInfo);
 				break;
@@ -208,22 +207,22 @@ include("uploadImgToWX.php");
 				$jiaDur[] = 0;
 				$start5 = microtime(true);
 				for($i = 1000000000; $i < (1000000000+$num); $i++){
-					getQRCodeTest('http://s.jiathis.com/qrcode.php?url=', $i);
+					getQRCodeTest('http://www.kuaizhan.com/common/encode-png?large=true&data=', $i);
 					$end5 = microtime(true);
 					$jiaDur[] = round(($end5 - $start5)*1000);
 				}				
 				$text = $text.json_encode($jiaDur);
 
-				//快站接口 (无https)
-				$iclickDur = array();
-				$iclickDur[] = 0;
-				$start6 = microtime(true);
-				for($i = 1000000000; $i < (1000000000+$num); $i++){
-					getQRCodeTest('http://www.kuaizhan.com/common/encode-png?large=true&data=', $i);
-					$end4 = microtime(true);
-					$iclickDur[] = round(($end6 - $start6)*1000);
-				}				
-				$text = $text.json_encode($iclickDur);
+				// //快站接口 (无https)
+				// $iclickDur = array();
+				// $iclickDur[] = 0;
+				// $start6 = microtime(true);
+				// for($i = 1000000000; $i < (1000000000+$num); $i++){
+				// 	getQRCodeTest('http://www.kuaizhan.com/common/encode-png?large=true&data=', $i);
+				// 	$end6 = microtime(true);
+				// 	$iclickDur[] = round(($end6 - $start6)*1000);
+				// }				
+				// $text = $text.json_encode($iclickDur);
 
 				$filename = 'timeDur.txt';
 				$myfile = fopen($filename, "w");
@@ -235,7 +234,7 @@ include("uploadImgToWX.php");
 				$res['qq'] = $qqDur;
 				$res['liantu'] = $liantuDur;
 				$res['jia'] = $jiaDur;
-				$res['iclick'] = $iclickDur;
+				// $res['iclick'] = $iclickDur;
 				$replyStr = json_encode($res);
 				break;
 		default:

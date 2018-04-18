@@ -9,7 +9,7 @@ $pwd = $_SESSION["userpwd"];
 if($_SESSION["accessID"] == null){
 	page_redirect(false,"new-signin.html","请重新登录");
 }
-$sql = "SELECT ManageUserName, AccessID FROM YQ_ManageUser WHERE ManageUserName = '$user'";
+$sql = "SELECT ManageUserName, AccessID, alertNum FROM YQ_ManageUser WHERE ManageUserName = '$user'";
 $result = runSelectSql($sql);
 if($result){
 	if($result[0]["AccessID"] != $accessid){
@@ -17,14 +17,14 @@ if($result){
        page_redirect(false,"new-signin.html","请重新登录");
 	}
 	}
+$version = rand(0, 9);
 ?>
 <!DOCTYPE html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>
-			<?php echo $user;?>的主页</title>
+		<title><?php echo $user;?>的主页</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,8 +36,7 @@ if($result){
 		<link rel="stylesheet" type="text/css" href="jquery.dataTables.min.css">
 		<link rel="stylesheet" type="text/css" href="semantic.min.css">
 		<link rel="stylesheet" type="text/css" href="swiper.min.css" />
-		<!-- <link rel="stylesheet" href="particles_style.css" /> -->
-		<link rel="stylesheet" href="new-index.css">
+		<link rel="stylesheet" href="new-index.css?v=<?php echo $version;?>">
 
 		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 		<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
@@ -57,6 +56,9 @@ if($result){
 	</head>
 
 	<body>
+		<div class="warningBar" style="background: rgba(255,0,0,0.3);height: 60px;position: fixed;left: 0;right: 0;z-index: 100;top: 30px;text-align: center; display: none;">
+			<p style="line-height: 60px; color: #000;"><img src="warning.png" style="position: relative;width: 30px;height: 30px;">您被系统管理员警告的次数大于5次，请及时处理含敏感信息的二维码，否则将影响账号正常使用！</p>
+		</div>
 		<div id="particles">
 			<div class="mainHead">
 				<div class="ui secondary pointing menu">
@@ -527,6 +529,7 @@ if($result){
 	<script type="text/javascript">
 		//变量设置
 		var userId = "<?php echo $user; ?>";
+		var alertNum = "<?php echo $result[0]['alertNum']?>";
 		localStorage['userId'] = userId;
 		console.log(userId);
 		var nowIndex = 0,
@@ -600,6 +603,10 @@ if($result){
 
 		//初始页面
 		function init() {
+			// warning bar
+			if(alertNum >= 5) {
+				$('.warningBar').fadeIn();
+			}
 			whileAccountChange();
 			$('#datepicker').DateTimePicker();
 			var date = new Date(new Date().getTime());
@@ -1937,17 +1944,17 @@ if($result){
 						qqDur = averageTime(data.qq);
 						liantuDur = averageTime(data.liantu);
 						jiaDur = averageTime(data.jia);
-						iclickDur = averageTime(data.iclick);
+						// iclickDur = averageTime(data.iclick);
 					}
 					weDurTime = data.wechat;
 					qqDurTime = data.qq;
 					ltDurTime = data.liantu;
 					jiaDurTime = data.jia;
-					iclickDurTime = data.iclick;
+					// iclickDurTime = data.iclick;
 					//weDurTime.push([parseInt(_codeNum), parseFloat(wechatDur)]);
 					//qqDurTime.push([parseInt(_codeNum), parseFloat(qqDur)]);
 					//ltDurTime.push([parseInt(_codeNum), parseFloat(liantuDur)]);
-					$('#currentResult').text('QR Code Generator接口：' + wechatDur + 's, 腾讯接口：' + qqDur + 's, 联图接口：' + liantuDur + 's, JiaThis 接口：'+jiaDur+'s, 快站接口：'+iclickDur);
+					$('#currentResult').text('QR Code Generator接口：' + wechatDur + 's, 腾讯接口：' + qqDur + 's, 联图接口：' + liantuDur + 's, JiaThis 接口：'+jiaDur+'s');
 					//在图表中显示
 					testChart();
 					testChart2();
@@ -2090,11 +2097,6 @@ if($result){
 						name: 'JiaThis',
 						color: 'rgba(263, 192, 123, .5)',
 						data: jiaDurTime
-					},
-					{
-						name: '快站',
-						color: 'rgba(263, 192, 123, .5)',
-						data: iclickDurTime
 					}
 				]
 			});

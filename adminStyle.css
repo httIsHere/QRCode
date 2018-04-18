@@ -2088,3 +2088,18 @@ ul.grid-part {
 
 /*操作按钮*/
 .userList .btn{width: 40px; height: 25px; font-size: 12px; padding: 0; margin-right: 10px;}
+
+/*敏感词列表*/
+.sensitiveWords ul li{color: #fff;display: inline-block;padding: 2px 10px; border-radius: 5px;margin-right: 10px;margin-bottom: 5px;}
+.sensitiveWords ul li:nth-child(2n){background: #c1e4de;}
+.sensitiveWords ul li:nth-child(2n+1){background: #febb50;}
+.sensitiveWords ul li:nth-child(3n+1){background: #f69581;}
+.sensitiveWords ul li:nth-child(5n){background: #b7d6ec;}
+.sensitiveWords ul li a{color: #fff; margin-left: 5px;}
+
+/*二维码列表*/
+/*#qrTab td{padding: 0}
+#qrTab td div{display: flex;justify-content: center;align-items: center;}
+*/
+
+.slideup{width: 20px; height: 20px; display: inline-block;float: right;background: url(down.png);background-size: 100% 100%;}

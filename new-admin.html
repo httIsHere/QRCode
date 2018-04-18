@@ -1,179 +1,169 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>管理员的主页</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="keywords" content="Truck Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-	<link href="bootstrap.min.css" rel="stylesheet">
-	<link href="animate.css" rel="stylesheet" type="text/css" media="all">
-	<link rel="stylesheet" type="text/css" href="theme.css">
-	<link rel="stylesheet" type="text/css" href="sweetalert.css">
-	<link rel="stylesheet" type="text/css" href="adminStyle.css">
-	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
-	<script src="bootstrap.min.js"></script>
-	<script type="text/javascript" src="sweetalert-dev.js"></script>
-	<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
-	<script src="http://code.highcharts.com/modules/exporting.js"></script>
-</head>
-<body>
-	<div class="container head">
-		<div class="header">
-			<div class="head-logo">
-				<a href="#index">HTTQM</a>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>管理员的主页</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="Truck Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+		<link href="bootstrap.min.css" rel="stylesheet">
+		<link href="animate.css" rel="stylesheet" type="text/css" media="all">
+		<link rel="stylesheet" type="text/css" href="theme.css">
+		<link rel="stylesheet" type="text/css" href="sweetalert.css">
+		<link rel="stylesheet" type="text/css" href="table.css">
+		<link rel="stylesheet" type="text/css" href="jquery.dataTables.min.css">
+		<link rel="stylesheet" type="text/css" href="adminStyle.css?v=454">
+		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+		<script src="bootstrap.min.js"></script>
+		<script type="text/javascript" src="sweetalert-dev.js"></script>
+		<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		<script type="text/javascript" language="javascript" src="jquery.dataTables.min.js"></script>
+	</head>
+
+	<body>
+		<div class="container head">
+			<div class="header">
+				<div class="head-logo">
+					<a href="#index">HTTQM</a>
+				</div>
+				<div class="top-nav">
+					<span class="menu"><img src="menu.png" alt=""></span>
+					<ul class="nav1">
+						<li class="hvr-sweep-to-bottom active">
+							<a href="#index">主页</a>
+						</li>
+						<li class="hvr-sweep-to-bottom">
+							<a href="#qrcode">二维码管理</a>
+						</li>
+						<li class="hvr-sweep-to-bottom">
+							<a href="#userList">用户管理</a>
+						</li>
+						<li class="logout">
+							<a href="new-signin.html">退出</a>
+						</li>
+						<div class="clearfix"> </div>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
 			</div>
-			<div class="top-nav">
-				<span class="menu"><img src="menu.png" alt=""></span>
-				<ul class="nav1">
-					<li class="hvr-sweep-to-bottom active"><a href="#index">主页</a></li>
-					<li class="hvr-sweep-to-bottom"><a href="#userList">用户管理</a></li>
-					<li class="hvr-sweep-to-bottom"><a href="#qrcode">二维码管理</a></li>
-					<li class="logout"><a href="new-signin.html">退出</a></li>
-					<div class="clearfix"> </div>
-				</ul>
-			</div>
-			<div class="clearfix"> </div>
 		</div>
-	</div>
-	<!-- 主页？ -->
-	<!-- 用户管理 -->
-	<div class="container">
-		<div class="row">
-			<div class="span12">
-				<div class="content">					
-					<div id="demo">
-						<div id="indemo">
-							<div id="demo1">
-								<ul>
-									<li><p style="text-align:center;">message</p></li>
-									<li><p style="text-align:center;">message</p></li>
-								</ul>
+		<!-- 主页？ -->
+		<!-- 用户管理 -->
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<div class="content">
+						<div class="btn-controls">
+							<div class="btn-box-row row-fluid">
+								<a href="javascript:;" class="btn-box big span3 totalUser"><i></i>
+									<p class="text-muted">总用户数</p>
+								</a>
+								<a href="javascript:;" class="btn-box big span3 totalCode"><i></i>
+									<p class="text-muted">总二维码数</p>
+								</a>
+								<a href="javascript:;" class="btn-box big span3 totalScan"><i></i>
+									<p class="text-muted">总扫描次数</p>
+								</a>
+								<a href="javascript:;" class="btn-box big span3 scanUser"><i></i>
+									<p class="text-muted">总扫描用户数</p>
+								</a>
 							</div>
-							<div id="demo2">
-								<ul>
-									<li><p style="text-align:center;">message</p></li>
-									<li><p style="text-align:center;">message</p></li>
+							<div class="btn-box-row row-fluid">
+								<div class="span8">
+									<div class="row-fluid">
+										<div class="span12">
+											<a href="#" class="btn-box small span6 newUser"><i></i><b>今日新增用户</b></a>
+											<a href="#" class="btn-box small span6 newScan"><i></i><b>今日新增扫描</b></a>
+										</div>
+									</div>
+								</div>
+								<ul class="widget widget-usage unstyled span4">
+									<li>
+										<p>
+											<strong>用户新增率</strong> <span class="pull-right small muted userRate"></span>
+										</p>
+										<div class="progress tight userRateBar">
+											<div class="bar" style="width: 0%;">
+											</div>
+										</div>
+									</li>
+									<li>
+										<p>
+											<strong>扫描新增率</strong> <span class="pull-right small muted scanRate"></span>
+										</p>
+										<div class="progress tight scanRateBar">
+											<div class="bar bar-success" style="width: 0%;">
+											</div>
+										</div>
+									</li>
 								</ul>
 							</div>
 						</div>
-					</div>
-					<script>
-						var speed=20;
-						var tab=document.getElementById("demo");
-						var tab1=document.getElementById("demo1");
-						var tab2=document.getElementById("demo2");
-						tab2.innerHTML=tab1.innerHTML;
-						function Marquee(){
-							if(tab2.offsetWidth-tab.scrollLeft<=0)
-								tab.scrollLeft-=tab1.offsetWidth
-							else{
-								tab.scrollLeft++;
-							}
-						}
-						function Marquee2(){
-							if(tab.scrollLeft<=0)
-								tab.scrollLeft+=demo2.offsetWidth
-							else{
-								tab.scrollLeft--
-							}
-						}
-						var MyMar=setInterval(Marquee,speed);
-					</script>
-					<div class="btn-controls">
-						<div class="btn-box-row row-fluid">
-							<a href="javascript:;" class="btn-box big span3 totalUser"><i></i><p class="text-muted">总用户数</p></a>
-							<a href="javascript:;" class="btn-box big span3 totalCode"><i></i><p class="text-muted">总二维码数</p></a>
-							<a href="javascript:;" class="btn-box big span3 totalScan"><i></i><p class="text-muted">总扫描次数</p></a>
-							<a href="javascript:;" class="btn-box big span3 scanUser"><i></i><p class="text-muted">总扫描用户数</p></a>
-						</div>
-						<div class="btn-box-row row-fluid">
-							<div class="span8">
-								<div class="row-fluid">
-									<div class="span12">
-										<a href="#" class="btn-box small span6 newUser"><i></i><b>今日新增用户</b></a>
-										<a href="#" class="btn-box small span6 newScan"><i></i><b>今日新增扫描</b></a>
+						<!--/#btn-controls-->
+						<div class="module">
+							<div class="module-head">
+								<h3>扫描统计（近一月）<a href="javascript:;" class="slideup open"></a></h3>
+							</div>
+							<div class="module-body">
+								<div class="chart inline-legend grid">
+									<div id="mychart1" class="graph" style="height: 500px">
 									</div>
 								</div>
 							</div>
-							<ul class="widget widget-usage unstyled span4">
-								<li>
-									<p>
-										<strong>用户新增率</strong> <span class="pull-right small muted userRate"></span>
-									</p>
-									<div class="progress tight userRateBar">
-										<div class="bar" style="width: 0%;">
-										</div>
-									</div>
-								</li>
-								<li>
-									<p>
-										<strong>扫描新增率</strong> <span class="pull-right small muted scanRate"></span>
-									</p>
-									<div class="progress tight scanRateBar">
-										<div class="bar bar-success" style="width: 0%;">
-										</div>
-									</div>
-								</li>
-							</ul>
 						</div>
-					</div>
-					<!--/#btn-controls-->
-					<div class="module">
-						<div class="module-head">
-							<h3>扫描统计（近一周）</h3>
-						</div>
-						<div class="module-body">
-							<div class="chart inline-legend grid">
-								<div id="mychart1" class="graph" style="height: 500px">
+						<!--/.module-->
+						<div class="module">
+							<div class="module-head">
+								<h3>敏感词列表<a href="javascript:;" class="slideup open"></a></h3>
+							</div>
+							<div class="module-body">
+								<div class="form-inline clearfix">
+									<a href="javascript:;" class="btn btn-primary pull-right" id="addWords">添加</a>
+									<label for="amount">敏感词:</label>&nbsp;
+									<input type="text" id="amount" class="input-" />
+								</div>
+								<hr />
+								<div class="slider-range sensitiveWords">
+									<ul></ul>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!--/.module-->
-					<div class="module hide">
-						<div class="module-head">
-							<h3>
-							Adjust Budget Range</h3>
-						</div>
-						<div class="module-body">
-							<div class="form-inline clearfix">
-								<a href="#" class="btn pull-right">Update</a>
-								<label for="amount">
-								Price range:</label>
-								&nbsp;
-								<input type="text" id="amount" class="input-" />
+						<div class="module" id="qrcode">
+							<div class="module-head">
+								<h3>二维码列表<a href="javascript:;" class="slideup open"></a></h3>
 							</div>
-							<hr />
-							<div class="slider-range">
+							<div class="module-body">
+								<table class="table table-bordered table-hover" width="95%" border="1" id="qrTab">
+									<thead class="qrList" id="qrList">
+										<th>标题</th>
+										<th>简介</th>
+										<th>二维码</th>
+										<th>操作</th>
+									</thead>
+									<tbody></tbody>
+								</table>
 							</div>
 						</div>
-					</div>
-					<div class="module">
-						<div class="module-head">
-							<h3>用户列表</h3>
-						</div>
-						<div class="module-body table">
-							<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	display"
-							width="100%">
-							<thead>
-								<tr>
-									<th>用户</th>
-									<th>微信公众号</th>
-									<th>注册时间</th>
-									<!-- <th>生成二维码个数</th> -->
-									<th>操作</th>
-								</tr>
-							</thead>
-							<tbody class="userList">
-								<tr>
-									<td>11111111111111</td>
-									<td>11111111111111</td>
-									<td>11111111111111</td>
-									<td><input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td>
-								</tr>
-							</tbody>
-							<!-- <tfoot>
+						<div class="module" id="userList">
+							<div class="module-head">
+								<h3>用户列表<a href="javascript:;" class="slideup open"></a></h3>
+							</div>
+							<div class="module-body table">
+								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	display" width="100%" id="userTable">
+									<thead>
+										<tr>
+											<th>用户</th>
+											<th>微信公众号</th>
+											<th>注册时间</th>
+											<th>警告次数</th>
+											<th>账户状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody class="userList"></tbody>
+									<!-- <tfoot>
 								<tr>
 									<th colspan="3" style="text-align: right;">
 										<a href="javascript:;" id="lastPage">上一页</a>
@@ -182,215 +172,393 @@
 									</th>
 								</tr>
 							</tfoot> -->
-						</table>
+								</table>
+							</div>
+						</div>
+						<!--/.module-->
 					</div>
+					<!--/.content-->
 				</div>
-				<!--/.module-->
+				<!--/.span9-->
 			</div>
-			<!--/.content-->
 		</div>
-		<!--/.span9-->
-	</div>
-</div>
-</body>
-<script type="text/javascript">
-	var opAccount;
-	$(".nav1 .hvr-sweep-to-bottom").click(function() {
-		$(".nav1 .hvr-sweep-to-bottom").removeClass("active");
-		$(this).addClass('active');
-	});
-	var adminOperation = function() {
-
-	};
-	//验证access id
-	adminOperation.prototype.userCheck = function() {
-		$.ajax({
-			type: "post",
-			url: "userCheck.php",
-			dataType: "json",
-			data: {},
-			success: function(){
-
-			}
+	</body>
+	<script type="text/javascript">
+		var storage = window.localStorage;
+		var opAccount, ticket;
+		var sensWords = ["回回", "十九大", "反清复明", "太子", "小熊维尼", "不转不是中国人", "天朝", "政治", "苟"];
+		if(storage.sensWords) {
+			sensWords = storage.sensWords.split(',');
+		} else {
+			storage.sensWords = sensWords;
+		}
+		$(".nav1 .hvr-sweep-to-bottom").click(function() {
+			$(".nav1 .hvr-sweep-to-bottom").removeClass("active");
+			$(this).addClass('active');
 		});
-	};
+		var adminOperation = function() {
 
-	//账户操作
-	adminOperation.prototype.operateAccount = function(tp){
-		$.ajax({
-			type: 'post',
-			url: 'adminMidFunc.php',
-			dataType: 'json',
-			data: {
-				type: 1,
-				tp: tp,
-				acnt: opAccount
-			},
-			success: function(data){
-				if(tp == 1){
-					swal("", "该账户停用成功", "success");
-				} else if(tp == 0){
-					swal("", "该账户恢复成功", "success");
-				} else if(tp == 2){
-					swal("", "该账户密码重置成功", "success");
+		};
+		//验证access id
+		adminOperation.prototype.userCheck = function() {
+			$.ajax({
+				type: "post",
+				url: "userCheck.php",
+				dataType: "json",
+				data: {},
+				success: function() {
+
 				}
-			}
-		})
-	}
+			});
+		};
 
-	//弹窗
-	adminOperation.prototype.myAlert = function(tit, txt, func, arg){
-		swal({ 
-			title: tit, 
-			text: txt, 
-			type: "warning",
-			showCancelButton: true, 
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "确定", 
-			cancelButtonText: "取消",
-			closeOnConfirm: false
-		},
-		function(){
-			func(arg);
-		});
-	}
-	//生成图表
-	adminOperation.prototype.getCharts = function(user, msg) {
-		var now = nowFm();
-		console.log(now);
-		var label = preDay(now);
-		var chart = new Highcharts.Chart('mychart1', {
-			chart: {
-				type: 'column'
-			},
-			title: {
-				text: '数据统计'
-			},
-			xAxis: {
-				categories: label
-			},
-			yAxis: {
-				title: {
-					text: '每日扫描用户量/扫描次数'
+		//账户操作
+		adminOperation.prototype.operateAccount = function(tp) {
+			var $this = this;
+			$.ajax({
+				type: 'post',
+				url: 'adminMidFunc.php',
+				dataType: 'json',
+				data: {
+					type: 1,
+					tp: tp,
+					acnt: opAccount,
+					ticket: ticket || ''
 				},
-				allowDecimals: false,
-				min: 0,
-				minRange: 1
-			},
-			series: [{
-				name: '扫描用户量',
-				color: '#ffa579',
-				data: user
-			}, {
-				name: '扫描次数',
-				data: msg
-			}],
-			credits: {
-				enabled: false
-			}
-		});
-	}
-	//初始化数据
-	adminOperation.prototype.initData = function() {
-		var $this = this;
-		$.ajax({
-			type: "post",
-			url: "adminMidFunc.php",
-			dataType: "json",
-			data: {
-				type: 0
-			},
-			success: function(data){
-				//data = eval("("+data+")");
-				$('.totalUser i').text(data.totalUser);
-				$('.totalCode i').text(data.totalCode);
-				$('.totalScan i').text(data.totalScan);
-				$('.scanUser i').text(data.totalScanUser);
-				$('.newUser i').text(data.newUsers);
-				$('.newScan i').text(data.newScan);
-				$('.userRate').text(data.userRate.toFixed(2)*100+'%');
-				$('.scanRate').text(data.scanRate.toFixed(2)*100+'%');
-				$('.userRateBar .bar').css('width', data.userRate.toFixed(2)*100+'%');
-				$('.scanRateBar .bar').css('width', data.scanRate.toFixed(2)*100+'%');
-
-				//扫描图表
-				$this.getCharts(data.userNum, data.msgNum);
-
-				// 用户列表
-				var list = '';
-				var l = data.userList;
-				for(var i = 0; i < l.length; i++){
-					var name = l[i].ManageUserName || '-';
-					var account = l[i].WeChatAccount || '-';
-					list += '<tr class="odd gradeX"><td>'+name+'</td><td>'+account+'</td><td>'+formatMyTime(l[i].createTime)+'</td>';
-					if(l[i].status == "1"){
-						list+='<td><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td></tr>';
-					} else if(l[i].status == "0"){
-						list+='<td><input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td></tr>';
-					} else {
-						list+='<td><input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td></tr>';
+				success: function(data) {
+					if(tp == 1) {
+						swal("", "该账户停用成功", "success");
+					} else if(tp == 0) {
+						swal("", "该账户恢复成功", "success");
+					} else if(tp == 2) {
+						swal("", "该账户密码重置成功", "success");
+					} else if(tp == 3) {
+						swal("", "已对该二维码所属账户进行警告", "success");
+					} else if(tp == 4) {
+						swal("", "删除二维码成功", "success");
+					} else if(tp == 5) {
+						swal("", "清除次数成功", "success");
 					}
-					
 				}
-				$('.userList').html(list);
-				$('.stopAcnt').bind('click', function(){
-					var _this = $(this);
-					opAccount = _this.parent().parent().children('td:eq(0)').text();
-					$this.myAlert("", "确定停用该账户？", $this.operateAccount, 1);
+			})
+		}
+
+		//弹窗
+		adminOperation.prototype.myAlert = function(tit, txt, func, arg) {
+			swal({
+					title: tit,
+					text: txt,
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "确定",
+					cancelButtonText: "取消",
+					closeOnConfirm: false
+				},
+				function() {
+					func(arg);
 				});
-				$('.coverAcnt').bind('click', function(){
-					var _this = $(this);
-					opAccount = _this.parent().parent().children('td:eq(0)').text();
-					$this.myAlert("", "确定恢复该账户？", $this.operateAccount, 0);
-				});
-				$('.resetAcnt').bind('click', function(){
-					var _this = $(this);
-					opAccount = _this.parent().parent().children('td:eq(0)').text();
-					$this.myAlert("", "确定重置该账户密码？", $this.operateAccount, 2);
-				});
+		}
+		//生成图表
+		adminOperation.prototype.getCharts = function(user, msg) {
+			var now = nowFm();
+			console.log(now);
+			var label = preDay(now);
+			var chart = new Highcharts.Chart('mychart1', {
+				chart: {
+					type: 'column'
+				},
+				title: {
+					text: '数据统计'
+				},
+				xAxis: {
+					categories: label
+				},
+				yAxis: {
+					title: {
+						text: '每日扫描用户量/扫描次数'
+					},
+					allowDecimals: false,
+					min: 0,
+					minRange: 1
+				},
+				series: [{
+					name: '扫描用户量',
+					color: '#ffa579',
+					data: user
+				}, {
+					name: '扫描次数',
+					data: msg
+				}],
+				credits: {
+					enabled: false
+				}
+			});
+		}
+		//敏感词列表
+		adminOperation.prototype.wordsList = function() {
+			var _l = '';
+			for(var _i = 0; _i < sensWords.length; _i++) {
+				_l += '<li>' + sensWords[_i] + '<a href="javascript:;">×</a></li>'
 			}
-		});
-	}
+			$('.sensitiveWords ul').html(_l);
+		}
+		adminOperation.prototype.addWords = function() {
+			var $this = this;
+			var _new = $('#amount').val();
+			sensWords.unshift(_new);
+			storage.sensWords = sensWords;
+			var _new = $('#amount').val('');
+			$this.wordsList();
+		}
+		adminOperation.prototype.removeWords = function(index) {
+			var $this = this;
+			sensWords.splice(index, 1);
+			storage.sensWords = sensWords;
+			$this.wordsList();
+		}
+		adminOperation.prototype.matchWords = function(str) {
+			var re = '';
 
-	$(function(){
-		var admin = new adminOperation();
-		//admin.getCharts([1,1], [2,2]);
-		admin.initData();
-	});
+			for(var i = 0; i < sensWords.length; i++) {
+				if(i == sensWords.length - 1) {
+					re += sensWords[i];
+				} else {
+					re += sensWords[i] + "|";
+				}
+			}
+			//定义正则表示式对象
+			//利用RegExp可以动态生成正则表示式
+			var pattern = new RegExp("("+re+")", "g");
+			var _result = str.match(pattern);
+			var _newstr = str.replace(pattern, "<font color=red>$1</font>"); 
+			return _newstr;
+		}
+		adminOperation.prototype.qrTable = function(data){
+			var $this = this;
+			var array = new Array();
+			var _result;
+			for(var _i = 0; _i < data.length; _i++){
+				var _info = new Array(5);
+				var QRCodeImgFileName = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + data[_i].Ticket;
+				_info[0] = '<div>'+$this.matchWords(data[_i].SceneName || '')+'</div>';
+				_info[1] = '<div>'+$this.matchWords(data[_i].SceneDescription || '')+'</div>';
+				_info[2] = '<img src="' + QRCodeImgFileName + '"style="height:8vw;width:8vw;margin:10px auto;" />';
+				_info[3] = '<input type="button" class="btn btn-warning warningAcnt" user="'+data[_i].ManageUserName+'" value="警告"><input type="button" class="btn btn-danger deleteCode" ticket="'+data[_i].Ticket+'" value="删除">';
+				array[_i] = _info;
+			}
+			$('#qrTab').dataTable().fnDestroy();
+			$('#qrTab').DataTable({
+				data: array,
+				"sortable": true, //是否启用排序
+				"bLengthChange": true, //改变每页显示数据数量
+				"ordering": false,
+				"sScrollXInner": "100%",
+				"bAutoWidth": false,
+				"bProcessing": true,
+				"iDisplayLength": 5,
+				"oLanguage": {
+					"sLengthMenu": "每页显示5个二维码",
+					"sZeroRecords": "抱歉， 没有找到相应的场景",
+					"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 个场景",
+					"sInfoEmpty": "没有场景生成数据",
+					"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+					"sSearch": "搜索",
+					"oPaginate": {
+						"sFirst": "首页",
+						"sPrevious": "前一页",
+						"sNext": "后一页",
+						"sLast": "尾页"
+					},
+					"sZeroRecords": "暂无场景数据",
+					"bStateSave": true //保存状态到cookie *************** 很重要
+				}
+			});
+			$('.warningAcnt').bind('click', function(){
+				var _this = $(this);
+				opAccount = _this.attr('user');
+				$this.operateAccount(3);
+			});
+			$('.deleteCode').bind('click', function(){
+				var _this = $(this);
+				ticket = _this.attr('ticket');
+				console.log(ticket);
+				$this.myAlert('', '确定要删除该二维码吗？', $this.operateAccount, 4);
+			});
+		}
 
-	//时间格式化
-	function formatMyTime(str) {
-		var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
-		var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
-		var isEdge = userAgent.indexOf("Edge") > -1; //判断是否IE的Edge浏览器
-		console.log("isIE:" + isIE + isEdge);
-		var d = new Date(str * 1000);
-		if(isIE || isEdge) {
-			commonTime = d.toLocaleString();
-		} else
-		commonTime = d.toLocaleString('chinese', {
-			hour12: false
+		//初始化数据
+		adminOperation.prototype.initData = function() {
+			var $this = this;
+			$.ajax({
+				type: "post",
+				url: "adminMidFunc.php",
+				dataType: "json",
+				data: {
+					type: 0
+				},
+				success: function(data) {
+					//data = eval("("+data+")");
+					$('.totalUser i').text(data.totalUser);
+					$('.totalCode i').text(data.totalCode);
+					$('.totalScan i').text(data.totalScan);
+					$('.scanUser i').text(data.totalScanUser);
+					$('.newUser i').text(data.newUsers);
+					$('.newScan i').text(data.newScan);
+					$('.userRate').text(data.userRate.toFixed(2) * 100 + '%');
+					$('.scanRate').text(data.scanRate.toFixed(2) * 100 + '%');
+					$('.userRateBar .bar').css('width', data.userRate.toFixed(2) * 100 + '%');
+					$('.scanRateBar .bar').css('width', data.scanRate.toFixed(2) * 100 + '%');
+
+					//扫描图表
+					$this.getCharts(data.userNum, data.msgNum);
+
+					//敏感词列表
+					$this.wordsList();
+
+					//二维码列表
+					$this.qrTable(data.qrCodeInfo);
+
+					// 用户列表
+					var list = '';
+					var l = data.userList;
+					var array = new Array();
+					for(var i = 0; i < l.length; i++) {
+						var _info = new Array(6);
+						var name = l[i].ManageUserName || '-';
+						var account = l[i].WeChatAccount || '-';
+						var status = l[i].status == 1? '已被停用' : '正常'
+						_info[0] = name;
+						_info[1] = account;
+						_info[2] = formatMyTime(l[i].createTime);
+						_info[3] = '<p style="color: red;">' + l[i].alertNum || '-' + '</p>';
+						_info[4] = status;
+						_info[5] = '<input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"><input type="button" class="btn btn-primary resetWarning" value="警告重置">';
+						// list += '<tr class="odd gradeX"><td>' + name + '</td><td>' + account + '</td><td>' + formatMyTime(l[i].createTime) + '</td>' + '<td style="color: red;">' + l[i].alertNum || '-' + '</td>';
+						// list += '<td><input type="button" class="btn btn-danger stopAcnt" value="停用"><input type="button" class="btn btn-success coverAcnt" value="恢复"><input type="button" class="btn btn-warning resetAcnt" value="重置"></td></tr>';
+						array[i] = _info;
+					}
+					// $('.userList').html(list);
+					$('#userTable').DataTable({
+						data: array,
+						"sortable": true, //是否启用排序
+						"bLengthChange": false, //改变每页显示数据数量
+						"ordering": false,
+						"sScrollXInner": "100%",
+						"bAutoWidth": false,
+						"bProcessing": true,
+						"iDisplayLength": 10,
+						"searching":false, //去掉搜索框
+    					"bLengthChange":false,//去掉每页多少条框体
+						"oLanguage": {
+							"sLengthMenu": "每页显示5个二维码",
+							"sZeroRecords": "抱歉， 没有找到相应的场景",
+							"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 个场景",
+							"sInfoEmpty": "没有场景生成数据",
+							"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+							"sSearch": "搜索",
+							"oPaginate": {
+								"sFirst": "首页",
+								"sPrevious": "前一页",
+								"sNext": "后一页",
+								"sLast": "尾页"
+							},
+							"sZeroRecords": "暂无场景数据",
+							"bStateSave": true //保存状态到cookie *************** 很重要
+						}
+					});
+					$('.stopAcnt').bind('click', function() {
+						var _this = $(this);
+						opAccount = _this.parent().parent().children('td:eq(0)').text();
+						$this.myAlert("", "确定停用该账户？", $this.operateAccount, 1);
+					});
+					$('.coverAcnt').bind('click', function() {
+						var _this = $(this);
+						opAccount = _this.parent().parent().children('td:eq(0)').text();
+						$this.myAlert("", "确定恢复该账户？", $this.operateAccount, 0);
+					});
+					$('.resetAcnt').bind('click', function() {
+						var _this = $(this);
+						opAccount = _this.parent().parent().children('td:eq(0)').text();
+						$this.myAlert("", "确定重置该账户密码？", $this.operateAccount, 2);
+					});
+					$('.resetWarning').bind('click', function() {
+						var _this = $(this);
+						opAccount = _this.parent().parent().children('td:eq(0)').text();
+						$this.myAlert("", "确定重置该账户警告次数？", $this.operateAccount, 5);
+					});
+				}
+			});
+		}
+
+		$(function() {
+			var admin = new adminOperation();
+			admin.wordsList();
+			// admin.qrTable([{SceneID: "247", SceneName: "苟利国家生死以", SceneDescription: "天朝永远是最棒的！！不转不是中国人", SceneImg: "http://mmbiz.qpic.cn/mmbiz_jpg/A5bO1cgBnkeWiaehggG…aLJW373ddrO4CO9BFnMw1vzJtDzhMDIv0tQ/0?wx_fmt=jpeg", Ticket: "gQGO8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyUHRJNjB5ZkFid1QxMDAwMHcwN2gAAgQfXM9aAwQAAAAA",ManageUserName:"123@123.com"},{SceneID: "247", SceneName: "苟利国家生死以", SceneDescription: "天朝永远是最棒的！！不转不是中国人", SceneImg: "http://mmbiz.qpic.cn/mmbiz_jpg/A5bO1cgBnkeWiaehggG…aLJW373ddrO4CO9BFnMw1vzJtDzhMDIv0tQ/0?wx_fmt=jpeg", Ticket: "gQGO8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyUHRJNjB5ZkFid1QxMDAwMHcwN2gAAgQfXM9aAwQAAAAA",ManageUserName:"123@123.com"}]);
+			admin.initData();
+
+			$('#addWords').bind('click', function() {
+				if($('#amount').val() != '') {
+					admin.addWords();
+				} else {
+					alert('请输入敏感词');
+				}
+			});
+			$('#amount').bind('keydown', function(e) {
+				var _k = e.which;
+				if(_k == 13) {
+					if($('#amount').val() != '') {
+						admin.addWords();
+					} else {
+						alert('请输入敏感词');
+					}
+				}
+			})
+			$('.sensitiveWords a').bind('click', function() {
+				var _index = $('.sensitiveWords a').index($(this));
+				admin.removeWords(_index);
+			});
+			//缩起
+			$('.slideup').bind('click', function() {
+				var _this = $(this);
+				_this.parent().parent().parent().children('.module-body').slideToggle();
+			});
 		});
-		return commonTime;
-	}
-	//当前时间格式化xx（月）-xx
-	function nowFm(){
-		var _time = new Date();
-		var _y = _time.getFullYear();
-		var _m = _time.getMonth()+1;
-		var _d = _time.getDate();
-		return _y+'-'+_m+'-'+_d;
-	}
-	function preDay(now) {
-		var l = new Array();
-		if(now.indexOf("-") >= 0)
-			var data = now.split("-");
-		else var data = now.split("/");
-		var year = data[0];
-		var month = data[1];
-		var day = data[2];
-		var dd = new Date();
-		var d = new Date(year, month - 1, day);
+
+		//时间格式化
+		function formatMyTime(str) {
+			var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+			var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+			var isEdge = userAgent.indexOf("Edge") > -1; //判断是否IE的Edge浏览器
+			console.log("isIE:" + isIE + isEdge);
+			var d = new Date(str * 1000);
+			if(isIE || isEdge) {
+				commonTime = d.toLocaleString();
+			} else
+				commonTime = d.toLocaleString('chinese', {
+					hour12: false
+				});
+			return commonTime;
+		}
+		//当前时间格式化xx（月）-xx
+		function nowFm() {
+			var _time = new Date();
+			var _y = _time.getFullYear();
+			var _m = _time.getMonth() + 1;
+			var _d = _time.getDate();
+			return _y + '-' + _m + '-' + _d;
+		}
+
+		function preDay(now) {
+			var l = new Array();
+			if(now.indexOf("-") >= 0)
+				var data = now.split("-");
+			else var data = now.split("/");
+			var year = data[0];
+			var month = data[1];
+			var day = data[2];
+			var dd = new Date();
+			var d = new Date(year, month - 1, day);
 			// console.log(year+"-"+month+"-"+day);
 			for(var i = 29; i >= 0; i--) {
 				dd.setTime(d.getTime() - 24 * 60 * 60 * 1000 * i);
@@ -402,6 +570,6 @@
 			}
 			return l;
 		}
-
 	</script>
-	</html>
+
+</html>

@@ -7,7 +7,7 @@
 define("yqAccount","ItsMusic");
 define("yqAppId","wx3baa5a278d207f5e");
 define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
-//·¢Éú±»¶¯»Ø¸´
+//å‘ç”Ÿè¢«åŠ¨å›å¤
     function ReplyByText($WXAccount,$toUsername,$fromUsername,$contentStr)
    {      			 $thisFunction="The function is ReplyByText";$postStr=$WXAccount.",".$toUsername.",".$fromUsername.",".$contentStr;			
 		$msgType='text';		
@@ -34,7 +34,7 @@ define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
 						logger('CommonFunction','log/','Log',$thisFunction." replyStr=".$replyStr);
 		return $resultStr;
 }
-//ĞÅÏ¢·¢ËÍ
+//ä¿¡æ¯å‘é€
 	function sendTxtMsg($WXAccount,$appid,$appsecret,$fromUserName,$toUserName,$msg)
 	{					$thisFunction="The function is sendTxtMsg";$postStr=$WXAccount.",".$appid.",".$appsecret.",".$fromUserName.",".$toUserName.",".$msg;
 		if(gettype($toUserName)=="object") { $toUserName=(string)$toUserName; }
@@ -71,7 +71,7 @@ define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
 	}
 
 
-//»ñÈ¡¶şÎ¬Âë
+//è·å–äºŒç»´ç 
 	function getTicketOfQrcode($WXAccount,$appid,$appsecret,$sceneName)
 	{					logger('CommonFunction','log/','Log',"getTicketOfQrcode postStr=".$WXAccount.$appid.$appsecret.$sceneName);	
  		$access_token =getAccess_Token($WXAccount,$appid,$appsecret); 
@@ -112,13 +112,13 @@ define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
 	}
 
 
-//¹Ø×¢µÄÓÃ»§ĞÅÏ¢´¦Àí	
+//å…³æ³¨çš„ç”¨æˆ·ä¿¡æ¯å¤„ç†	
 	
-	function getOneWXUserInfo($WXAccount,$appid,$appsecret,$openID)//¸ù¾İOpenID£¬»ñÈ¡Ò»¸ö¹Ø×¢ÓÃ»§ĞÅÏ¢
+	function getOneWXUserInfo($WXAccount,$appid,$appsecret,$openID)//æ ¹æ®OpenIDï¼Œè·å–ä¸€ä¸ªå…³æ³¨ç”¨æˆ·ä¿¡æ¯
 	{					$thisFunction="The function is getOneWXUserInfo";$postStr=$WXAccount.",".$appid.",".$appsecret.",".$openID;
 		$access_token =getAccess_Token($WXAccount,$appid,$appsecret); //$jsoninfo["access_token"];
 		
-		//»ñÈ¡ÓÃ»§ĞÅÏ¢
+		//è·å–ç”¨æˆ·ä¿¡æ¯
 		$url ="https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$access_token."&openid=".$openID;
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -153,7 +153,7 @@ define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
 		}
 		
 	}
-//Í¨ÓÃÒ»°ãº¯Êı
+//é€šç”¨ä¸€èˆ¬å‡½æ•°
   	function runSelectSql($sql)
 	{	logger('CommonFunction','log/','Log'," sql=".$sql);
 		$selectPos=stripos($sql,"select");		$fromPos=stripos($sql,"from");
@@ -194,7 +194,7 @@ define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
 	}
 
 
-//µÃµ½Access_Token£¬
+//å¾—åˆ°Access_Tokenï¼Œ
 
 	function getAccess_Token($WXAccount,$appid,$appsecret)
 	{
@@ -263,13 +263,13 @@ define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
 
 
 
-//Êı¾İ¿âÁ¬½Óº¯Êı
+//æ•°æ®åº“è¿æ¥å‡½æ•°
 	function openDB()
 	{
-		$mysql_servername = "qdm-012.hichina.com"; //Ö÷»úµØÖ·
-		$mysql_username = "qdm0120433"; //Êı¾İ¿âÓÃ»§Ãû
-		$mysql_password ="chengenfang19681010"; //Êı¾İ¿âÃÜÂë
-		$mysql_database ="qdm0120433_db"; //Êı¾İ¿â
+		$mysql_servername = "qdm-012.hichina.com"; //ä¸»æœºåœ°å€
+		$mysql_username = "qdm0120433"; //æ•°æ®åº“ç”¨æˆ·å
+		$mysql_password ="chengenfang19681010"; //æ•°æ®åº“å¯†ç 
+		$mysql_database ="qdm0120433_db"; //æ•°æ®åº“
 		$link =mysql_connect($mysql_servername , $mysql_username , $mysql_password) or die(mysql_error());
 		mysql_query("SET NAMES 'utf8'");
 		if(mysql_select_db($mysql_database,$link))
@@ -284,11 +284,11 @@ define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
 		 return $retOpenDB;
 	}
 
-//ÈÕÖ¾º¯Êı
+//æ—¥å¿—å‡½æ•°
 	function logger($ObjectName,$ObjectLogDir,$logType,$logMessage)
-	{   //$ObjectNameµ÷ÓÃ´Ëº¯ÊıµÄ¶ÔÏóÃûÃû³Æ
-		//$logType£¬logÎÄ¼şÀàĞÍ£¨ERROR,DEBUG£¬INFO£©
-		//$logMessage£¬ÒªĞ´ÈëµÄĞÅÏ¢¡£ 
+	{   //$ObjectNameè°ƒç”¨æ­¤å‡½æ•°çš„å¯¹è±¡ååç§°
+		//$logTypeï¼Œlogæ–‡ä»¶ç±»å‹ï¼ˆERROR,DEBUGï¼ŒINFOï¼‰
+		//$logMessageï¼Œè¦å†™å…¥çš„ä¿¡æ¯ã€‚ 
 		$nowTime=time();
 		$logRearName=date('Ymd',$nowTime);
 		$logFileName=$ObjectLogDir.$ObjectName."_".$logType."_".$logRearName.".log";
@@ -298,7 +298,7 @@ define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
 		file_put_contents($logFileName,"\r\n",FILE_APPEND);
 	}
   
-//±àÂë×ª»»
+//ç¼–ç è½¬æ¢
 	function wphp_urlencode($data)
 	{
 		 if(is_array($data) || is_object($data))  
@@ -337,7 +337,7 @@ define("yqAppsecret","072b4d7cf04dd25660f577d0017c6f62");
 	
 	}	
 
-//ÏµÍ³ĞÅÏ¢º¯Êı
+//ç³»ç»Ÿä¿¡æ¯å‡½æ•°
 	function getSERVERallMsg()
 	{
 		$allMsg='';

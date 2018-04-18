@@ -4,17 +4,10 @@ $type=(integer)$_POST['type'];
 switch ($type) {
 	case 0:
 	$data = array();
-
-	$qrCodeInfo=runSelectSql("select SceneName,SceneDescription, Ticket, ManageUserName from YQ_QRCode where Ticket is not null and Ticket <> '' order by SceneID desc");
-	$data['qrCodeInfo'] = $qrCodeInfo;
-
-	# 用户列表
-	$sql = "select ManageUserName, WeChatAccount, createTime, status, alertNum from YQ_ManageUser order by alertNum desc";
-	$result = runSelectSql($sql);
-	$data['userList'] = $result;
-
-	$totalUser = count($result);
-	$totalCode = count($qrCodeInfo);
+	$qrCodeInfo = runSelectSql("select SceneID,SceneName,SceneDescription,SceneImg, Ticket,SceneImage,SceneUrl,QRCodeImgFileName from YQ_QRCode where Ticket is not null and Ticket <> '' order by SceneID desc");
+	$data[] = $qrCodeInfo;
+	$totalUser = count(runSelectSql("select ManageUserName from YQ_ManageUser"));
+	$totalCode = count(runSelectSql("select SceneID from YQ_QRCode"));
 	$totalScan = count(runSelectSql("select OpenID from YQ_ReceiveMsg"));
 	$totalScanUser = count(runSelectSql("select distinct OpenID from YQ_ReceiveMsg"));
 	$data['totalUser'] = $totalUser;
@@ -59,6 +52,10 @@ switch ($type) {
 	}
 	$data['msgNum'] = $msgNum;
 
+	# 用户列表
+	$sql = "select ManageUserName, WeChatAccount, createTime, status from YQ_ManageUser";
+	$result = runSelectSql($sql);
+	$data['userList'] = $result;
 
 	$replyStr = json_encode($data);
 	break;
@@ -70,7 +67,7 @@ switch ($type) {
 	if($tp == 1){
 			# stop
 		$sql = "update YQ_ManageUser set status=1 where ManageUserName='$opAccount'";
-		$result = runInsertUpdateDeleteSql($sql);
+		$result = runSelectSql($sql);
 		if(count($result)){
 			$replyStr = 1;
 		} else {
@@ -79,7 +76,7 @@ switch ($type) {
 	} else if($tp == 0){
 			# recover
 		$sql = "update YQ_ManageUser set status=0 where ManageUserName='$opAccount'";
-		$result = runInsertUpdateDeleteSql($sql);
+		$result = runSelectSql($sql);
 		if(count($result)){
 			$replyStr = 1;
 		} else {
@@ -88,41 +85,17 @@ switch ($type) {
 	} else if($tp == 2){
 			# reset password
 		$sql = "update YQ_ManageUser set pwd=123456 where ManageUserName='$opAccount'";
-		$result = runInsertUpdateDeleteSql($sql);
+		$result = runSelectSql($sql);
 		if(count($result)){
 			$replyStr = 1;
 		} else {
 			$replyStr = 0;
 		}
-	} else if($tp == 3){
-		# warning
-		$sql = "update YQ_ManageUser set alertNum=alertNum+1 where ManageUserName='$opAccount'";
-		$result = runInsertUpdateDeleteSql($sql);
-		if(count($result)){
-			$replyStr = 1;
-		} else {
-			$replyStr = 0;
-		}
-	} else if($tp == 4){
-		# delete qr code
-		$ticket = $_POST['ticket'];
-		$sql = "delete from YQ_QRCode where Ticket = '$ticket'";
-		$result = runInsertUpdateDeleteSql($sql);
-		if(count($result)){
-			$replyStr = 1;
-		} else {
-			$replyStr = 0;
-		}
-	} else if($tp == 5){
-		# warning
-		$sql = "update YQ_ManageUser set alertNum=0 where ManageUserName='$opAccount'";
-		$result = runInsertUpdateDeleteSql($sql);
-		if(count($result)){
-			$replyStr = 1;
-		} else {
-			$replyStr = 0;
-		}
-	} 
+	}
+	break;
+
+	case 2: 
+		
 	break;
 }
 echo $replyStr;

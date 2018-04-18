@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>
-			<?php echo $user;?>的主页</title>
+		<title><?php echo $user;?>的主页</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +20,8 @@
 
 		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 		<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		<script type="text/javascript" src="export-csv.js"></script>
 		<script type="text/javascript" src="sweetalert-dev.js"></script>
 		<script type="text/javascript" src="fileinput.js"></script>
 		<script type="text/javascript" src="zh.js"></script>
@@ -36,6 +36,9 @@
 	</head>
 
 	<body>
+		<div class="warningBar" style="background: rgba(255,0,0,0.3);height: 60px;position: fixed;left: 0;right: 0;z-index: 100;top: 30px;text-align: center;">
+			<p style="line-height: 60px; color: #000;"><img src="warning.png" style="position: relative;width: 30px;height: 30px;">您被系统管理员警告的次数大于5次，请及时处理含敏感信息的二维码，否则将影响账号正常使用！</p>
+		</div>
 		<div id="particles">
 			<div class="mainHead">
 				<div class="ui secondary pointing menu">
@@ -264,7 +267,7 @@
 											<span>生成个数</span>
 											<input type="text" class="form-control" id="codeNum" />
 											<input type="button" class="form-control" id="testBtn" value="测试" />
-											<a href="timeDur.txt">下载结果文件</a>
+											<a href="timeDur.txt" download="timeDur" style="margin-left: 20px;">下载结果文件</a>
 										</li>
 										<!--加载动画-->
 										<li>
@@ -327,7 +330,7 @@
 									<br />
 									<div class="form-group">
 										<label for="appSecret">AppSecret</label>
-										<input type="text" id="AppSecret" class="form-control">
+										<input type="password" id="AppSecret" class="form-control">
 									</div>
 									<br />
 									<div class="new-row">
@@ -592,6 +595,20 @@
 			$("#statisticTabContent .row").removeClass("in");
 			$("#statisticTabContent .row").eq(0).addClass("in");
 			$("#statisticTabContent .row").eq(0).addClass("active");
+			//图表的初始化
+			Highcharts.setOptions({  
+    			lang: {  
+        			printChart: "打印图表",
+        			downloadJPEG: "导出JPEG 图片",
+        			downloadPDF: "导出PDF文档",
+        			downloadPNG: "导出PNG 图片",
+        			downloadSVG: "导出SVG 矢量图",
+        			exportButtonTitle: "导出图片",
+       				downloadCSV:"导出excel格式文件",
+        			downloadXLS:"导出XLS格式文件",
+        			viewData:"查看数据"
+    			}  
+			});
 			getApp();
 			//getInfomation(1);
 		}
@@ -608,7 +625,7 @@
 			$("#sceneImage").trigger('filesuccessremove');
 			getStatisticData();
 			getApp();
-		}
+		}   
 		//----------------------文件上传输入框初始化----------------
 		//初始化fileinput控件（第一次初始化）
 		function initFileInput(ctrlName, uploadUrl) {
@@ -977,7 +994,7 @@
 			}
 			return l;
 		}
-		//生成扫描统计图表
+		//生成图表
 		function getCharts(user, msg) {
 			var now = $('#dateInput').val();
 			var label = preDay(now);
@@ -1115,7 +1132,7 @@
 			var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
 			var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
 			var isEdge = userAgent.indexOf("Edge") > -1; //判断是否IE的Edge浏览器
-			console.log("isIE:" + isIE + "isEdge:" + isEdge);
+			console.log("isIE:" + isIE + isEdge);
 			var d = new Date(str * 1000);
 			if(isIE || isEdge) {
 				commonTime = d.toLocaleString();
@@ -1894,21 +1911,25 @@
 				success: function(data) {
 					$('.spinnerTwo').addClass('disNone');
 					//显示所用时间
-					var wechatDur, qqDur, liantuDur;
+					var wechatDur, qqDur, liantuDur,jiaDur, iclcikDur;
 					if(data.wechat == -1) {
 						wechatDur = '限制';
 					} else {
 						wechatDur = averageTime(data.wechat);
 						qqDur = averageTime(data.qq);
 						liantuDur = averageTime(data.liantu);
+						jiaDur = averageTime(data.jia);
+						// iclickDur = averageTime(data.iclick);
 					}
 					weDurTime = data.wechat;
 					qqDurTime = data.qq;
 					ltDurTime = data.liantu;
+					jiaDurTime = data.jia;
+					// iclickDurTime = data.iclick;
 					//weDurTime.push([parseInt(_codeNum), parseFloat(wechatDur)]);
 					//qqDurTime.push([parseInt(_codeNum), parseFloat(qqDur)]);
 					//ltDurTime.push([parseInt(_codeNum), parseFloat(liantuDur)]);
-					$('#currentResult').text('微信接口：' + wechatDur + 's, 腾讯接口：' + qqDur + 's, 联图接口：' + liantuDur + 's');
+					$('#currentResult').text('QR Code Generator接口：' + wechatDur + 's, 腾讯接口：' + qqDur + 's, 联图接口：' + liantuDur + 's, JiaThis 接口：'+jiaDur+'s');
 					//在图表中显示
 					testChart();
 					testChart2();
@@ -1980,7 +2001,7 @@
 					}
 				},
 				series: [{
-						name: '微信',
+						name: 'QR Code Generator',
 						color: 'rgba(223, 83, 83, .5)',
 						data: weDurTime
 					},
@@ -2033,7 +2054,7 @@
 					}
 				},
 				series: [{
-						name: '微信',
+						name: 'QR Code Generator',
 						color: 'rgba(223, 83, 83, .5)',
 						data: weDurTime
 					},
@@ -2046,6 +2067,11 @@
 						name: '联图',
 						color: 'rgba(263, 192, 123, .5)',
 						data: ltDurTime
+					},
+					{
+						name: 'JiaThis',
+						color: 'rgba(263, 192, 143, .5)',
+						data: jiaDurTime
 					}
 				]
 			});
